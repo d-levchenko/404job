@@ -1,8 +1,10 @@
+import { experienceLevels } from '../constants/experienceLevels.js';
 import { model, Schema } from 'mongoose';
 
 const experienceLevelSchema = new Schema(
   {
     name: {
+      enum: experienceLevels,
       type: String,
       required: true,
     },
