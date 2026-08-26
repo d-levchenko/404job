@@ -9,6 +9,7 @@ import { logger } from './middleware/logger.js';
 import { notFoundHandler } from './middleware/notFoundHandler.js';
 import { errorHandler } from './middleware/errorHandler.js';
 import { connectMongoDB } from './db/connectMongoDB.js';
+import authRouter from './routes/authRoutes.js';
 
 dns.setServers(['1.1.1.1', '8.8.8.8']);
 
@@ -22,7 +23,7 @@ app.use(express.json());
 app.use(cookieParser());
 
 // routes
-
+app.use('/auth', authRouter);
 app.use(notFoundHandler);
 
 app.use(errorHandler);
