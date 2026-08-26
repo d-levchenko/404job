@@ -18,14 +18,10 @@ export const getAllVacancies = async (req, res) => {
   );
 
   if (search) vacanciesQuery.find({ title: { $regex: search, $options: 'i' } });
-  if (industry)
-    vacanciesQuery.find({ name: { $regex: industry, $options: 'i' } });
-  if (experience)
-    vacanciesQuery.find({ name: { $regex: experience, $options: 'i' } });
-  if (location)
-    vacanciesQuery.find({ name: { $regex: location, $options: 'i' } });
-  if (employmentType)
-    vacanciesQuery.find({ name: { $regex: employmentType, $options: 'i' } });
+  if (industry) vacanciesQuery.find({ industryId: industry });
+  if (experience) vacanciesQuery.find({ experienceLevelId: experience });
+  if (location) vacanciesQuery.find({ locationId: location });
+  if (employmentType) vacanciesQuery.find({ employmentTypeId: employmentType });
   if (isRemote) vacanciesQuery.find({ isRemote: isRemote === 'true' });
 
   const [totalItems, vacancies] = await Promise.all([
