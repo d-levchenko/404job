@@ -5,17 +5,20 @@ import {
 } from '../validations/authValidator.js';
 import { celebrate } from 'celebrate';
 import {
+  getUser,
   loginUser,
   logoutUser,
   refreshUserSession,
   registerUser,
 } from '../controllers/authController.js';
+import authenticate from '../middleware/authenticate.js';
 
 const authRouter = Router();
 
 authRouter.post('/register', celebrate(registerUserSchema), registerUser);
 authRouter.post('/login', celebrate(loginUserSchema), loginUser);
 authRouter.post('/refresh', refreshUserSession);
+authRouter.get('/getMe', authenticate, getUser);
 authRouter.post('/logout', logoutUser);
 
 export default authRouter;

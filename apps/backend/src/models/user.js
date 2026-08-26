@@ -28,11 +28,11 @@ const userSchema = Schema(
       type: String,
       required: true,
     },
-    logo: { type: String, required: false },
-    description: { type: String, required: false },
-    websiteUrl: { type: String, required: false },
+    logo: { type: String, required: false, default: '' },
+    description: { type: String, required: false, default: '' },
+    websiteUrl: { type: String, required: false, default: '' },
   },
-  { collection: 'user', timestamps: true, versionKey: false },
+  { collection: 'users', timestamps: true, versionKey: false },
 );
 
 userSchema.methods.toJSON = function () {
@@ -41,4 +41,4 @@ userSchema.methods.toJSON = function () {
   return obj;
 };
 
-export const User = model('user', userSchema);
+export const User = model('users', userSchema);
