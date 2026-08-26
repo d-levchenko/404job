@@ -5,11 +5,14 @@ import 'dotenv/config';
 import './models/index.js';
 import dns from 'node:dns';
 
+import { errors } from 'celebrate';
 import { logger } from './middleware/logger.js';
 import { notFoundHandler } from './middleware/notFoundHandler.js';
 import { errorHandler } from './middleware/errorHandler.js';
 import { connectMongoDB } from './db/connectMongoDB.js';
 import authRouter from './routes/authRoutes.js';
+import usersRouter from './routes/usersRoutes.js';
+
 import vacancyRouter from './routes/vacanciesRoutes.js';
 import optionsRouter from './routes/optionsRoutes.js';
 
@@ -25,9 +28,11 @@ app.use(cookieParser());
 
 // routes
 app.use('/api/auth', authRouter);
+app.use('/api/users', usersRouter);
 app.use('/api/vacancies', vacancyRouter);
 app.use('/api/options', optionsRouter);
 app.use(notFoundHandler);
+app.use(errors());
 app.use(errorHandler);
 
 await connectMongoDB();
