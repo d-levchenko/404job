@@ -3,7 +3,6 @@ import cors from 'cors';
 import cookieParser from 'cookie-parser';
 import 'dotenv/config';
 import './models/index.js';
-
 import dns from 'node:dns';
 
 import { errors } from 'celebrate';
@@ -15,6 +14,7 @@ import authRouter from './routes/authRoutes.js';
 import usersRouter from './routes/usersRoutes.js';
 
 import vacancyRouter from './routes/vacanciesRoutes.js';
+import optionsRouter from './routes/optionsRoutes.js';
 
 dns.setServers(['1.1.1.1', '8.8.8.8']);
 
@@ -30,7 +30,7 @@ app.use(cookieParser());
 app.use('/api/auth', authRouter);
 app.use('/api/users', usersRouter);
 app.use('/api/vacancies', vacancyRouter);
-
+app.use('/api/options', optionsRouter);
 app.use(notFoundHandler);
 app.use(errors());
 app.use(errorHandler);

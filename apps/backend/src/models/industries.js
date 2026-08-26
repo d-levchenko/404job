@@ -1,15 +1,13 @@
-import { Schema, model } from 'mongoose';
-import { Industries } from '../constants/industries.js';
+import { model, Schema } from 'mongoose';
 
 const industrySchema = new Schema(
   {
     name: {
-      enum: Industries,
       type: String,
       required: true,
     },
   },
-  { collection: 'industries', timestamps: true, versionKey: false },
+  { collection: 'industries', timestamps: false, versionKey: false },
 );
 
 export const Industry = model('Industry', industrySchema);
