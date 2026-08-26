@@ -5,6 +5,8 @@ import 'dotenv/config';
 
 import dns from 'node:dns';
 
+import { connectMongoDB } from './db/connectMongoDB.js';
+
 dns.setServers(['1.1.1.1', '8.8.8.8']);
 
 const app = express();
@@ -19,6 +21,8 @@ app.use(cookieParser());
 // 404
 
 // 500
+
+await connectMongoDB();
 
 app.listen(PORT, () => {
   console.log(`Listening on port ${PORT}`);
