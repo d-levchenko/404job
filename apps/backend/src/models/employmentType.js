@@ -7,7 +7,7 @@ const employmentTypeSchema = new Schema(
       required: true,
     },
   },
-  { collection: 'employmentTypes', timestamps: false, versionKey: false },
+  { collection: 'employmentType', timestamps: false, versionKey: false },
 );
 
 export const EmploymentType = model('EmploymentType', employmentTypeSchema);

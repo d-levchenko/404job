@@ -1,7 +1,11 @@
 import jobLogo from '@/assets/jobLogo.svg';
+import keyboardArrowDown from '@/assets/keyboardArrowDown.svg';
+import search from '@/assets/search.svg';
 
 const icons = {
   logo: jobLogo,
+  keyboardArrowDown,
+  search,
 };
 
 export type IconName = keyof typeof icons;
