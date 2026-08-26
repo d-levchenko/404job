@@ -1,7 +1,9 @@
 import jobLogo from '@/assets/jobLogo.svg';
+import keyboardArrowDown from '@/assets/keyboardArrowDown.svg';
 
 const icons = {
   logo: jobLogo,
+  keyboardArrowDown,
 };
 
 export type IconName = keyof typeof icons;
