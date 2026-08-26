@@ -8,6 +8,7 @@ import dns from 'node:dns';
 import { logger } from './middleware/logger.js';
 import { notFoundHandler } from './middleware/notFoundHandler.js';
 import { errorHandler } from './middleware/errorHandler.js';
+import { connectMongoDB } from './db/connectMongoDB.js';
 
 dns.setServers(['1.1.1.1', '8.8.8.8']);
 
@@ -25,6 +26,8 @@ app.use(cookieParser());
 app.use(notFoundHandler);
 
 app.use(errorHandler);
+
+await connectMongoDB();
 
 app.listen(PORT, () => {
   console.log(`Listening on port ${PORT}`);
