@@ -56,14 +56,21 @@ export const addVacancyToFavorites = async (req, res) => {
     throw createHttpError(404, 'Vacancy not found');
   }
 
-  await User.findByIdAndUpdate(userId, {
-    $addToSet: {
-      savedVacancies: vacancyId,
+  const updatedUser = await User.findByIdAndUpdate(
+    userId,
+    {
+      $addToSet: {
+        savedVacancies: vacancyId,
+      },
     },
-  });
+    {
+      returnDocument: 'after',
+    },
+  ).populate('savedVacancies');
 
   res.status(200).json({
     message: 'Vacancy added to favorites',
+    savedVacancies: updatedUser.savedVacancies,
   });
 };
 
@@ -81,13 +88,20 @@ export const removeVacancyFromFavorites = async (req, res) => {
     throw createHttpError(404, 'Vacancy not found');
   }
 
-  await User.findByIdAndUpdate(userId, {
-    $pull: {
-      savedVacancies: vacancyId,
+  const updatedUser = await User.findByIdAndUpdate(
+    userId,
+    {
+      $pull: {
+        savedVacancies: vacancyId,
+      },
     },
-  });
+    {
+      returnDocument: 'after',
+    },
+  ).populate('savedVacancies');
 
   res.status(200).json({
     message: 'Vacancy removed from favorites',
+    savedVacancies: updatedUser.savedVacancies,
   });
 };
