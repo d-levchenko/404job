@@ -1,5 +1,4 @@
 import createHttpError from 'http-errors';
-import mongoose from 'mongoose';
 import { Location } from '../models/location.js';
 import { Industry } from '../models/industries.js';
 import { ExperienceLevel } from '../models/experienceLevel.js';
