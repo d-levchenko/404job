@@ -1,0 +1,8 @@
+GET http://localhost:4000/api/vacancies/get-all
+?page=1
+&perPage=10
+&industry=9b30daa83a212d05b8a7df8f
+&experience=d62f988b790fb42db63e6420
+&location=58482f129d5a080f5191abc6
+&isRemote=true
+&employmentType=b74f86c0448fce2f48dcbad2
