@@ -1,0 +1,21 @@
+### Update candidate profile
+PATCH http://localhost:4000/api/users/candidate
+Content-Type: application/json
+
+{
+  "name": "Test Candidate Updated",
+  "githubUrl": "https://github.com/test-user",
+  "linkedinUrl": "https://linkedin.com/in/test-user",
+  "behanceUrl": "https://behance.net/test-user"
+}
+
+### Update employer profile
+PATCH http://localhost:4000/api/users/employer
+Content-Type: application/json
+
+{
+  "companyName": "Test Company Updated",
+  "logo": "https://example.com/logo.png",
+  "description": "Updated company description",
+  "websiteUrl": "https://example.com"
+}
