@@ -1,16 +1,19 @@
 import { Router } from 'express';
 import authenticate from '../middleware/authenticate.js';
+import { getAllVacancies } from '../controllers/vacanciesController.js';
 import {
   addVacancyToFavorites,
   removeVacancyFromFavorites,
 } from '../controllers/vacanciesController.js';
 
-const vacanciesRouter = Router();
+const vacancyRouter = Router();
 
-vacanciesRouter.use(authenticate);
+vacancyRouter.get('/get-all', getAllVacancies);
 
-vacanciesRouter.post('/:vacancyId/favorite', addVacancyToFavorites);
+vacancyRouter.use(authenticate);
 
-vacanciesRouter.delete('/:vacancyId/favorite', removeVacancyFromFavorites);
+vacancyRouter.post('/:vacancyId/favorite', addVacancyToFavorites);
 
-export default vacanciesRouter;
+vacancyRouter.delete('/:vacancyId/favorite', removeVacancyFromFavorites);
+
+export default vacancyRouter;
