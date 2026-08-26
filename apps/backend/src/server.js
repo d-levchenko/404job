@@ -10,6 +10,7 @@ import { notFoundHandler } from './middleware/notFoundHandler.js';
 import { errorHandler } from './middleware/errorHandler.js';
 import { connectMongoDB } from './db/connectMongoDB.js';
 import authRouter from './routes/authRoutes.js';
+import vacanciesRouter from './routes/vacanciesRoutes.js';
 
 dns.setServers(['1.1.1.1', '8.8.8.8']);
 
@@ -24,6 +25,8 @@ app.use(cookieParser());
 
 // routes
 app.use('/api/auth', authRouter);
+app.use('/api/vacancies', vacanciesRouter);
+
 app.use(notFoundHandler);
 
 app.use(errorHandler);
