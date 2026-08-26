@@ -1,4 +1,4 @@
-import { Schema, model } from 'mongoose';
+import { model, Schema } from 'mongoose';
 
 const locationSchema = new Schema(
   {
@@ -7,11 +7,7 @@ const locationSchema = new Schema(
       required: true,
     },
   },
-  {
-    collection: 'locations',
-    timestamps: true,
-    versionKey: false,
-  },
+  { collection: 'locations', timestamps: false, versionKey: false },
 );
 
 export const Location = model('Location', locationSchema);

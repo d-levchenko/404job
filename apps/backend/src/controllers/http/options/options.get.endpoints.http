@@ -1,0 +1,20 @@
+@baseUrl = http://localhost:4000/api
+
+### Get locations
+GET {{baseUrl}}/options?type=locations
+
+### Get industries
+GET {{baseUrl}}/options?type=industries
+
+### Get experience levels
+GET {{baseUrl}}/options?type=experienceLevels
+
+### Get employment types
+GET {{baseUrl}}/options?type=employmentTypes
+
+### Invalid type (should return 400)
+GET {{baseUrl}}/options?type=unknownType
+
+### Missing type (should return 400)
+GET {{baseUrl}}/options
+
