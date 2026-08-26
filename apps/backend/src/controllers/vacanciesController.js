@@ -39,3 +39,17 @@ export const getAllVacancies = async (req, res) => {
     vacancies,
   });
 };
+
+export const getHotVacancies = async (req, res) => {
+  const { limit = 6 } = req.query;
+  const vacancies = await Vacancy.find({
+    status: 'active',
+    hotVacancy: true,
+  })
+    .sort({ createdAt: -1 })
+    .limit(Number(limit))
+    .populate('employerId', 'companyName logo')
+    .populate('locationId', 'name');
+
+  res.json({ vacancies });
+};
