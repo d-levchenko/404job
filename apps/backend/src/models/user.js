@@ -1,5 +1,5 @@
 import { model, Schema } from 'mongoose';
-const userSchema = Schema(
+const userSchema = new Schema(
   {
     userType: {
       type: String,
@@ -28,9 +28,16 @@ const userSchema = Schema(
       type: String,
       required: true,
     },
-    logo: { type: String, required: false, default: '' },
-    description: { type: String, required: false, default: '' },
-    websiteUrl: { type: String, required: false, default: '' },
+    githubUrl: { type: String, default: undefined },
+    linkedinUrl: { type: String, default: undefined },
+    behanceUrl: { type: String, default: undefined },
+    savedVacancies: {
+      type: [{ type: Schema.Types.ObjectId, ref: 'Vacancy' }],
+      default: undefined,
+    },
+    logo: { type: String, default: undefined },
+    description: { type: String, default: undefined },
+    websiteUrl: { type: String, default: undefined },
   },
   { collection: 'users', timestamps: true, versionKey: false },
 );
@@ -41,4 +48,4 @@ userSchema.methods.toJSON = function () {
   return obj;
 };
 
-export const User = model('users', userSchema);
+export const User = model('User', userSchema);
