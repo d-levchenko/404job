@@ -1,5 +1,5 @@
-import { Schema, model } from 'mongoose';
 import { experienceLevels } from '../constants/experienceLevels.js';
+import { model, Schema } from 'mongoose';
 
 const experienceLevelSchema = new Schema(
   {
@@ -9,11 +9,7 @@ const experienceLevelSchema = new Schema(
       required: true,
     },
   },
-  {
-    collection: 'experienceLevels',
-    timestamps: false,
-    versionKey: false,
-  },
+  { collection: 'experienceLevels', timestamps: false, versionKey: false },
 );
 
 export const ExperienceLevel = model('ExperienceLevel', experienceLevelSchema);

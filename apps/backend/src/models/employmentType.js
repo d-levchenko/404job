@@ -1,10 +1,8 @@
-import { Schema, model } from 'mongoose';
-import { employmentTypes } from '../constants/employmentTypes.js';
+import { model, Schema } from 'mongoose';
 
 const employmentTypeSchema = new Schema(
   {
     name: {
-      enum: employmentTypes,
       type: String,
       required: true,
     },

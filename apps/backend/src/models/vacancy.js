@@ -33,7 +33,7 @@ const vacancySchema = new Schema(
       required: true,
       default: 'active',
     },
-    salaryRange: { type: String, default: '' },
+    salaryRange: { type: String, default: '', trim: true },
     hotVacancy: { type: Boolean, required: true, default: false },
   },
   { collection: 'vacancies', timestamps: true, versionKey: false },
