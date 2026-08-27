@@ -1,8 +1,9 @@
 import { RegisterData } from '@/types/auth';
-import { authApi } from './api';
+import { api } from './api';
+
 export const registerUser = async (payload: RegisterData) => {
   try {
-    const { data } = await authApi.post('/auth/register', payload);
+    const { data } = await api.post('api/auth/register', payload);
     return data;
   } catch (error) {
     throw error;
