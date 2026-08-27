@@ -2,10 +2,10 @@
 import { ErrorMessage, Field, Form, Formik, FormikHelpers } from 'formik';
 import * as Yup from 'yup';
 import css from './RegisterForm.module.css';
-import { registerUser } from '@/lib/clientApi';
 import { RegisterData } from '@/types/auth';
 import toast from 'react-hot-toast';
 import { useRouter } from 'next/navigation';
+import { registerUser } from '@/lib/authApi';
 interface RegisterFormValidation {
   name: string;
   companyName: string;
