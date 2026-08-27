@@ -1,10 +1,6 @@
 import { Vacancy } from '@/store/vacancyType';
 import { RegisterData } from '@/types/auth';
-import axios from 'axios';
-
-const api = axios.create({
-  baseURL: process.env.NEXT_PUBLIC_API_URL + '/api',
-});
+import { api } from './api';
 
 export const getHotVacancies = async (limit = 6): Promise<Vacancy[]> => {
   try {
@@ -18,6 +14,6 @@ export const getHotVacancies = async (limit = 6): Promise<Vacancy[]> => {
 };
 
 export const registerUser = async (payload: RegisterData) => {
-  const { data } = await api.post('/auth/register', payload);
+  const { data } = await api.post('/api/auth/register', payload);
   return data;
 };
