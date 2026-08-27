@@ -1,17 +1,40 @@
 'use client';
-import {
-  BlossomCarousel,
-  BlossomDots,
-  BlossomNext,
-  BlossomPrev,
-} from '@blossom-carousel/react';
-import css from './HotVacancies.module.css';
+
+import { useCallback, useEffect, useState } from 'react';
+import useEmblaCarousel from 'embla-carousel-react';
 import { useQuery } from '@tanstack/react-query';
-import { getHotVacancies } from '@/lib/clientApi';
-import Image from 'next/image';
+
+import css from './HotVacancies.module.css';
 import { SvgIcon } from '@/components/SvgIcon/SvgIcon';
+import { getHotVacancies } from '@/lib/clientApi';
 
 function HotVacancies() {
+  const [emblaRef, emblaApi] = useEmblaCarousel({
+    loop: true,
+    dragFree: false,
+    duration: 25,
+  });
+  const [selectedIndex, setSelectedIndex] = useState(0);
+
+  const scrollPrev = useCallback(() => emblaApi?.scrollPrev(), [emblaApi]);
+  const scrollNext = useCallback(() => emblaApi?.scrollNext(), [emblaApi]);
+  const scrollTo = useCallback(
+    (index: number) => emblaApi?.scrollTo(index),
+    [emblaApi],
+  );
+
+  useEffect(() => {
+    if (!emblaApi) return;
+
+    const onSelect = () => setSelectedIndex(emblaApi.selectedScrollSnap());
+    onSelect();
+    emblaApi.on('select', onSelect);
+
+    return () => {
+      emblaApi.off('select', onSelect);
+    };
+  }, [emblaApi]);
+
   const { data, isLoading, isError } = useQuery({
     queryKey: ['hotVacancies'],
     queryFn: () => getHotVacancies(),
@@ -19,22 +42,48 @@ function HotVacancies() {
 
   if (isLoading) return <p>Завантаження...</p>;
   if (isError) return <p>Помилка завантаження вакансій</p>;
+
   return (
     <section className={css.hotSection}>
-      <div className={css.container}>
-        <BlossomCarousel repeat={true} id="gallery" className={css.carousel}>
+      <div className={css.viewport} ref={emblaRef}>
+        <div className={css.container}>
           {data?.map(vacancy => (
-            <li key={vacancy._id} data-blossom-slide className={css.slide}>
+            <div key={vacancy._id} className={css.slide}>
               <SvgIcon name="noImage" />
-              <p>{vacancy.title}</p>
-            </li>
+              <p className={css.title}>{vacancy.title}</p>
+            </div>
           ))}
-        </BlossomCarousel>
-        <BlossomDots for="gallery" className={css.dots} />
-        <div className="controls">
-          <BlossomPrev for="gallery" />
-          <BlossomNext for="gallery" />
         </div>
+      </div>
+
+      <div className={css.controls}>
+        <button
+          type="button"
+          onClick={scrollPrev}
+          className={css.navButton}
+          aria-label="Попередні">
+          ←
+        </button>
+
+        <div className={css.dots}>
+          {data?.map((vacancy, index) => (
+            <button
+              key={vacancy._id}
+              type="button"
+              onClick={() => scrollTo(index)}
+              className={`${css.dot} ${index === selectedIndex ? css.dotActive : ''}`}
+              aria-label={`Слайд ${index + 1}`}
+            />
+          ))}
+        </div>
+
+        <button
+          type="button"
+          onClick={scrollNext}
+          className={css.navButton}
+          aria-label="Наступні">
+          →
+        </button>
       </div>
     </section>
   );
