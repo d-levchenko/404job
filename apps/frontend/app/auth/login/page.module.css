@@ -1,0 +1,12 @@
+.login-page {
+  display: flex;
+  gap: 64px;
+  margin: 0 auto;
+}
+
+.login-image {
+  display: none;
+  @media (min-width: 1440px) {
+    display: block;
+  }
+}
