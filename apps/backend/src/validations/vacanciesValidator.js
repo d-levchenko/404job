@@ -6,8 +6,8 @@ const objectIdValidator = (value, helpers) =>
 
 export const getAllVacanciesSchema = {
   [Segments.QUERY]: Joi.object({
-    page: Joi.number().min(1).required(),
-    perPage: Joi.number().min(1).required(),
+    page: Joi.number().min(1).default(1),
+    perPage: Joi.number().min(1).max(100).default(10),
 
     search: Joi.string().allow('', null),
 

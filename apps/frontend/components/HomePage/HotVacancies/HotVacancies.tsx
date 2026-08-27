@@ -6,7 +6,7 @@ import { useQuery } from '@tanstack/react-query';
 
 import css from './HotVacancies.module.css';
 import { SvgIcon } from '@/components/SvgIcon/SvgIcon';
-import { getHotVacancies } from '@/lib/clientApi';
+import { getHotVacancies } from '@/lib/vacanciesApi';
 
 function HotVacancies() {
   const [emblaRef, emblaApi] = useEmblaCarousel({
