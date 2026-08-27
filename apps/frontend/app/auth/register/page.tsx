@@ -13,7 +13,7 @@ const Page = () => {
         <h1 className={css.registerTitle}>Реєстрація</h1>
         <div className={css.content}>
           <div className={css.userType}>
-            <label htmlFor="userType">
+            <label htmlFor="candidate">
               <input
                 id="candidate"
                 type="radio"
