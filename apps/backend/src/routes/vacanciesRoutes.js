@@ -8,7 +8,10 @@ import {
   addVacancyToFavorites,
   removeVacancyFromFavorites,
 } from '../controllers/vacanciesController.js';
-import { getAllVacanciesSchema } from '../validations/vacanciesValidator.js';
+import {
+  getAllVacanciesSchema,
+  getHotVacanciesSchema,
+} from '../validations/vacanciesValidator.js';
 import { celebrate } from 'celebrate';
 
 const vacancyRouter = Router();
@@ -19,7 +22,7 @@ vacancyRouter.get(
   getAllVacancies,
 );
 
-vacancyRouter.get('/hot', getHotVacancies);
+vacancyRouter.get('/hot', celebrate(getHotVacanciesSchema), getHotVacancies);
 
 vacancyRouter.post('/:vacancyId/favorite', authenticate, addVacancyToFavorites);
 

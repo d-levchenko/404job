@@ -1,0 +1,49 @@
+.carousel {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: 200px;
+  gap: 1rem;
+  scroll-snap-type: inline mandatory;
+}
+
+.slide {
+  width: 100%;
+  aspect-ratio: 3 / 4;
+  scroll-snap-align: center;
+}
+
+.controls {
+  display: flex;
+  gap: 1rem;
+}
+
+:global([data-blossom-dot]) :global([data-blossom-dot-marker]) {
+  transition: transform 0.25s ease;
+}
+
+:global([data-blossom-dot][aria-current='true'])
+  :global([data-blossom-dot-marker]) {
+  transform: scale(1.6);
+}
+
+:global([data-blossom-dot][aria-current='true'] + [data-blossom-dot])
+  :global([data-blossom-dot-marker]),
+:global([data-blossom-dot]:has(+ [data-blossom-dot][aria-current='true']))
+  :global([data-blossom-dot-marker]) {
+  transform: scale(1.2);
+}
+
+:global(
+    [data-blossom-dot][aria-current='true']
+      + [data-blossom-dot]
+      + [data-blossom-dot]
+  )
+  :global([data-blossom-dot-marker]),
+:global(
+    [data-blossom-dot]:has(
+      + [data-blossom-dot] + [data-blossom-dot][aria-current='true']
+    )
+  )
+  :global([data-blossom-dot-marker]) {
+  transform: scale(0.85);
+}

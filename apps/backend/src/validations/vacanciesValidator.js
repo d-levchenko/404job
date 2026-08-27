@@ -19,3 +19,9 @@ export const getAllVacanciesSchema = {
     isRemote: Joi.string().valid('true', 'false').allow('', null),
   }),
 };
+
+export const getHotVacanciesSchema = {
+  [Segments.QUERY]: Joi.object({
+    limit: Joi.number().integer().min(4).max(6),
+  }),
+};
