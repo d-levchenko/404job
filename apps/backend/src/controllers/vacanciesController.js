@@ -1,4 +1,6 @@
+import { User } from '../models/user.js';
 import { Vacancy } from '../models/vacancy.js';
+import createHttpError from 'http-errors';
 
 export const getAllVacancies = async (req, res) => {
   const {
@@ -37,6 +39,70 @@ export const getAllVacancies = async (req, res) => {
     totalVacancies: totalItems,
     totalPages,
     vacancies,
+  });
+};
+
+export const addVacancyToFavorites = async (req, res) => {
+  const { vacancyId } = req.params;
+  const { _id: userId, userType } = req.user;
+
+  if (userType !== 'candidate') {
+    throw createHttpError(403, 'Only candidates can save vacancies');
+  }
+
+  const vacancy = await Vacancy.findById(vacancyId);
+
+  if (!vacancy) {
+    throw createHttpError(404, 'Vacancy not found');
+  }
+
+  const updatedUser = await User.findByIdAndUpdate(
+    userId,
+    {
+      $addToSet: {
+        savedVacancies: vacancyId,
+      },
+    },
+    {
+      returnDocument: 'after',
+    },
+  ).populate('savedVacancies');
+
+  res.status(200).json({
+    message: 'Vacancy added to favorites',
+    savedVacancies: updatedUser.savedVacancies,
+  });
+};
+
+export const removeVacancyFromFavorites = async (req, res) => {
+  const { vacancyId } = req.params;
+  const { _id: userId, userType } = req.user;
+
+  if (userType !== 'candidate') {
+    throw createHttpError(403, 'Only candidates can remove saved vacancies');
+  }
+
+  const vacancy = await Vacancy.findById(vacancyId);
+
+  if (!vacancy) {
+    throw createHttpError(404, 'Vacancy not found');
+  }
+
+  const updatedUser = await User.findByIdAndUpdate(
+    userId,
+    {
+      $pull: {
+        savedVacancies: vacancyId,
+      },
+    },
+    {
+      returnDocument: 'after',
+    },
+  ).populate('savedVacancies');
+
+  res.status(200).json({
+    message: 'Vacancy removed from favorites',
+    savedVacancies: updatedUser.savedVacancies,
   });
 };
 
