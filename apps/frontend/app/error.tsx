@@ -2,9 +2,10 @@
 
 // apps/frontend/app/error.tsx
 // Глобальний error boundary — обов'язково client component (вимога Next.js App Router).
-// Кольори взято з макету Figma (Color/Curious Blue).
 
 import { useEffect } from 'react';
+
+import css from './error.module.css';
 
 export default function Error({
   error,
@@ -14,22 +15,18 @@ export default function Error({
   reset: () => void;
 }) {
   useEffect(() => {
-    // логуємо помилку для діагностики
+    // логуємо помилку для діагностики.
     console.error(error);
   }, [error]);
 
   return (
-    <div className="flex min-h-[70vh] flex-col items-center justify-center gap-4 px-4 text-center">
-      <p className="text-sm font-medium text-[#3498db]">Помилка</p>
-      <h1 className="text-3xl font-bold text-black md:text-4xl">
-        Щось пішло не так
-      </h1>
-      <p className="max-w-md text-base text-gray-600">
-        Виникла непередбачена помилка. Спробуй ще раз або повернись пізніше.
+    <div className={css.wrapper}>
+      <p className={css.label}>Помилка</p>
+      <h1 className={css.title}>Щось пішло не так</h1>
+      <p className={css.description}>
+        Виникла непередбачена помилка. Спробуйте ще раз або поверніться пізніше.
       </p>
-      <button
-        onClick={() => reset()}
-        className="mt-2 rounded-md bg-[#3498db] px-6 py-2.5 text-sm font-medium text-white transition-colors hover:bg-[#2b82c0]">
+      <button onClick={() => reset()} className={css.button}>
         Спробувати ще раз
       </button>
     </div>
