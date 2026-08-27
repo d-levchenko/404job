@@ -1,4 +1,5 @@
 import { Vacancy } from '@/store/vacancyType';
+import { RegisterData } from '@/types/auth';
 import axios from 'axios';
 
 const api = axios.create({
@@ -14,4 +15,9 @@ export const getHotVacancies = async (limit = 6): Promise<Vacancy[]> => {
   } catch (error) {
     throw error;
   }
+};
+
+export const registerUser = async (payload: RegisterData) => {
+  const { data } = await api.post('/auth/register', payload);
+  return data;
 };
