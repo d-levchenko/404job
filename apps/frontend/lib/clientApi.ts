@@ -1,4 +1,5 @@
 import { Vacancy } from '@/types/vacancyType';
+
 import { api } from './api';
 
 export const getHotVacancies = async (limit = 6): Promise<Vacancy[]> => {
