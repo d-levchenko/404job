@@ -4,16 +4,6 @@ import createHttpError from 'http-errors';
 import { createSession, setSessionCookies } from '../services/auth.js';
 import { Session } from '../models/session.js';
 
-export const getUser = async (req, res) => {
-  res.json({
-    id: req.user._id,
-    userType: req.user.userType,
-    name: req.user.name,
-    companyName: req.user.companyName,
-    email: req.user.email,
-  });
-};
-
 export const registerUser = async (req, res) => {
   const { email, password } = req.body;
   const user = await User.findOne({ email });
