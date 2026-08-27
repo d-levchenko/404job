@@ -19,3 +19,9 @@ export const getAllVacanciesSchema = {
     isRemote: Joi.string().valid('true', 'false').allow('', null),
   }),
 };
+
+export const getVacancyByIdSchema = {
+  [Segments.PARAMS]: Joi.object({
+    id: Joi.string().custom(objectIdValidator).required(),
+  }),
+};

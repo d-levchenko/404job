@@ -1,45 +1,51 @@
 import { User } from '../models/user.js';
-import { Vacancy } from '../models/vacancy.js';
 import createHttpError from 'http-errors';
+import { Vacancy } from '../models/vacancy.js';
 
-export const getAllVacancies = async (req, res) => {
-  const {
-    page = 1,
-    perPage = 10,
-    search,
-    industry,
-    experience,
-    location,
-    employmentType,
-    isRemote,
-  } = req.query;
-  const skip = (page - 1) * perPage;
+export const getAllVacancies = async (req, res, next) => {
+  try {
+    const {
+      page = 1,
+      perPage = 10,
+      search,
+      industry,
+      experience,
+      location,
+      employmentType,
+      isRemote,
+    } = req.query;
+    const skip = (page - 1) * perPage;
 
-  const vacanciesQuery = Vacancy.find().populate(
-    'industryId experienceLevelId locationId employmentTypeId',
-  );
+    const vacanciesQuery = Vacancy.find().populate(
+      'industryId experienceLevelId locationId employmentTypeId',
+    );
 
-  if (search) vacanciesQuery.find({ title: { $regex: search, $options: 'i' } });
-  if (industry) vacanciesQuery.find({ industryId: industry });
-  if (experience) vacanciesQuery.find({ experienceLevelId: experience });
-  if (location) vacanciesQuery.find({ locationId: location });
-  if (employmentType) vacanciesQuery.find({ employmentTypeId: employmentType });
-  if (isRemote) vacanciesQuery.find({ isRemote: isRemote === 'true' });
+    if (search)
+      vacanciesQuery.find({ title: { $regex: search, $options: 'i' } });
+    if (industry) vacanciesQuery.find({ industryId: industry });
+    if (experience) vacanciesQuery.find({ experienceLevelId: experience });
+    if (location) vacanciesQuery.find({ locationId: location });
+    if (employmentType)
+      vacanciesQuery.find({ employmentTypeId: employmentType });
+    if (isRemote) vacanciesQuery.find({ isRemote: isRemote === 'true' });
 
-  const [totalItems, vacancies] = await Promise.all([
-    vacanciesQuery.clone().countDocuments(),
-    vacanciesQuery.skip(skip).limit(perPage),
-  ]);
+    const [totalItems, vacancies] = await Promise.all([
+      vacanciesQuery.clone().countDocuments(),
+      vacanciesQuery.skip(skip).limit(perPage),
+    ]);
 
-  const totalPages = Math.ceil(totalItems / perPage);
+    const totalPages = Math.ceil(totalItems / perPage);
 
-  res.json({
-    page,
-    perPage,
-    totalVacancies: totalItems,
-    totalPages,
-    vacancies,
-  });
+    res.json({
+      page,
+      perPage,
+      totalVacancies: totalItems,
+      totalPages,
+      vacancies,
+    });
+  } catch (error) {
+    next(error);
+  }
 };
 
 export const addVacancyToFavorites = async (req, res) => {
@@ -106,16 +112,56 @@ export const removeVacancyFromFavorites = async (req, res) => {
   });
 };
 
-export const getHotVacancies = async (req, res) => {
-  const { limit = 6 } = req.query;
-  const vacancies = await Vacancy.find({
-    status: 'active',
-    hotVacancy: true,
-  })
-    .sort({ createdAt: -1 })
-    .limit(Number(limit))
-    .populate('employerId', 'companyName logo')
-    .populate('locationId', 'name');
+export const getHotVacancies = async (req, res, next) => {
+  try {
+    const { limit = 6 } = req.query;
+    const vacancies = await Vacancy.find({
+      status: 'active',
+      hotVacancy: true,
+    })
+      .sort({ createdAt: -1 })
+      .limit(Number(limit))
+      .populate('employerId', 'companyName logo')
+      .populate('locationId', 'name');
 
-  res.json({ vacancies });
+    res.json({ vacancies });
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const getVacancyById = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+
+    const vacancy = await Vacancy.findById(id)
+      .populate('employerId', 'companyName logo websiteUrl description')
+      .populate('industryId', 'name')
+      .populate('experienceLevelId', 'name')
+      .populate('locationId', 'name')
+      .populate('employmentTypeId', 'name');
+
+    if (!vacancy) {
+      throw createHttpError(404, 'Вакансію не знайдено');
+    }
+
+    const rawIndustryId = vacancy.industryId?._id || vacancy.industryId;
+
+    const similarVacancies = await Vacancy.find({
+      industryId: rawIndustryId,
+      _id: { $ne: vacancy._id },
+      status: 'active',
+    })
+      .populate('employerId', 'companyName logo')
+      .populate('locationId', 'name')
+      .limit(3)
+      .lean();
+
+    res.status(200).json({
+      vacancy,
+      similarVacancies,
+    });
+  } catch (error) {
+    next(error);
+  }
 };
