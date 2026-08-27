@@ -11,6 +11,7 @@ import {
   createVacancy,
 } from '../controllers/vacanciesController.js';
 import {
+  createVacancySchema,
   getAllVacanciesSchema,
   getHotVacanciesSchema,
   getVacancyByIdSchema,
@@ -37,6 +38,11 @@ vacancyRouter.delete(
   removeVacancyFromFavorites,
 );
 
-vacancyRouter.post('/create-vacancy', authenticate, createVacancy);
+vacancyRouter.post(
+  '/create-vacancy',
+  authenticate,
+  celebrate(createVacancySchema),
+  createVacancy,
+);
 
 export default vacancyRouter;

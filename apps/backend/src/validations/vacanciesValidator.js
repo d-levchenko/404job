@@ -31,3 +31,20 @@ export const getHotVacanciesSchema = {
     limit: Joi.number().integer().min(4).max(6),
   }),
 };
+
+export const createVacancySchema = {
+  [Segments.BODY]: Joi.object({
+    title: Joi.string().min(4).max(256).required(),
+    description: Joi.string().min(4).max(4000).required(),
+    requirements: Joi.string().min(4).max(4000).required(),
+    duties: Joi.string().min(4).max(4000).required(),
+    plusWillBe: Joi.string().min(4).max(4000).optional(),
+    weOffer: Joi.string().min(4).max(4000).required(),
+    salaryRange: Joi.string().optional(),
+    industryId: Joi.string().custom(objectIdValidator).required(),
+    experienceLevelId: Joi.string().custom(objectIdValidator).required(),
+    locationId: Joi.string().custom(objectIdValidator).required(),
+    employmentTypeId: Joi.string().custom(objectIdValidator).required(),
+    isRemote: Joi.boolean().required(),
+  }),
+};
