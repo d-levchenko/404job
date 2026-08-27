@@ -1,4 +1,4 @@
-import { AllVacancies, FilterOptionType, Vacancy } from '@/types/vacancyType';
+import { AllVacancies, Vacancy } from '@/types/vacancyType';
 
 import { api } from './api';
 
@@ -13,13 +13,7 @@ interface getAllVacanciesRequest {
   isRemote?: boolean | null;
 }
 
-interface getHotVacanciesRequest {
-  limit: number;
-}
-
-export const getHotVacancies = async ({
-  limit = 6,
-}: getHotVacanciesRequest): Promise<Vacancy[]> => {
+export const getHotVacancies = async (limit = 6): Promise<Vacancy[]> => {
   try {
     const { data } = await api.get<Vacancy[]>('/vacancies/hot', {
       params: { limit },
@@ -42,12 +36,4 @@ export const getAllVacancies = async (
   } catch (error) {
     throw error;
   }
-};
-
-export const getFilterOptions = async (type: FilterOptionType) => {
-  const { data } = await api.get('/options', {
-    params: { type },
-  });
-
-  return data;
 };

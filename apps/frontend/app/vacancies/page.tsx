@@ -1,4 +1,4 @@
-import { getFilterOptions } from '@/lib/clientApi';
+import { getFilterOptions } from '@/lib/vacanciesApi';
 import {
   dehydrate,
   HydrationBoundary,

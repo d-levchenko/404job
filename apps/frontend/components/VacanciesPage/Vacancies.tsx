@@ -4,7 +4,7 @@ import { useSearchParams } from 'next/navigation';
 import FiltersPanel from './FiltersPanel/FiltersPanel';
 import VacanciesList from './VacanciesList/VacanciesList';
 import { useQuery } from '@tanstack/react-query';
-import { getAllVacancies } from '@/lib/clientApi';
+import { getAllVacancies } from '@/lib/vacanciesApi';
 import RequestReturnedNothing from './RequestReturnedNothing/RequestReturnedNothing';
 
 const Vacancies = () => {
