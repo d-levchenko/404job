@@ -1,4 +1,5 @@
 import { AllVacancies, FilterOptionType, Vacancy } from '@/types/vacancyType';
+
 import { api } from './api';
 
 interface getAllVacanciesRequest {
