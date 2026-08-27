@@ -9,6 +9,7 @@ import {
   addVacancyToFavorites,
   removeVacancyFromFavorites,
   createVacancy,
+  getFavoriteVacancies,
 } from '../controllers/vacanciesController.js';
 import {
   createVacancySchema,
@@ -29,6 +30,7 @@ vacancyRouter.get(
 vacancyRouter.get('/hot', celebrate(getHotVacanciesSchema), getHotVacancies);
 
 vacancyRouter.get('/:id', celebrate(getVacancyByIdSchema), getVacancyById);
+vacancyRouter.get('/favorite', authenticate, getFavoriteVacancies);
 
 vacancyRouter.post('/:vacancyId/favorite', authenticate, addVacancyToFavorites);
 
