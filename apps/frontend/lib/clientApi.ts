@@ -14,6 +14,10 @@ export const getHotVacancies = async (limit = 6): Promise<Vacancy[]> => {
 };
 
 export const registerUser = async (payload: RegisterData) => {
-  const { data } = await api.post('/api/auth/register', payload);
-  return data;
+  try {
+    const { data } = await api.post('/api/auth/register', payload);
+    return data;
+  } catch (error) {
+    throw error;
+  }
 };
