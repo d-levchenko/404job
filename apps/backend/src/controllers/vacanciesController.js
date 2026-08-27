@@ -165,3 +165,11 @@ export const getVacancyById = async (req, res, next) => {
     next(error);
   }
 };
+
+export const createVacancy = async (req, res) => {
+  const vacancy = await Vacancy.create({
+    ...req.body,
+    employerId: req.user._id,
+  });
+  res.status(201).json(vacancy);
+};
