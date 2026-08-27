@@ -4,7 +4,13 @@
   gap: 32px;
   padding: 216.5px 20px;
   margin: 0 auto;
+  width: 100%;
   max-width: 375px;
+
+  @media (min-width: 768px) {
+    max-width: none;
+    width: 480px;
+  }
 }
 
 .form-title {
@@ -30,6 +36,11 @@
   height: 40px;
 
   background: var(--opacity-transparent);
+
+  @media (min-width: 768px) {
+    max-width: none;
+    width: 100%;
+  }
 }
 
 .input {
@@ -46,6 +57,11 @@
   height: 40px;
 
   background: var(--opacity-transparent);
+
+  @media (min-width: 768px) {
+    max-width: none;
+    width: 100%;
+  }
 }
 
 .input:focus {
@@ -86,6 +102,11 @@
   line-height: 1.5;
   color: var(--color-white);
   margin-bottom: 24px;
+
+  @media (min-width: 768px) {
+    max-width: none;
+    width: 100%;
+  }
 }
 
 .register-info {
