@@ -3,6 +3,9 @@ import keyboardArrowDown from '@/assets/keyboardArrowDown.svg';
 import search from '@/assets/search.svg';
 import noImage from '@/assets/no-image.svg';
 import burger from '@/assets/burger.svg';
+import facebook from '@/assets/facebook.svg';
+import x from '@/assets/x.svg';
+import linkedin from '@/assets/linkedIn.svg';
 
 const icons = {
   logo: jobLogo,
@@ -10,6 +13,9 @@ const icons = {
   search,
   noImage,
   burger,
+  facebook,
+  x,
+  linkedin,
 };
 
 export type IconName = keyof typeof icons;
