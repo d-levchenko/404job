@@ -85,6 +85,9 @@ function HotVacancies() {
                     {vacancy.employerId.companyName}
                   </p>
                   <p className={css.location}>
+                    <span>
+                      <SvgIcon name="locationOn" width={24} height={24} />
+                    </span>
                     {vacancy.isRemote
                       ? vacancy.locationId.name + ' / Віддалено'
                       : vacancy.locationId.name}
@@ -93,7 +96,14 @@ function HotVacancies() {
 
                 <p className={css.title}>{vacancy.title}</p>
 
-                <p className={css.salary}>{vacancy.salaryRange}</p>
+                {vacancy.salaryRange && (
+                  <p className={css.salary}>
+                    <span>
+                      <SvgIcon name="payments" width={24} height={24} />
+                    </span>
+                    {vacancy.salaryRange}
+                  </p>
+                )}
               </div>
             ))}
           </div>
