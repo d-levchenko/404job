@@ -1,4 +1,4 @@
-import { Vacancy } from '@/store/vacancyType';
+import { Vacancy } from '@/types/vacancyType';
 import { RegisterData } from '@/types/auth';
 import { api } from './api';
 
