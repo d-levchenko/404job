@@ -29,6 +29,23 @@
   border: 1px solid #d9d9d9;
   border-radius: 22px;
   outline: none;
+  transition: border-color var(--transition);
+}
+
+.input:focus,
+.textarea:focus {
+  border-color: var(--color-curious-blue);
+  outline: none;
+}
+
+.inputError {
+  border-color: #d92d20;
+}
+
+.error {
+  font-size: 14px;
+  line-height: 1.5;
+  color: #d92d20;
 }
 
 .textarea {
@@ -45,10 +62,25 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 220px;
-  height: 120px;
-  border-radius: 16px;
-  background-color: #e5e5e5;
+
+  width: 304px;
+  height: 99px;
+  border-radius: 24px;
+  overflow: hidden;
+
+  background-color: var(--color-neutral-lighter);
+}
+
+.logo {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.noImage {
+  width: 12%;
+  height: auto;
+  fill: var(--color-white);
 }
 
 .error {

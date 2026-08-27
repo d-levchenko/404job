@@ -1,10 +1,12 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { ErrorMessage, Field, Form, Formik } from 'formik';
+import { uploadLogo } from '@/lib/uploadLogo';
+import { ErrorMessage, Field, Form, Formik, type FormikHelpers } from 'formik';
 import * as Yup from 'yup';
+import toast from 'react-hot-toast';
 import Image from 'next/image';
-
+import NoImage from '@/assets/no-image.svg';
 import {
   type EmployerProfile,
   getCurrentUser,
@@ -37,6 +39,17 @@ const CompanyProfileForm = () => {
     useState<EmployerProfile>(emptyValues);
 
   const [isLoading, setIsLoading] = useState(true);
+  const [logoFile, setLogoFile] = useState<File | null>(null);
+  const [logoPreview, setLogoPreview] = useState('');
+
+  const handleLogoChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+
+    if (!file) return;
+
+    setLogoFile(file);
+    setLogoPreview(URL.createObjectURL(file));
+  };
 
   useEffect(() => {
     const loadProfile = async () => {
@@ -61,16 +74,19 @@ const CompanyProfileForm = () => {
 
   const handleSubmit = async (
     values: EmployerProfile,
-    {
-      setSubmitting,
-      resetForm,
-    }: {
-      setSubmitting: (isSubmitting: boolean) => void;
-      resetForm: (nextState?: { values: EmployerProfile }) => void;
-    },
+    { setSubmitting, resetForm }: FormikHelpers<EmployerProfile>,
   ) => {
     try {
-      const updatedUser = await updateEmployerProfile(values);
+      let logoUrl = values.logo;
+
+      if (logoFile) {
+        logoUrl = await uploadLogo(logoFile);
+      }
+
+      const updatedUser = await updateEmployerProfile({
+        ...values,
+        logo: logoUrl,
+      });
 
       const updatedValues = {
         companyName: updatedUser.companyName ?? '',
@@ -84,8 +100,15 @@ const CompanyProfileForm = () => {
       resetForm({
         values: updatedValues,
       });
+
+      setLogoFile(null);
+      setLogoPreview('');
+
+      toast.success('Зміни успішно збережено');
     } catch (error) {
       console.error('Failed to update employer profile:', error);
+
+      toast.error('Не вдалося зберегти зміни. Спробуйте ще раз.');
     } finally {
       setSubmitting(false);
     }
@@ -104,13 +127,17 @@ const CompanyProfileForm = () => {
         enableReinitialize
         validationSchema={validationSchema}
         onSubmit={handleSubmit}>
-        {({ resetForm, isSubmitting, dirty }) => (
+        {({ resetForm, isSubmitting, dirty, errors, touched }) => (
           <Form className={css.form}>
             <label className={css.label}>
               <span>Назва компанії</span>
 
               <Field
-                className={css.input}
+                className={`${css.input} ${
+                  touched.companyName && errors.companyName
+                    ? css.inputError
+                    : ''
+                }`}
                 type="text"
                 name="companyName"
                 placeholder="Назва компанії"
@@ -127,7 +154,9 @@ const CompanyProfileForm = () => {
               <span>Сайт компанії</span>
 
               <Field
-                className={css.input}
+                className={`${css.input} ${
+                  touched.websiteUrl && errors.websiteUrl ? css.inputError : ''
+                }`}
                 type="text"
                 name="websiteUrl"
                 placeholder="Сайт компанії"
@@ -144,27 +173,44 @@ const CompanyProfileForm = () => {
               <span>Логотип</span>
 
               <div className={css.logoPlaceholder}>
-                {initialValues.logo ? (
+                {logoPreview ? (
+                  <Image
+                    src={logoPreview}
+                    alt="Логотип компанії"
+                    width={304}
+                    height={99}
+                    className={css.logo}
+                    unoptimized
+                  />
+                ) : initialValues.logo ? (
                   <Image
                     src={initialValues.logo}
                     alt="Логотип компанії"
-                    width={220}
-                    height={120}
+                    width={304}
+                    height={99}
                     className={css.logo}
                   />
                 ) : (
-                  <span>Логотип не завантажено</span>
+                  <NoImage className={css.noImage} />
                 )}
               </div>
 
-              <input type="file" accept="image/*" />
+              <input
+                type="file"
+                accept="image/png,image/jpeg,image/webp"
+                onChange={handleLogoChange}
+              />
             </div>
 
             <label className={css.label}>
               <span>Опис</span>
 
               <Field
-                className={css.textarea}
+                className={`${css.textarea} ${
+                  touched.description && errors.description
+                    ? css.inputError
+                    : ''
+                }`}
                 as="textarea"
                 name="description"
                 placeholder="Короткий опис"
@@ -181,15 +227,19 @@ const CompanyProfileForm = () => {
               <button
                 type="button"
                 className={css.resetButton}
-                onClick={() => resetForm()}
-                disabled={!dirty || isSubmitting}>
+                onClick={() => {
+                  resetForm();
+                  setLogoFile(null);
+                  setLogoPreview('');
+                }}
+                disabled={(!dirty && !logoFile) || isSubmitting}>
                 Скинути зміни
               </button>
 
               <button
                 type="submit"
                 className={css.submitButton}
-                disabled={!dirty || isSubmitting}>
+                disabled={(!dirty && !logoFile) || isSubmitting}>
                 {isSubmitting ? 'Збереження...' : 'Зберегти зміни'}
               </button>
             </div>

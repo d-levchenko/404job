@@ -9,7 +9,7 @@ const nextConfig: NextConfig = {
     remotePatterns: [
       {
         protocol: 'https',
-        hostname: 'storage.jobscape.dev',
+        hostname: 'res.cloudinary.com',
       },
     ],
   },
