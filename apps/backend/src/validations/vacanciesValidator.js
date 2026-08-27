@@ -20,6 +20,12 @@ export const getAllVacanciesSchema = {
   }),
 };
 
+export const getVacancyByIdSchema = {
+  [Segments.PARAMS]: Joi.object({
+    id: Joi.string().custom(objectIdValidator).required(),
+  }),
+};
+
 export const getHotVacanciesSchema = {
   [Segments.QUERY]: Joi.object({
     limit: Joi.number().integer().min(4).max(6),
