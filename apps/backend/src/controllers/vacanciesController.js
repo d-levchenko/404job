@@ -124,7 +124,7 @@ export const getHotVacancies = async (req, res, next) => {
       .populate('employerId', 'companyName logo')
       .populate('locationId', 'name');
 
-    res.json({ vacancies });
+    res.json(vacancies);
   } catch (error) {
     next(error);
   }

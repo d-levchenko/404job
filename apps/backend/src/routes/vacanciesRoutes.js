@@ -11,6 +11,7 @@ import {
 } from '../controllers/vacanciesController.js';
 import {
   getAllVacanciesSchema,
+  getHotVacanciesSchema,
   getVacancyByIdSchema,
 } from '../validations/vacanciesValidator.js';
 import { celebrate } from 'celebrate';
@@ -23,7 +24,7 @@ vacancyRouter.get(
   getAllVacancies,
 );
 
-vacancyRouter.get('/hot', getHotVacancies);
+vacancyRouter.get('/hot', celebrate(getHotVacanciesSchema), getHotVacancies);
 
 vacancyRouter.get('/:id', celebrate(getVacancyByIdSchema), getVacancyById);
 
