@@ -173,3 +173,27 @@ export const createVacancy = async (req, res) => {
   });
   res.status(201).json(vacancy);
 };
+
+export const closeVacancy = async (req, res) => {
+  const { vacancyId } = req.params;
+  const { _id: userId, userType } = req.user;
+
+  if (userType !== 'employer') {
+    throw createHttpError(403, 'Only employers can close vacancies');
+  }
+
+  const vacancy = await Vacancy.findById(vacancyId);
+
+  if (!vacancy) {
+    throw createHttpError(404, 'Vacancy not found');
+  }
+
+  if (String(vacancy.employerId) !== String(userId)) {
+    throw createHttpError(403, 'You can only close your own vacancies');
+  }
+
+  vacancy.status = 'closed';
+  await vacancy.save();
+
+  res.status(200).json(vacancy);
+};
