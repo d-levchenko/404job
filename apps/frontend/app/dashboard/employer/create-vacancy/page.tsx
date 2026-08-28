@@ -1,5 +1,11 @@
+import CreateVacancyForm from '@/components/CreateVacancyForm/CreateVacancyForm';
+
 const Page = () => {
-  return <div>Page</div>;
+  return (
+    <div>
+      <CreateVacancyForm />
+    </div>
+  );
 };
 
 export default Page;
