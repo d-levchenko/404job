@@ -1,6 +1,10 @@
 import { User } from '../models/user.js';
 import createHttpError from 'http-errors';
 import { Vacancy } from '../models/vacancy.js';
+import { Industry } from '../models/industries.js';
+import { ExperienceLevel } from '../models/experienceLevel.js';
+import { Location } from '../models/location.js';
+import { EmploymentType } from '../models/employmentType.js';
 
 export const getAllVacancies = async (req, res, next) => {
   try {
@@ -172,4 +176,24 @@ export const createVacancy = async (req, res) => {
     employerId: req.user._id,
   });
   res.status(201).json(vacancy);
+};
+
+export const getVacancyFilters = async (req, res, next) => {
+  try {
+    const [industries, experiences, locations, employmentTypes] =
+      await Promise.all([
+        Industry.find(),
+        ExperienceLevel.find(),
+        Location.find(),
+        EmploymentType.find(),
+      ]);
+    res.json({
+      industries,
+      experiences,
+      locations,
+      employmentTypes,
+    });
+  } catch (error) {
+    next(error);
+  }
 };

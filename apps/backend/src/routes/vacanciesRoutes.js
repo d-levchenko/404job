@@ -9,6 +9,7 @@ import {
   addVacancyToFavorites,
   removeVacancyFromFavorites,
   createVacancy,
+  getVacancyFilters,
 } from '../controllers/vacanciesController.js';
 import {
   createVacancySchema,
@@ -19,6 +20,8 @@ import {
 import { celebrate } from 'celebrate';
 
 const vacancyRouter = Router();
+
+vacancyRouter.get('/filters', getVacancyFilters);
 
 vacancyRouter.get(
   '/get-all',
