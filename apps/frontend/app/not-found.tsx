@@ -1,6 +1,3 @@
-// apps/frontend/app/not-found.tsx
-// Сторінка для маршрутів, яких не існує — конвенція Next.js App Router.
-
 import Link from 'next/link';
 
 import css from './not-found.module.css';
