@@ -48,3 +48,9 @@ export const createVacancySchema = {
     isRemote: Joi.boolean().required(),
   }),
 };
+
+export const closeVacancySchema = {
+  [Segments.PARAMS]: Joi.object({
+    vacancyId: Joi.string().custom(objectIdValidator).required(),
+  }),
+};
