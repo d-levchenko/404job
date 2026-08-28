@@ -224,6 +224,10 @@
   max-height: 402px;
   overflow-y: auto;
 
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+
   scrollbar-width: thin;
   scrollbar-color: var(--color-curious-blue-light) var(--color-white);
 }
