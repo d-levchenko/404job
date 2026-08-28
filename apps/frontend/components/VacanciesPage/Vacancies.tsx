@@ -12,6 +12,7 @@ import {
   Industry,
   Location,
 } from '@/types/vacancyType';
+import Search from './Search/Search';
 
 interface VacanciesProps {
   filters: {
@@ -42,11 +43,15 @@ const Vacancies = ({ filters }: VacanciesProps) => {
   });
 
   return (
-    <>
+    <div className="desktop:flex desktop:gap-8 items-start">
       <FiltersPanel params={data} filters={filters} />
 
-      {data ? <VacanciesList vacancies={data} /> : <RequestReturnedNothing />}
-    </>
+      <div>
+        <Search />
+
+        {data ? <VacanciesList vacancies={data} /> : <RequestReturnedNothing />}
+      </div>
+    </div>
   );
 };
 

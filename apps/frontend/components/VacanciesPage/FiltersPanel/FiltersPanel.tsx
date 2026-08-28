@@ -41,11 +41,13 @@ const FiltersPanel = ({ params, filters }: FiltersPanelProps) => {
   };
 
   return (
-    <aside className="mb-6">
-      <h2 className={css.title}>Фільтри</h2>
-      <p className={css.description}>
-        Показано {params?.perPage} зі {params?.totalVacancies}
-      </p>
+    <aside className="mb-8 relative md:flex md:justify-between items-center desktop:mb-0 desktop:flex-col desktop:max-w-76.25 desktop:w-full desktop:items-start">
+      <div className="">
+        <h2 className={css.title}>Фільтри</h2>
+        <p className={css.description}>
+          Показано {params?.perPage} зі {params?.totalVacancies}
+        </p>
+      </div>
 
       <form className={css.form}>
         <div className={css.formContainer}>
@@ -231,21 +233,6 @@ const FiltersPanel = ({ params, filters }: FiltersPanelProps) => {
             </div>
           </div>
         </div>
-
-        <div className={css.searchWrapper}>
-          <SvgIcon
-            name="search"
-            width={24}
-            height={24}
-            aria-label="Пошук"
-            className={css.searchIcon}
-          />
-          <input type="text" placeholder="Пошук" className={css.input} />
-        </div>
-
-        <button type="button" className={css.submitButton}>
-          Знайти вакансії
-        </button>
       </form>
     </aside>
   );

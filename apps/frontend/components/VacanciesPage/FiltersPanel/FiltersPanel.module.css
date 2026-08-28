@@ -16,6 +16,10 @@
   color: var(--color-scheme-1-text);
 
   margin-bottom: 16px;
+
+  @media screen and (min-width: 768px) {
+    margin-bottom: 0;
+  }
 }
 
 .button {
@@ -34,12 +38,13 @@
   justify-content: space-between;
   align-items: center;
 
-  margin-bottom: 32px;
-
   position: relative;
   z-index: 2;
 
   transition: border-radius 450ms var(--transition-ease);
+
+  @media screen and (min-width: 768px) {
+  }
 }
 
 .activeButton {
@@ -59,6 +64,12 @@
   position: relative;
 
   margin-bottom: 24px;
+
+  @media screen and (min-width: 768px) {
+    margin-bottom: 0;
+    width: 100%;
+    flex: 1;
+  }
 }
 
 .searchIcon {
@@ -80,8 +91,8 @@
   border: 1px solid var(--opacity-neutral-darkest-15);
   border-radius: 32px;
   padding: 8px 16px 8px 52px;
+
   width: 100%;
-  max-width: 335px;
   height: 36px;
 
   transition: var(--transition);
@@ -115,6 +126,10 @@
   width: 100%;
   max-width: 335px;
   height: 33px;
+
+  @media screen and (min-width: 768px) {
+    max-width: 128px;
+  }
 
   background: var(--color-curious-blue);
   transition: var(--transition);
@@ -361,4 +376,12 @@
 
 .formContainer {
   position: relative;
+}
+
+.form {
+  @media screen and (min-width: 768px) {
+    width: 100%;
+    max-width: 335px;
+    margin-left: auto;
+  }
 }

@@ -20,6 +20,8 @@
   box-orient: vertical;
 
   color: var(--color-scheme-1-text);
+
+  margin-bottom: 8px;
 }
 
 .location {
