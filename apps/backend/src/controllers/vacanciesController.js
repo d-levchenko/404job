@@ -17,7 +17,7 @@ export const getAllVacancies = async (req, res, next) => {
     const skip = (page - 1) * perPage;
 
     const vacanciesQuery = Vacancy.find().populate(
-      'industryId experienceLevelId locationId employmentTypeId',
+      'industryId experienceLevelId locationId employmentTypeId employerId',
     );
 
     if (search)

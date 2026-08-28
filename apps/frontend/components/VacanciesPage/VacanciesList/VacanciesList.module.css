@@ -1,0 +1,31 @@
+.title {
+  font-family: var(--font-family);
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 1.4;
+  letter-spacing: -0.01em;
+  color: var(--color-scheme-1-text);
+}
+
+.description {
+  font-family: var(--font-family);
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 1.5;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  line-clamp: 3;
+  box-orient: vertical;
+
+  color: var(--color-scheme-1-text);
+}
+
+.location {
+  font-size: 12px;
+}
+
+.salary {
+  font-size: 14px;
+}

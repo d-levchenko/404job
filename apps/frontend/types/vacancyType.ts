@@ -1,15 +1,48 @@
 type Status = 'active' | 'closed';
+type ExperienceLevelsName = 'Trainee' | 'Junior' | 'Middle' | 'Senior' | 'Lead';
+export type FilterOptionType =
+  'locations' | 'industries' | 'experienceLevels' | 'employmentTypes';
 
 interface Employer {
   _id: string;
   companyName: string;
   logo: string;
+  createdAt: string;
+  description: string;
+  email: string;
+  updatedAt: string;
+  userType: string;
+  websiteUrl: string;
 }
 
-interface Location {
+export interface Location {
   _id: string;
   name: string;
 }
+
+export interface AllVacancies {
+  page: number;
+  perPage: number;
+  totalPages: number;
+  totalVacancies: number;
+  vacancies: Vacancy[];
+}
+
+export interface EmploymentType {
+  _id: string;
+  name: string;
+}
+
+export interface Industry {
+  _id: string;
+  name: string;
+}
+
+export interface ExperienceLevel {
+  _id: string;
+  name: ExperienceLevelsName;
+}
+
 export interface Vacancy {
   _id: string;
   employerId: Employer;
@@ -19,10 +52,10 @@ export interface Vacancy {
   duties: string;
   plusWillBe: string;
   weOffer: string;
-  industryId: string;
-  experienceLevelId: string;
+  industryId: Industry;
+  experienceLevelId: ExperienceLevel;
   locationId: Location;
-  employmentTypeId: string;
+  employmentTypeId: EmploymentType;
   isRemote: boolean;
   status: Status;
   createdAt: string;

@@ -3,6 +3,7 @@ import { Roboto } from 'next/font/google';
 import '@blossom-carousel/react/style.css';
 import './globals.css';
 import TanStackProvider from '@/providers/TanStackProvider';
+import Header from '@/components/Header/Header';
 
 const roboto = Roboto({
   weight: ['400', '500', '700'],
@@ -55,7 +56,11 @@ const RootLayout = ({ children }: LayoutProps<'/'>) => {
   return (
     <html lang="en" className={`${roboto.variable} h-full antialiased`}>
       <body className="min-h-full flex flex-col">
-        <TanStackProvider>{children}</TanStackProvider>
+        <TanStackProvider>
+          <Header />
+
+          {children}
+        </TanStackProvider>
       </body>
     </html>
   );

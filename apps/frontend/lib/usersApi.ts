@@ -1,4 +1,4 @@
-import { clientApi } from './clientApi';
+import axios from 'axios';
 
 export interface EmployerProfile {
   companyName: string;
@@ -12,7 +12,7 @@ interface CurrentUserResponse {
 }
 
 export const getCurrentUser = async (): Promise<EmployerProfile> => {
-  const response = await clientApi.get<CurrentUserResponse>('/users');
+  const response = await axios.get<CurrentUserResponse>('/api/users');
 
   return response.data.data;
 };
@@ -20,8 +20,8 @@ export const getCurrentUser = async (): Promise<EmployerProfile> => {
 export const updateEmployerProfile = async (
   data: EmployerProfile,
 ): Promise<EmployerProfile> => {
-  const response = await clientApi.patch<CurrentUserResponse>(
-    '/users/employer',
+  const response = await axios.patch<CurrentUserResponse>(
+    '/api/users/employer',
     data,
   );
 
