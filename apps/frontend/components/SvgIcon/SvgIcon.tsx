@@ -7,6 +7,8 @@ import arrowBack from '@/assets/arrow-back.svg';
 import arrowForward from '@/assets/arrow-forward.svg';
 import payments from '@/assets/payments.svg';
 import locationOn from '@/assets/location-on.svg';
+import checkbox from '@/assets/checkbox.svg';
+
 const icons = {
   logo: jobLogo,
   keyboardArrowDown,
@@ -17,6 +19,7 @@ const icons = {
   arrowForward,
   payments,
   locationOn,
+  checkbox,
 };
 
 export type IconName = keyof typeof icons;
