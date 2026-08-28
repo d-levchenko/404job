@@ -5,8 +5,6 @@ import { useQuery } from '@tanstack/react-query';
 
 import { SvgIcon } from '@/components/SvgIcon/SvgIcon';
 import { getAllVacancies } from '@/lib/vacanciesApi';
-import LocationPin from '@/assets/location-pin.svg';
-import Payments from '@/assets/payments.svg';
 
 import css from './SimilarVacanciesSection.module.css';
 
@@ -52,19 +50,21 @@ const SimilarVacanciesSection = ({
                     {vacancy.employerId.companyName}
                   </p>
                   <p className={css.location}>
-                    <LocationPin width={20} height={20} aria-hidden="true" />
+                    <SvgIcon name="locationOn" width={20} height={20} />
                     {vacancy.locationId?.name}
                   </p>
                 </div>
 
                 <p className={css.vacancyTitle}>{vacancy.title}</p>
 
-                {vacancy.salaryRange && (
-                  <p className={css.salary}>
-                    <Payments width={20} height={20} aria-hidden="true" />
-                    {vacancy.salaryRange}
-                  </p>
-                )}
+                <div className={css.salary}>
+                  {vacancy.salaryRange && (
+                    <>
+                      <SvgIcon name="payments" width={20} height={20} />
+                      <span>{vacancy.salaryRange}</span>
+                    </>
+                  )}
+                </div>
               </div>
             </Link>
           </li>
