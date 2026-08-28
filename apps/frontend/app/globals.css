@@ -3,7 +3,7 @@
 @theme {
   --font-sans: var(--font-roboto), Arial, Helvetica, sans-serif;
 
-  --breakpoint-desktop: 90rem; /* 1440px */
+  --breakpoint-desktop: 90rem;
 
   --color-primary: #3498db;
   --color-primary-light: #d6eaf7;
