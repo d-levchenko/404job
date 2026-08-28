@@ -9,6 +9,7 @@ import payments from '@/assets/payments.svg';
 import locationOn from '@/assets/location-on.svg';
 import messageUnread from '@/assets/message-unread.svg';
 import documentSearch from '@/assets/document-search.svg';
+import checkbox from '@/assets/checkbox.svg';
 
 const icons = {
   logo: jobLogo,
@@ -22,6 +23,7 @@ const icons = {
   locationOn,
   messageUnread,
   documentSearch,
+  checkbox,
 };
 
 export type IconName = keyof typeof icons;
