@@ -57,7 +57,7 @@ const RootLayout = ({ children }: LayoutProps<'/'>) => {
     <html lang="en" className={`${roboto.variable} h-full antialiased`}>
       <body className="min-h-full flex flex-col">
         <TanStackProvider>
-          <Header />
+          {/* <Header /> */}
 
           {children}
         </TanStackProvider>

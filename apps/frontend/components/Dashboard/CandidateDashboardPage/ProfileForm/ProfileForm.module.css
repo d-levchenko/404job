@@ -1,0 +1,130 @@
+.profile-section {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 335px;
+  padding-inline: 20px;
+  padding-top: 32px;
+  padding-bottom: 48px;
+  margin: 0 auto;
+
+  @media (min-width: 768px) {
+    max-width: none;
+    width: 640px;
+  }
+}
+
+.profile-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.input {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  flex-direction: row;
+  gap: 12px;
+
+  border: 1px solid var(--opacity-neutral-darkest-15);
+  border-radius: 32px;
+  padding: 8px 16px;
+  width: 100%;
+  height: 40px;
+
+  background: var(--opacity-transparent);
+}
+
+.error-input {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  flex-direction: row;
+  gap: 12px;
+
+  border: 1px solid var(--color-red);
+  border-radius: 32px;
+  padding: 8px 16px;
+  width: 100%;
+  height: 40px;
+
+  background: var(--opacity-transparent);
+}
+
+.error-message {
+  color: var(--color-red);
+}
+
+.btn-group {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+
+  @media (min-width: 768px) {
+    flex-direction: row;
+  }
+}
+
+.reset-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: row;
+  gap: 8px;
+
+  border: 1px solid var(--opacity-neutral-darkest-15);
+  border-radius: 100px;
+  padding: 6px 12px;
+  width: 100%;
+  height: 33px;
+
+  font-family: var(--font-family);
+
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--color-neutral-darkest);
+
+  @media (min-width: 768px) {
+    width: 120px;
+    white-space: nowrap;
+  }
+}
+
+.submit-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: row;
+  gap: 8px;
+
+  border: 1px solid var(--color-curious-blue);
+  border-radius: 100px;
+  padding: 6px 12px;
+  width: 100%;
+  height: 33px;
+
+  background: var(--color-curious-blue);
+
+  font-family: var(--font-family);
+
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--color-white);
+
+  @media (min-width: 768px) {
+    width: 125px;
+    white-space: nowrap;
+  }
+}
+
+.title-form {
+  font-family: var(--font-family);
+
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 1.5;
+  color: var(--color-scheme-2-text);
+}
