@@ -1,5 +1,7 @@
 import Image from 'next/image';
 
+import { SvgIcon } from '@/components/SvgIcon/SvgIcon';
+
 import css from './AboutCompanyBlock.module.css';
 
 type AboutCompanyBlockProps = {
@@ -19,8 +21,8 @@ const AboutCompanyBlock = ({
     <section className={css.wrapper}>
       <h2 className={css.title}>Про компанію</h2>
 
-      {logo && (
-        <div className={css.logoWrapper}>
+      <div className={css.logoWrapper}>
+        {logo ? (
           <Image
             src={logo}
             alt={companyName}
@@ -28,8 +30,16 @@ const AboutCompanyBlock = ({
             className={css.logo}
             sizes="307px"
           />
-        </div>
-      )}
+        ) : (
+          <SvgIcon
+            name="noImage"
+            width={307}
+            height={55}
+            className={css.logo}
+            aria-label={companyName}
+          />
+        )}
+      </div>
 
       {description && <p className={css.description}>{description}</p>}
 
