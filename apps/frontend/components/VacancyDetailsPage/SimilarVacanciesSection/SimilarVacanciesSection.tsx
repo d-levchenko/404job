@@ -1,35 +1,17 @@
-'use client';
-
 import Link from 'next/link';
-import { useQuery } from '@tanstack/react-query';
 
 import { SvgIcon } from '@/components/SvgIcon/SvgIcon';
-import { getAllVacancies } from '@/lib/vacanciesApi';
+import { Vacancy } from '@/types/vacancyType';
 
 import css from './SimilarVacanciesSection.module.css';
 
 type SimilarVacanciesSectionProps = {
-  industryId: string;
-  excludeVacancyId: string;
+  similarVacancies: Vacancy[];
 };
 
 const SimilarVacanciesSection = ({
-  industryId,
-  excludeVacancyId,
+  similarVacancies,
 }: SimilarVacanciesSectionProps) => {
-  const { data, isLoading, isError } = useQuery({
-    queryKey: ['similarVacancies', industryId],
-    queryFn: () => getAllVacancies({ industry: industryId, perPage: 5 }),
-    enabled: Boolean(industryId),
-  });
-
-  const similarVacancies =
-    data?.vacancies
-      .filter(vacancy => vacancy._id !== excludeVacancyId)
-      .slice(0, 4) ?? [];
-
-  if (isLoading) return <p>Завантаження...</p>;
-  if (isError) return <p>Помилка завантаження вакансій</p>;
   if (similarVacancies.length === 0) return null;
 
   return (
