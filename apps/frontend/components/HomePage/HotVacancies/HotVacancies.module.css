@@ -181,10 +181,13 @@
   transition: background-color 300ms var(--transition-ease);
 }
 
-.navButton:hover {
+.navButton:hover,
+.navButton:focus-visible {
   background: var(--color-curious-blue);
 }
-
+.navButton:active {
+  background: var(--color-curious-blue-dark);
+}
 .iconNav {
   fill: var(--color-neutral-darkest);
   stroke: var(--color-neutral-darkest);
