@@ -7,7 +7,8 @@ import arrowBack from '@/assets/arrow-back.svg';
 import arrowForward from '@/assets/arrow-forward.svg';
 import payments from '@/assets/payments.svg';
 import locationOn from '@/assets/location-on.svg';
-import checkbox from '@/assets/checkbox.svg';
+import messageUnread from '@/assets/message-unread.svg';
+import documentSearch from '@/assets/document-search.svg';
 
 const icons = {
   logo: jobLogo,
@@ -19,7 +20,8 @@ const icons = {
   arrowForward,
   payments,
   locationOn,
-  checkbox,
+  messageUnread,
+  documentSearch,
 };
 
 export type IconName = keyof typeof icons;

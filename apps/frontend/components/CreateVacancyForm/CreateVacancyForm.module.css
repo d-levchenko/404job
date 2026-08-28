@@ -1,0 +1,9 @@
+.createForm {
+  display: flex;
+  flex-direction: column;
+}
+
+.inputArea {
+  display: flex;
+  flex-direction: column;
+}
