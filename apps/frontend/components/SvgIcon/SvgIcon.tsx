@@ -3,13 +3,20 @@ import keyboardArrowDown from '@/assets/keyboardArrowDown.svg';
 import search from '@/assets/search.svg';
 import noImage from '@/assets/no-image.svg';
 import burger from '@/assets/burger.svg';
-
+import arrowBack from '@/assets/arrow-back.svg';
+import arrowForward from '@/assets/arrow-forward.svg';
+import payments from '@/assets/payments.svg';
+import locationOn from '@/assets/location-on.svg';
 const icons = {
   logo: jobLogo,
   keyboardArrowDown,
   search,
   noImage,
   burger,
+  arrowBack,
+  arrowForward,
+  payments,
+  locationOn,
 };
 
 export type IconName = keyof typeof icons;
