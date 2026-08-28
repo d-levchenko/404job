@@ -1,24 +1,12 @@
 import Link from 'next/link';
 
 import { SvgIcon } from '@/components/SvgIcon/SvgIcon';
+import { Vacancy } from '@/types/vacancyType';
 
 import css from './SimilarVacanciesSection.module.css';
 
-type SimilarVacancy = {
-  _id: string;
-  title: string;
-  salaryRange?: string;
-  employerId: {
-    companyName: string;
-    logo?: string;
-  };
-  locationId?: {
-    name: string;
-  };
-};
-
 type SimilarVacanciesSectionProps = {
-  similarVacancies: SimilarVacancy[];
+  similarVacancies: Vacancy[];
 };
 
 const SimilarVacanciesSection = ({
