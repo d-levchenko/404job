@@ -27,10 +27,10 @@ const Vacancies = ({ filters }: VacanciesProps) => {
   const params = {
     page: Number(searchParams.get('page') || 1),
     search: searchParams.get('search') || undefined,
-    industry: searchParams.get('industry'),
-    experience: searchParams.get('experience'),
+    industry: searchParams.getAll('industry'),
+    experience: searchParams.getAll('experience'),
     location: searchParams.get('location'),
-    employmentType: searchParams.get('employmentType'),
+    employmentType: searchParams.getAll('employmentType'),
     isRemote:
       searchParams.get('isRemote') === null
         ? null

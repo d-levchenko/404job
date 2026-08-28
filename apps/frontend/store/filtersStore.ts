@@ -4,19 +4,19 @@ import { create } from 'zustand';
 
 export interface VacancyFiltersState {
   search: string;
-  industry: string | null;
-  experience: string | null;
+  industry: string[];
+  experience: string[];
   location: string | null;
-  employmentType: string | null;
+  employmentType: string[];
   isRemote: boolean | null;
 }
 
-type SingleSelectKey =
-  'industry' | 'experience' | 'location' | 'employmentType';
+type MultiSelectKey = 'industry' | 'experience' | 'employmentType';
 
 interface FiltersStore extends VacancyFiltersState {
   setSearch: (value: string) => void;
-  toggleValue: (key: SingleSelectKey, value: string) => void;
+  toggleValue: (key: MultiSelectKey, value: string) => void;
+  setLocation: (value: string | null) => void;
   setIsRemote: (value: boolean | null) => void;
   setFromParams: (params: URLSearchParams) => void;
   reset: () => void;
@@ -24,10 +24,10 @@ interface FiltersStore extends VacancyFiltersState {
 
 const initialState: VacancyFiltersState = {
   search: '',
-  industry: null,
-  experience: null,
+  industry: [],
+  experience: [],
   location: null,
-  employmentType: null,
+  employmentType: [],
   isRemote: null,
 };
 
@@ -36,18 +36,25 @@ export const useFiltersStore = create<FiltersStore>((set, get) => ({
 
   setSearch: search => set({ search }),
 
-  toggleValue: (key, value) =>
-    set({ [key]: get()[key] === value ? null : value }),
+  toggleValue: (key, value) => {
+    const current = get()[key];
+    set({
+      [key]: current.includes(value)
+        ? current.filter(v => v !== value)
+        : [...current, value],
+    });
+  },
 
+  setLocation: location => set({ location }),
   setIsRemote: isRemote => set({ isRemote }),
 
   setFromParams: params =>
     set({
       search: params.get('search') ?? '',
-      industry: params.get('industry'),
-      experience: params.get('experience'),
+      industry: params.getAll('industry'),
+      experience: params.getAll('experience'),
       location: params.get('location'),
-      employmentType: params.get('employmentType'),
+      employmentType: params.getAll('employmentType'),
       isRemote:
         params.get('isRemote') === null
           ? null

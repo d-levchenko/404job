@@ -7,8 +7,11 @@ import { api } from '../../api';
 export async function GET(req: NextRequest) {
   try {
     const { searchParams } = new URL(req.url);
-
     const rawIsRemote = searchParams.get('isRemote');
+
+    const industry = searchParams.getAll('industry');
+    const experience = searchParams.getAll('experience');
+    const employmentType = searchParams.getAll('employmentType');
 
     const params: getAllVacanciesRequest = {
       page: searchParams.get('page')
@@ -18,15 +21,14 @@ export async function GET(req: NextRequest) {
         ? Number(searchParams.get('perPage'))
         : undefined,
       search: searchParams.get('search') || undefined,
-      industry: searchParams.get('industry'),
-      experience: searchParams.get('experience'),
+      industry: industry.length ? industry : undefined,
+      experience: experience.length ? experience : undefined,
       location: searchParams.get('location'),
-      employmentType: searchParams.get('employmentType'),
+      employmentType: employmentType.length ? employmentType : undefined,
       isRemote: rawIsRemote === null ? null : rawIsRemote === 'true',
     };
 
     const res = await api.get('/vacancies/get-all', { params });
-
     return NextResponse.json(res.data);
   } catch (error) {
     if (isAxiosError(error)) {

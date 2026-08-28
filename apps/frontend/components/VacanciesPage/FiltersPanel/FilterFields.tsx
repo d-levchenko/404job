@@ -33,6 +33,7 @@ const FiltersFields = ({ filters, onApplied }: FiltersFieldsProps) => {
   const { search, industry, experience, location, employmentType, isRemote } =
     useFiltersStore();
   const toggleValue = useFiltersStore(state => state.toggleValue);
+  const setLocation = useFiltersStore(state => state.setLocation);
   const resetStore = useFiltersStore(state => state.reset);
 
   const selectedLocationName =
@@ -44,10 +45,10 @@ const FiltersFields = ({ filters, onApplied }: FiltersFieldsProps) => {
     const params = new URLSearchParams();
 
     if (search) params.set('search', search);
-    if (industry) params.set('industry', industry);
-    if (experience) params.set('experience', experience);
+    industry.forEach(id => params.append('industry', id));
+    experience.forEach(id => params.append('experience', id));
     if (location) params.set('location', location);
-    if (employmentType) params.set('employmentType', employmentType);
+    employmentType.forEach(id => params.append('employmentType', id));
     if (isRemote !== null) params.set('isRemote', String(isRemote));
 
     router.push(params.size ? `${pathname}?${params}` : pathname);
@@ -73,7 +74,7 @@ const FiltersFields = ({ filters, onApplied }: FiltersFieldsProps) => {
                     type="checkbox"
                     id={item._id}
                     className={css.checkboxInput}
-                    checked={industry === item._id}
+                    checked={industry.includes(item._id)}
                     onChange={() => toggleValue('industry', item._id)}
                   />
                   <label htmlFor={item._id} className={css.label}>
@@ -103,7 +104,7 @@ const FiltersFields = ({ filters, onApplied }: FiltersFieldsProps) => {
                     type="checkbox"
                     id={item._id}
                     className={css.checkboxInput}
-                    checked={experience === item._id}
+                    checked={experience.includes(item._id)}
                     onChange={() => toggleValue('experience', item._id)}
                   />
                   <label htmlFor={item._id} className={css.label}>
@@ -146,7 +147,7 @@ const FiltersFields = ({ filters, onApplied }: FiltersFieldsProps) => {
                   <button
                     type="button"
                     onClick={() => {
-                      if (location) toggleValue('location', location);
+                      setLocation(null);
                       setLocationOpen(false);
                     }}>
                     Вся Україна
@@ -159,7 +160,7 @@ const FiltersFields = ({ filters, onApplied }: FiltersFieldsProps) => {
                       <button
                         type="button"
                         onClick={() => {
-                          toggleValue('location', item._id);
+                          setLocation(location === item._id ? null : item._id);
                           setLocationOpen(false);
                         }}>
                         {item.name}
@@ -181,7 +182,7 @@ const FiltersFields = ({ filters, onApplied }: FiltersFieldsProps) => {
                     type="checkbox"
                     id={item._id}
                     className={css.checkboxInput}
-                    checked={employmentType === item._id}
+                    checked={employmentType.includes(item._id)}
                     onChange={() => toggleValue('employmentType', item._id)}
                   />
                   <label htmlFor={item._id} className={css.label}>
