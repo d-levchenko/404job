@@ -124,12 +124,7 @@
   padding-inline: 12px;
 
   width: 100%;
-  max-width: 335px;
   height: 33px;
-
-  @media screen and (min-width: 768px) {
-    max-width: 128px;
-  }
 
   background: var(--color-curious-blue);
   transition: var(--transition);
@@ -143,10 +138,6 @@
   &:active {
     background: var(--color-curious-blue-light);
   }
-}
-
-.apply {
-  margin-bottom: 16px;
 }
 
 .reset {
@@ -236,15 +227,17 @@
 }
 
 .filtersScroll {
-  max-height: 402px;
-  overflow-y: auto;
+  @media screen and (max-width: 1439px) {
+    max-height: 402px;
+    overflow-y: auto;
 
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
 
-  scrollbar-width: thin;
-  scrollbar-color: var(--color-curious-blue-light) var(--color-white);
+    scrollbar-width: thin;
+    scrollbar-color: var(--color-curious-blue-light) var(--color-white);
+  }
 }
 
 .checkboxInput {
@@ -376,6 +369,11 @@
 
 .formContainer {
   position: relative;
+
+  @media screen and (min-width: 768px) {
+    width: 100%;
+    max-width: 305px;
+  }
 }
 
 .form {
