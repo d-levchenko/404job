@@ -1,6 +1,8 @@
 import { getFilterOptions } from '@/lib/optionsApi';
 import css from './HeroSection.module.css';
 import { Location } from '@/types/vacancyType';
+import LocationDropdown from './LocationDropdown/LocationDropdown';
+import { SvgIcon } from '@/components/SvgIcon/SvgIcon';
 
 async function HeroSection() {
   const locations: Location[] = await getFilterOptions('locations');
@@ -15,23 +17,21 @@ async function HeroSection() {
           </p>
 
           <form className={css.form} action="/vacancies" method="get">
-            <label htmlFor="search">
-              <input className={css.input} name="search" type="text" />
+            <label className={css.inputLabel} htmlFor="search">
+              <SvgIcon
+                name="search"
+                className={css.icon}
+                width={24}
+                height={24}
+              />
+              <input
+                className={css.input}
+                name="search"
+                type="text"
+                placeholder="Назва посади, технологія..."
+              />
             </label>
-            <label htmlFor="location">
-              <select
-                className={css.select}
-                name="location"
-                id="location"
-                defaultValue="">
-                <option value="">Уся Україна</option>
-                {locations.map(location => (
-                  <option key={location._id} value={location._id}>
-                    {location.name}
-                  </option>
-                ))}
-              </select>
-            </label>
+            <LocationDropdown locations={locations} />
             <button className={css.button} type="submit">
               Знайти вакансію
             </button>
