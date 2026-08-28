@@ -3,11 +3,12 @@ import { NextRequest, NextResponse } from 'next/server';
 
 import { api } from '@/lib/api';
 
-export async function GET(request: NextRequest) {
+export async function PATCH(request: NextRequest) {
   try {
     const cookie = request.headers.get('cookie') ?? '';
+    const body = await request.json();
 
-    const response = await api.get('/api/users/me', {
+    const response = await api.patch('/api/users/employer', body, {
       headers: {
         cookie,
       },
@@ -20,7 +21,7 @@ export async function GET(request: NextRequest) {
     if (axios.isAxiosError(error)) {
       return NextResponse.json(
         error.response?.data ?? {
-          message: 'Failed to get current user',
+          message: 'Failed to update employer profile',
         },
         {
           status: error.response?.status ?? 500,

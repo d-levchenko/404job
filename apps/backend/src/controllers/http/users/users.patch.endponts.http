@@ -2,6 +2,7 @@
 PATCH http://localhost:4000/api/users/candidate
 Content-Type: application/json
 
+
 {
   "name": "Test Candidate Updated",
   "githubUrl": "https://github.com/test-user",
@@ -12,6 +13,7 @@ Content-Type: application/json
 ### Update employer profile
 PATCH http://localhost:4000/api/users/employer
 Content-Type: application/json
+
 
 {
   "companyName": "Test Company Updated",

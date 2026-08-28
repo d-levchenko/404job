@@ -2,10 +2,15 @@
 
 import { SvgIcon } from '@/components/SvgIcon/SvgIcon';
 import { useState } from 'react';
+import { AllVacancies } from '@/types/vacancyType';
 
 import css from './FiltersPanel.module.css';
 
-const FiltersPanel = () => {
+interface FiltersPanelProps {
+  params: AllVacancies | undefined;
+}
+
+const FiltersPanel = ({ params }: FiltersPanelProps) => {
   const [active, setActive] = useState(false);
 
   const handleClick = () => {
@@ -13,9 +18,11 @@ const FiltersPanel = () => {
   };
 
   return (
-    <aside>
+    <aside className="mb-6">
       <h2 className={css.title}>Фільтри</h2>
-      <p className={css.description}>Показано 8 зі 100</p>
+      <p className={css.description}>
+        Показано {params?.perPage} зі {params?.totalVacancies}
+      </p>
 
       <form>
         <button className={css.button} type="button" onClick={handleClick}>
