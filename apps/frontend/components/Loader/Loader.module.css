@@ -1,0 +1,58 @@
+@keyframes scan {
+  0%,
+  100% {
+    transform: translateX(-26px);
+  }
+  50% {
+    transform: translateX(26px);
+  }
+}
+
+@keyframes rowFade {
+  0%,
+  20% {
+    opacity: 0.25;
+  }
+  50% {
+    opacity: 1;
+  }
+  80%,
+  100% {
+    opacity: 0.25;
+  }
+}
+
+.wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+}
+
+.box {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 64px;
+}
+
+.rows {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  width: 80px;
+}
+
+.row {
+  height: 8px;
+  border-radius: 4px;
+  background-color: var(--color-curious-blue-lighter);
+  animation: rowFade 1.6s ease-in-out infinite;
+}
+
+.magnifier {
+  position: absolute;
+  color: var(--color-curious-blue);
+  animation: scan 1.8s ease-in-out infinite;
+}

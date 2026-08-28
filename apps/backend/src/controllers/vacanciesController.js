@@ -17,7 +17,7 @@ export const getAllVacancies = async (req, res, next) => {
     const skip = (page - 1) * perPage;
 
     const vacanciesQuery = Vacancy.find().populate(
-      'industryId experienceLevelId locationId employmentTypeId',
+      'industryId experienceLevelId locationId employmentTypeId employerId',
     );
 
     if (search)
@@ -124,7 +124,7 @@ export const getHotVacancies = async (req, res, next) => {
       .populate('employerId', 'companyName logo')
       .populate('locationId', 'name');
 
-    res.json({ vacancies });
+    res.json(vacancies);
   } catch (error) {
     next(error);
   }
@@ -164,4 +164,12 @@ export const getVacancyById = async (req, res, next) => {
   } catch (error) {
     next(error);
   }
+};
+
+export const createVacancy = async (req, res) => {
+  const vacancy = await Vacancy.create({
+    ...req.body,
+    employerId: req.user._id,
+  });
+  res.status(201).json(vacancy);
 };

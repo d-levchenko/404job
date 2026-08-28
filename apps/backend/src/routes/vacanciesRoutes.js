@@ -8,9 +8,12 @@ import {
   getVacancyById,
   addVacancyToFavorites,
   removeVacancyFromFavorites,
+  createVacancy,
 } from '../controllers/vacanciesController.js';
 import {
+  createVacancySchema,
   getAllVacanciesSchema,
+  getHotVacanciesSchema,
   getVacancyByIdSchema,
 } from '../validations/vacanciesValidator.js';
 import { celebrate } from 'celebrate';
@@ -23,7 +26,7 @@ vacancyRouter.get(
   getAllVacancies,
 );
 
-vacancyRouter.get('/hot', getHotVacancies);
+vacancyRouter.get('/hot', celebrate(getHotVacanciesSchema), getHotVacancies);
 
 vacancyRouter.get('/:id', celebrate(getVacancyByIdSchema), getVacancyById);
 
@@ -33,6 +36,13 @@ vacancyRouter.delete(
   '/:vacancyId/favorite',
   authenticate,
   removeVacancyFromFavorites,
+);
+
+vacancyRouter.post(
+  '/create-vacancy',
+  authenticate,
+  celebrate(createVacancySchema),
+  createVacancy,
 );
 
 export default vacancyRouter;
