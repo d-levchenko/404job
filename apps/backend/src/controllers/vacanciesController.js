@@ -197,3 +197,40 @@ export const closeVacancy = async (req, res) => {
 
   res.status(200).json(vacancy);
 };
+
+export const getMyVacancies = async (req, res, next) => {
+  try {
+    const { _id: userId, userType } = req.user;
+
+    if (userType !== 'employer') {
+      throw createHttpError(403, 'Only employers can view their vacancies');
+    }
+
+    const { page = 1, perPage = 10, status } = req.query;
+    const skip = (page - 1) * perPage;
+
+    const query = { employerId: userId };
+    if (status) query.status = status;
+
+    const [totalItems, vacancies] = await Promise.all([
+      Vacancy.countDocuments(query),
+      Vacancy.find(query)
+        .sort({ createdAt: -1 })
+        .skip(skip)
+        .limit(perPage)
+        .populate('industryId experienceLevelId locationId employmentTypeId'),
+    ]);
+
+    const totalPages = Math.ceil(totalItems / perPage);
+
+    res.status(200).json({
+      page,
+      perPage,
+      totalVacancies: totalItems,
+      totalPages,
+      vacancies,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
