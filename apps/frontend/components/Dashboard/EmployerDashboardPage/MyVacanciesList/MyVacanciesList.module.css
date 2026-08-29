@@ -1,191 +1,270 @@
+/* ========================================
+   MOBILE FIRST
+   ======================================== */
+
 .wrapper {
-  width: 100%;
-  margin-bottom: 48px;
-}
-
-.title {
-  margin: 0 0 16px;
-
-  font-family: var(--font-family);
-  font-weight: 700;
-  font-size: 18px;
-  line-height: 1.5;
-  color: var(--color-scheme-2-text);
-}
-
-/* LIST */
-
-.list {
   display: flex;
   flex-direction: column;
-  gap: 20px;
-
-  margin: 0;
-  padding: 0;
-
-  list-style: none;
-}
-
-/* CARD */
-
-.card {
-  display: flex;
-  justify-content: space-between;
+  align-items: stretch;
   gap: 16px;
-  width: 100%;
-  padding: 24px;
-  border-radius: 32px;
-  background-color: var(--color-scheme-4-foreground);
-}
 
-.cardContent {
-  flex: 1;
+  width: 100%;
   min-width: 0;
 }
 
-.meta {
-  display: flex;
-  align-items: center;
-  gap: 24px;
+.title {
+  margin: 0;
 
-  margin-bottom: 8px;
-
-  font-family: var(--font-family);
-  font-size: 12px;
-  line-height: 1.5;
-  color: var(--color-scheme-1-text);
-}
-
-.vacancyTitle {
-  margin: 0 0 12px;
-
-  font-family: var(--font-family);
-  font-weight: 700;
   font-size: 20px;
+  font-weight: 700;
   line-height: 1.4;
   letter-spacing: -0.01em;
 
   color: var(--color-scheme-1-text);
 }
 
+/* =========================
+   LIST
+   ========================= */
+
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+
+  width: 100%;
+  margin: 0;
+  padding: 0;
+
+  list-style: none;
+}
+
+/* =========================
+   CARD
+   ========================= */
+
+.card {
+  display: flex;
+  flex-direction: column;
+
+  width: 100%;
+  min-width: 0;
+  padding: 24px;
+
+  border-radius: 32px;
+
+  background-color: var(--color-scheme-4-foreground);
+}
+
+.cardContent {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+
+  width: 100%;
+  min-width: 0;
+}
+
+.cardLink {
+  display: block;
+
+  width: 100%;
+  min-width: 0;
+
+  color: inherit;
+  text-decoration: none;
+}
+
+/* =========================
+   LOGO
+   ========================= */
+
+.companyMobile {
+  display: block;
+  margin-bottom: 16px;
+}
+
+.companyDesktop {
+  display: none;
+}
+
+.companyLogo,
+.companyLogoPlaceholder {
+  width: 157px;
+  height: 67px;
+
+  flex-shrink: 0;
+
+  border-radius: 24px;
+  overflow: hidden;
+}
+
+.companyLogo {
+  display: block;
+  object-fit: contain;
+}
+
+.companyLogoPlaceholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background-color: #d9d9d9;
+}
+
+.noImageIcon {
+  width: 56px;
+  height: auto;
+
+  stroke: #bdbdbd;
+  fill: #bdbdbd;
+}
+
+/* =========================
+   META
+   ========================= */
+
+.meta {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 24px;
+
+  width: 100%;
+  min-width: 0;
+  min-height: 24px;
+  margin: 0 0 8px;
+
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.5;
+
+  color: var(--color-scheme-1-text);
+}
+
+.location {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  min-width: 0;
+}
+
+.locationIcon {
+  width: 24px;
+  height: 24px;
+
+  flex-shrink: 0;
+}
+
+.location > span,
+.metaCompany {
+  min-width: 0;
+
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* =========================
+   VACANCY TITLE
+   ========================= */
+
+.vacancyTitle {
+  width: 100%;
+  margin: 0 0 16px;
+
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 1.4;
+  letter-spacing: -0.01em;
+
+  color: var(--color-scheme-1-text);
+}
+
+/* =========================
+   DESCRIPTION
+   ========================= */
+
 .description {
   display: -webkit-box;
+
+  width: 100%;
+  min-width: 0;
+  margin: 0 0 8px;
+
   overflow: hidden;
 
-  margin: 0 0 12px;
-
-  font-family: var(--font-family);
-  font-weight: 400;
   font-size: 14px;
+  font-weight: 400;
   line-height: 1.5;
 
   color: var(--color-scheme-1-text);
 
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 3;
+
   line-clamp: 3;
 }
 
+/* =========================
+   SALARY
+   ========================= */
+
 .salary {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  width: 100%;
+  min-height: 24px;
   margin: 0;
-  font-family: var(--font-family);
+
   font-size: 14px;
+  font-weight: 400;
   line-height: 1.5;
 
   color: var(--color-scheme-1-text);
 }
 
-/* RIGHT SIDE */
+.salaryIcon {
+  width: 24px;
+  height: 24px;
 
-.cardActions {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-  justify-content: space-between;
   flex-shrink: 0;
 }
 
-.companyName {
-  font-family: var(--font-family);
-  font-size: 20px;
-  font-weight: 500;
+/* =========================
+   CARD ACTIONS
+   ========================= */
+
+.cardActions {
+  display: none;
 }
 
-.closeButton {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
+/* =========================
+   BUTTONS — SHARED
+   ========================= */
 
-  padding: 10px 16px;
-
-  border: none;
-  border-radius: 24px;
-
-  font-family: var(--font-family);
-  font-size: 14px;
-  cursor: pointer;
-}
-
-.closeButton:disabled {
-  cursor: default;
-}
-
-/* SHOW MORE */
-
+.createButton,
+.closeButton,
 .showMoreButton {
-  display: block;
-  width: fit-content;
-  margin: 24px auto 0;
-  padding: 10px 24px;
-  border: none;
-  border-radius: 24px;
-  font-family: var(--font-family);
-  font-size: 14px;
-  cursor: pointer;
-}
-
-/* EMPTY STATE */
-
-.empty {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 16px;
-  width: 100%;
-  border-radius: 24px;
-  background-color: var(--color-scheme-4-foreground);
-}
-
-.emptyTitle {
-  font-family: var(--font-family);
-  font-weight: 700;
-  font-size: 20px;
-  line-height: 1.5;
-  color: var(--color-scheme-1-text);
-}
-
-.emptyText {
-  font-family: var(--font-family);
-  font-size: 14px;
-  line-height: 1.5;
-  color: var(--color-scheme-1-text);
-}
-
-.createButton {
-  display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 287px;
-  height: 33px;
+
   padding: 6px 12px;
-  border-radius: 100px;
+
   border: 1px solid var(--color-curious-blue);
-  text-decoration: none;
-  color: var(--color-white);
-  font-family: var(--font-family);
+  border-radius: 100px;
+
   font-size: 14px;
+  line-height: 1.5;
+
+  color: var(--color-white);
   background-color: var(--color-curious-blue);
-  opacity: 100%;
+
+  cursor: pointer;
+
   transition:
     background-color var(--transition),
     border-color var(--transition),
@@ -193,72 +272,291 @@
     opacity var(--transition);
 }
 
+.createButton,
+.showMoreButton {
+  display: inline-flex;
+}
+
 .createButton:hover,
-.createButton:focus {
+.createButton:focus,
+.closeButton:hover,
+.closeButton:focus,
+.showMoreButton:hover,
+.showMoreButton:focus {
+  border-color: var(--color-curious-blue);
+
+  color: var(--color-scheme-1-text);
   background-color: var(--color-curious-blue-lighter);
-  border-color: var(--color-curious-blue);
-  color: var(--color-scheme-1-text);
 }
 
-.createButton:active {
+.createButton:active,
+.closeButton:active,
+.showMoreButton:active {
+  border-color: var(--color-curious-blue);
+
+  color: var(--color-scheme-1-text);
   background-color: var(--color-curious-blue-light);
-  border-color: var(--color-curious-blue);
+}
+
+.closeButton:disabled,
+.showMoreButton:disabled {
+  cursor: default;
+  opacity: 0.6;
+}
+
+/* =========================
+   SHOW MORE
+   ========================= */
+
+.showMoreButton {
+  align-self: center;
+
+  min-height: 33px;
+
+  font-weight: 500;
+}
+
+/* =========================
+   EMPTY STATE
+   ========================= */
+
+.empty {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 16px;
+
+  width: 100%;
+  padding: 24px;
+
+  border-radius: 24px;
+
+  background-color: var(--color-scheme-4-foreground);
+}
+
+.emptyTitle {
+  margin: 0;
+
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 1.4;
+  letter-spacing: -0.01em;
+
   color: var(--color-scheme-1-text);
 }
 
-.createButton:disabled {
-  background-color: var(--color-curious-blue);
-  opacity: 0.3;
-  border-color: var(--color-curious-blue);
-  color: var(--color-white);
+.emptyText {
+  margin: 0;
+
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.5;
+
+  color: var(--color-scheme-1-text);
 }
 
-/* MOBILE */
+.createButton {
+  width: 100%;
+  min-height: 33px;
 
-@media (max-width: 767px) {
-  .title {
-    margin-bottom: 16px;
-  }
+  font-weight: 500;
+}
 
-  .list {
-    gap: 16px;
-  }
+/* ========================================
+   TABLET + DESKTOP SHARED: 767px+
+   Структура картки однакова
+   ======================================== */
 
+@media screen and (min-width: 767px) {
   .card {
-    flex-direction: column;
+    align-items: flex-end;
     gap: 16px;
+  }
+
+  .cardContent {
+    display: grid;
+
+    grid-template-columns: minmax(0, 1fr) 157px;
+    grid-template-areas:
+      'meta logo'
+      'heading logo'
+      'description description'
+      'salary salary';
+
+    column-gap: 16px;
+
+    width: 100%;
+    min-width: 0;
+  }
+
+  .companyMobile {
+    grid-area: logo;
+
+    display: block;
+
+    justify-self: end;
+    align-self: start;
+
+    margin: 0;
+  }
+
+  .companyDesktop {
+    display: none;
   }
 
   .meta {
-    gap: 16px;
+    grid-area: meta;
   }
 
   .vacancyTitle {
-    font-size: 18px;
+    grid-area: heading;
+
+    margin: 0;
+  }
+
+  .description {
+    grid-area: description;
+
+    margin: 16px 0 0;
+  }
+
+  .salary {
+    grid-area: salary;
+
+    margin-top: 8px;
   }
 
   .cardActions {
-    align-items: stretch;
-    gap: 16px;
-  }
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
 
-  .companyName {
-    order: -1;
+    width: 100%;
+
+    /*
+      Притискає кнопку до низу картки
+    */
+    margin-top: auto;
   }
 
   .closeButton {
-    width: 100%;
-  }
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
 
-  .showMoreButton {
-    width: 100%;
+    padding: 6px 12px;
+
+    border: 1px solid var(--color-curious-blue);
+    border-radius: 100px;
+
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 1.5;
+
+    color: var(--color-white);
+    background-color: var(--color-curious-blue);
+
+    cursor: pointer;
   }
 
   .empty {
-    padding: 24px;
+    border-radius: 32px;
   }
 
   .createButton {
-    width: 100%;
+    width: fit-content;
+  }
+}
+
+/* ========================================
+   TABLET: 767px — 1439px
+   Тільки те, що відрізняється від desktop
+   ======================================== */
+
+@media screen and (min-width: 767px) and (max-width: 1439px) {
+  .card {
+    min-height: 277px;
+  }
+
+  .location {
+    font-size: 12px;
+  }
+
+  .closeButton {
+    width: 144px;
+    min-height: 33px;
+  }
+
+  .showMoreButton {
+    width: 137px;
+    min-height: 33px;
+  }
+}
+
+/* ========================================
+   DESKTOP: 1440px+
+   ======================================== */
+
+@media screen and (min-width: 1440px) {
+  .title {
+    font-size: 20px;
+    line-height: 1.5;
+
+    color: var(--color-scheme-2-text);
+  }
+
+  .card {
+    min-height: 265px;
+  }
+
+  .location {
+    font-size: 14px;
+  }
+
+  .metaCompany {
+    font-size: 16px;
+  }
+
+  .vacancyTitle {
+    font-size: 24px;
+    line-height: 1.4;
+  }
+
+  .description {
+    font-size: 16px;
+    line-height: 1.5;
+  }
+
+  .salary {
+    font-size: 16px;
+    line-height: 1.5;
+  }
+
+  .closeButton {
+    width: auto;
+    min-width: 161px;
+    min-height: 36px;
+  }
+
+  .showMoreButton {
+    width: auto;
+    min-width: 153px;
+    min-height: 36px;
+
+    margin-top: 8px;
+  }
+
+  .emptyTitle {
+    font-size: 24px;
+    line-height: 1.4;
+  }
+
+  .emptyText {
+    font-size: 16px;
+    line-height: 1.5;
+  }
+
+  .createButton {
+    min-height: 36px;
   }
 }

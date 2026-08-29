@@ -1,24 +1,98 @@
 'use client';
 
-import { useState } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 
-import type { Vacancy } from '@/types/vacancyType';
+import NoImage from '@/assets/no-image.svg';
+import LocationIcon from '@/assets/location-on.svg';
+import PaymentsIcon from '@/assets/payments.svg';
+import {
+  useInfiniteQuery,
+  useMutation,
+  useQueryClient,
+} from '@tanstack/react-query';
 
+import { closeVacancy, getMyVacancies } from '@/lib/vacanciesApi';
+import { useState } from 'react';
 import css from './MyVacanciesList.module.css';
 
-interface MyVacanciesListProps {
-  vacancies?: Vacancy[];
+const VACANCIES_PER_PAGE = 4;
+interface VacancyLogoProps {
+  logo?: string;
+  companyName: string;
 }
 
-const INITIAL_VACANCIES_COUNT = 4;
+const VacancyLogo = ({ logo, companyName }: VacancyLogoProps) => {
+  const [imageError, setImageError] = useState(false);
 
-const MyVacanciesList = ({ vacancies = [] }: MyVacanciesListProps) => {
-  const [showAll, setShowAll] = useState(false);
+  if (!logo || imageError) {
+    return (
+      <div className={css.companyLogoPlaceholder}>
+        <NoImage className={css.noImageIcon} />
+      </div>
+    );
+  }
 
-  const visibleVacancies = showAll
-    ? vacancies
-    : vacancies.slice(0, INITIAL_VACANCIES_COUNT);
+  return (
+    <Image
+      src={logo}
+      alt={`${companyName} logo`}
+      width={157}
+      height={67}
+      className={css.companyLogo}
+      onError={() => setImageError(true)}
+    />
+  );
+};
+
+const MyVacanciesList = () => {
+  const queryClient = useQueryClient();
+
+  const {
+    data,
+    isLoading,
+    isError,
+    fetchNextPage,
+    hasNextPage,
+    isFetchingNextPage,
+  } = useInfiniteQuery({
+    queryKey: ['myVacancies', 'active'],
+
+    queryFn: ({ pageParam }) =>
+      getMyVacancies({
+        page: pageParam,
+        perPage: VACANCIES_PER_PAGE,
+        status: 'active',
+      }),
+
+    initialPageParam: 1,
+
+    getNextPageParam: lastPage => {
+      return lastPage.page < lastPage.totalPages
+        ? lastPage.page + 1
+        : undefined;
+    },
+  });
+
+  const closeMutation = useMutation({
+    mutationFn: closeVacancy,
+
+    onSuccess: async () => {
+      await queryClient.invalidateQueries({
+        queryKey: ['myVacancies', 'active'],
+      });
+    },
+  });
+
+  const vacancies = data?.pages.flatMap(page => page.vacancies) ?? [];
+
+  if (isLoading) {
+    return <p>Завантаження...</p>;
+  }
+
+  if (isError) {
+    return <p>Не вдалося завантажити вакансії</p>;
+  }
 
   if (vacancies.length === 0) {
     return (
@@ -45,41 +119,73 @@ const MyVacanciesList = ({ vacancies = [] }: MyVacanciesListProps) => {
       <h2 className={css.title}>Відкриті вакансії</h2>
 
       <ul className={css.list}>
-        {visibleVacancies.map(vacancy => (
-          <li key={vacancy._id} className={css.card}>
-            <div className={css.cardContent}>
-              <div className={css.meta}>
-                <span>{vacancy.locationId.name}</span>
+        {vacancies.map(vacancy => {
+          const isClosing =
+            closeMutation.isPending && closeMutation.variables === vacancy._id;
 
-                <span>{vacancy.employerId.companyName}</span>
+          return (
+            <li key={vacancy._id} className={css.card}>
+              <div className={css.cardContent}>
+                <div className={css.companyMobile}>
+                  <VacancyLogo
+                    logo={vacancy.employerId.logo}
+                    companyName={vacancy.employerId.companyName}
+                  />
+                </div>
+
+                <div className={css.meta}>
+                  <span className={css.location}>
+                    <LocationIcon className={css.locationIcon} />
+
+                    <span>
+                      {vacancy.locationId.name}
+                      {vacancy.isRemote && ' / Віддалено'}
+                    </span>
+                  </span>
+
+                  <span className={css.metaCompany}>
+                    {vacancy.employerId.companyName}
+                  </span>
+                </div>
+
+                <h3 className={css.vacancyTitle}>{vacancy.title}</h3>
+
+                <p className={css.description}>{vacancy.description}</p>
+
+                <p className={css.salary}>
+                  <PaymentsIcon className={css.salaryIcon} />
+                  <span>{vacancy.salaryRange}</span>
+                </p>
               </div>
 
-              <h3 className={css.vacancyTitle}>{vacancy.title}</h3>
+              <div className={css.cardActions}>
+                <div className={css.companyDesktop}>
+                  <VacancyLogo
+                    logo={vacancy.employerId.logo}
+                    companyName={vacancy.employerId.companyName}
+                  />
+                </div>
 
-              <p className={css.description}>{vacancy.description}</p>
-
-              <p className={css.salary}>{vacancy.salaryRange}</p>
-            </div>
-
-            <div className={css.cardActions}>
-              <p className={css.companyName}>
-                {vacancy.employerId.companyName}
-              </p>
-
-              <button type="button" className={css.closeButton} disabled>
-                Закрити вакансію
-              </button>
-            </div>
-          </li>
-        ))}
+                <button
+                  type="button"
+                  className={css.closeButton}
+                  onClick={() => closeMutation.mutate(vacancy._id)}
+                  disabled={isClosing}>
+                  {isClosing ? 'Закриття...' : 'Закрити вакансію'}
+                </button>
+              </div>
+            </li>
+          );
+        })}
       </ul>
 
-      {vacancies.length > INITIAL_VACANCIES_COUNT && !showAll && (
+      {hasNextPage && (
         <button
           type="button"
           className={css.showMoreButton}
-          onClick={() => setShowAll(true)}>
-          Показати більше
+          onClick={() => fetchNextPage()}
+          disabled={isFetchingNextPage}>
+          {isFetchingNextPage ? 'Завантаження...' : 'Показати більше'}
         </button>
       )}
     </section>
