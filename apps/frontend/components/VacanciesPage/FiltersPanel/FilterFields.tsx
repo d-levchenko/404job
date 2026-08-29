@@ -80,25 +80,26 @@ const FiltersFields = ({
             {filters.industries.status === 'fulfilled' &&
               filters.industries.value.map(item => (
                 <li key={item._id} className={css.item}>
-                  <input
-                    type="checkbox"
-                    id={`${idPrefix}-${item._id}`}
-                    className={css.checkboxInput}
-                    checked={industry.includes(item._id)}
-                    onChange={() => toggleValue('industry', item._id)}
-                  />
+                  <div className={css.checkboxWrapper}>
+                    <input
+                      type="checkbox"
+                      id={`${idPrefix}-${item._id}`}
+                      className={css.checkboxInput}
+                      checked={industry.includes(item._id)}
+                      onChange={() => toggleValue('industry', item._id)}
+                    />
+                    <SvgIcon
+                      name="checkbox"
+                      width={20}
+                      height={20}
+                      className={css.checkbox}
+                      aria-hidden="true"
+                    />
+                  </div>
+
                   <label
                     htmlFor={`${idPrefix}-${item._id}`}
                     className={css.label}>
-                    <div className={css.checkboxWrapper}>
-                      <SvgIcon
-                        name="checkbox"
-                        width={20}
-                        height={20}
-                        className={css.checkbox}
-                        aria-hidden="true"
-                      />
-                    </div>
                     {item.name}
                   </label>
                 </li>
@@ -112,25 +113,26 @@ const FiltersFields = ({
             {filters.experienceLevels.status === 'fulfilled' &&
               filters.experienceLevels.value.map(item => (
                 <li key={item._id} className={css.item}>
-                  <input
-                    type="checkbox"
-                    id={`${idPrefix}-${item._id}`}
-                    className={css.checkboxInput}
-                    checked={experience.includes(item._id)}
-                    onChange={() => toggleValue('experience', item._id)}
-                  />
+                  <div className={css.checkboxWrapper}>
+                    <input
+                      type="checkbox"
+                      id={`${idPrefix}-${item._id}`}
+                      className={css.checkboxInput}
+                      checked={experience.includes(item._id)}
+                      onChange={() => toggleValue('experience', item._id)}
+                    />
+                    <SvgIcon
+                      name="checkbox"
+                      width={20}
+                      height={20}
+                      className={css.checkbox}
+                      aria-hidden="true"
+                    />
+                  </div>
+
                   <label
                     htmlFor={`${idPrefix}-${item._id}`}
                     className={css.label}>
-                    <div className={css.checkboxWrapper}>
-                      <SvgIcon
-                        name="checkbox"
-                        width={20}
-                        height={20}
-                        className={css.checkbox}
-                        aria-hidden="true"
-                      />
-                    </div>
                     {item.name}
                   </label>
                 </li>
@@ -189,24 +191,25 @@ const FiltersFields = ({
             )}
           </div>
 
-          <div className="pt-3">
-            <input
-              type="checkbox"
-              id={`${idPrefix}-isRemote`}
-              className={css.checkboxInput}
-              checked={Boolean(isRemote)}
-              onChange={e => setIsRemote(e.target.checked)}
-            />
+          <div className="pt-3 flex gap-2">
+            <div className={css.checkboxWrapper}>
+              <input
+                type="checkbox"
+                id={`${idPrefix}-isRemote`}
+                className={css.checkboxInput}
+                checked={Boolean(isRemote)}
+                onChange={e => setIsRemote(e.target.checked)}
+              />
+              <SvgIcon
+                name="checkbox"
+                width={20}
+                height={20}
+                className={css.checkbox}
+                aria-hidden="true"
+              />
+            </div>
+
             <label htmlFor={`${idPrefix}-isRemote`} className={css.label}>
-              <div className={css.checkboxWrapper}>
-                <SvgIcon
-                  name="checkbox"
-                  width={20}
-                  height={20}
-                  className={css.checkbox}
-                  aria-hidden="true"
-                />
-              </div>
               Віддалено
             </label>
           </div>
@@ -218,25 +221,26 @@ const FiltersFields = ({
             {filters.employmentTypes.status === 'fulfilled' &&
               filters.employmentTypes.value.map(item => (
                 <li key={item._id} className={css.item}>
-                  <input
-                    type="checkbox"
-                    id={`${idPrefix}-${item._id}`}
-                    className={css.checkboxInput}
-                    checked={employmentType.includes(item._id)}
-                    onChange={() => toggleValue('employmentType', item._id)}
-                  />
+                  <div className={css.checkboxWrapper}>
+                    <input
+                      type="checkbox"
+                      id={`${idPrefix}-${item._id}`}
+                      className={css.checkboxInput}
+                      checked={employmentType.includes(item._id)}
+                      onChange={() => toggleValue('employmentType', item._id)}
+                    />
+                    <SvgIcon
+                      name="checkbox"
+                      width={20}
+                      height={20}
+                      className={css.checkbox}
+                      aria-hidden="true"
+                    />
+                  </div>
+
                   <label
                     htmlFor={`${idPrefix}-${item._id}`}
                     className={css.label}>
-                    <div className={css.checkboxWrapper}>
-                      <SvgIcon
-                        name="checkbox"
-                        width={20}
-                        height={20}
-                        className={css.checkbox}
-                        aria-hidden="true"
-                      />
-                    </div>
                     {item.name}
                   </label>
                 </li>
