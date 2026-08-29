@@ -42,7 +42,7 @@ const VacanciesPage = async () => {
   };
 
   return (
-    <main className="bg-(--color-scheme-1-background) px-5 py-12">
+    <main className="bg-(--color-scheme-1-background) py-12">
       <div className="container">
         <h1 className={css.title}>Вакансії</h1>
 
