@@ -6,8 +6,23 @@ import VacanciesList from './VacanciesList/VacanciesList';
 import { useQuery } from '@tanstack/react-query';
 import { getAllVacancies } from '@/lib/vacanciesApi';
 import RequestReturnedNothing from './RequestReturnedNothing/RequestReturnedNothing';
+import {
+  EmploymentType,
+  ExperienceLevel,
+  Industry,
+  Location,
+} from '@/types/vacancyType';
 
-const Vacancies = () => {
+interface VacanciesProps {
+  filters: {
+    industries: PromiseSettledResult<Industry[]>;
+    locations: PromiseSettledResult<Location[]>;
+    experienceLevels: PromiseSettledResult<ExperienceLevel[]>;
+    employmentTypes: PromiseSettledResult<EmploymentType[]>;
+  };
+}
+
+const Vacancies = ({ filters }: VacanciesProps) => {
   const searchParams = useSearchParams();
 
   const params = {
@@ -15,6 +30,7 @@ const Vacancies = () => {
     industry: searchParams.get('industry'),
     experience: searchParams.get('experience'),
     location: searchParams.get('location'),
+    search: searchParams.get('search') || undefined,
     isRemote:
       searchParams.get('isRemote') === null
         ? null
@@ -28,7 +44,7 @@ const Vacancies = () => {
 
   return (
     <>
-      <FiltersPanel params={data} />
+      <FiltersPanel params={data} filters={filters} />
 
       {data ? <VacanciesList vacancies={data} /> : <RequestReturnedNothing />}
     </>

@@ -9,6 +9,10 @@ import payments from '@/assets/payments.svg';
 import locationOn from '@/assets/location-on.svg';
 import messageUnread from '@/assets/message-unread.svg';
 import documentSearch from '@/assets/document-search.svg';
+import checkbox from '@/assets/checkbox.svg';
+import facebook from '@/assets/facebook.svg';
+import x from '@/assets/x.svg';
+import linkedin from '@/assets/linkedIn.svg';
 
 const icons = {
   logo: jobLogo,
@@ -22,6 +26,10 @@ const icons = {
   locationOn,
   messageUnread,
   documentSearch,
+  checkbox,
+  facebook,
+  x,
+  linkedin,
 };
 
 export type IconName = keyof typeof icons;

@@ -2,7 +2,7 @@ import { AllVacancies, Vacancy } from '@/types/vacancyType';
 
 import { api } from './api';
 
-interface getAllVacanciesRequest {
+export interface getAllVacanciesRequest {
   page?: number;
   perPage?: number;
   search?: string;
