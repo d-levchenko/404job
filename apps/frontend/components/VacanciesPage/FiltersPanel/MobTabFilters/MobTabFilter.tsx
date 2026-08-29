@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { SvgIcon } from '@/components/SvgIcon/SvgIcon';
 import { AllVacancies } from '@/types/vacancyType';
 import FiltersFields, { FiltersOptions } from '../FilterFields';
@@ -14,46 +14,46 @@ interface MobTabFiltersProps {
 
 const MobTabFilters = ({ meta, filters }: MobTabFiltersProps) => {
   const [active, setActive] = useState(false);
-
-  const handleBackdropClick = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (active) {
-      if (e.target !== e.currentTarget) {
-        setActive(false);
-      }
-    }
-  };
+  const containerRef = useRef<HTMLDivElement>(null);
 
   const handleDropdownClick = () => {
-    setActive(!active);
+    setActive(prev => !prev);
   };
 
   useEffect(() => {
-    const handleKeyDown = (event: KeyboardEvent) => {
-      if (event.key === 'Escape') {
+    if (!active) return;
+
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        containerRef.current &&
+        !containerRef.current.contains(event.target as Node)
+      ) {
         setActive(false);
       }
     };
 
-    if (active) {
-      document.addEventListener('keydown', handleKeyDown);
-      document.body.style.overflow = 'hidden';
-    }
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') setActive(false);
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    document.addEventListener('keydown', handleKeyDown);
+    document.body.style.overflow = 'hidden';
 
     return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
       document.removeEventListener('keydown', handleKeyDown);
       document.body.style.overflow = '';
     };
   }, [active]);
 
   return (
-    <div
-      className="mb-8 relative desktop:hidden md:flex md:justify-between"
-      onClick={handleBackdropClick}>
+    <div className="mb-8 relative desktop:hidden md:flex md:justify-between">
       <p className={css.description}>
         Показано {meta?.vacancies.length} зі {meta?.totalVacancies}
       </p>
 
-      <div className={css.formContainer}>
+      <div className={css.formContainer} ref={containerRef}>
         <button
           type="button"
           className={`${css.button} ${active ? css.activeButton : ''}`}
