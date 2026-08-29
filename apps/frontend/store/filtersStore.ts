@@ -31,7 +31,7 @@ const initialState: VacancyFiltersState = {
   isRemote: null,
 };
 
-export const useFiltersStore = create<FiltersStore>((set, get) => ({
+export const useFiltersStore = create<FiltersStore>()((set, get) => ({
   ...initialState,
 
   setSearch: search => set({ search }),
