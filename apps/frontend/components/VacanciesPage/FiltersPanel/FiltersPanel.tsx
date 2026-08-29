@@ -19,7 +19,7 @@ const FiltersPanel = ({ meta, filters }: FiltersPanelProps) => {
       </p>
 
       <div className="flex flex-col gap-6 w-full">
-        <FiltersFields filters={filters} />
+        <FiltersFields filters={filters} idPrefix="desktop" />
       </div>
     </aside>
   );

@@ -1,28 +1,25 @@
 'use client';
 
-import { FormEvent } from 'react';
-import { usePathname, useRouter, useSearchParams } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import { SvgIcon } from '@/components/SvgIcon/SvgIcon';
-import { useFiltersStore } from '@/store/filtersStore';
+import {
+  buildFiltersSearchParams,
+  useFiltersStore,
+} from '@/store/filtersStore';
 
 import css from './Search.module.css';
 
 const Search = () => {
   const router = useRouter();
   const pathname = usePathname();
-  const searchParams = useSearchParams();
 
-  const search = useFiltersStore(state => state.search);
+  const filtersState = useFiltersStore();
   const setSearch = useFiltersStore(state => state.setSearch);
 
-  const handleSubmit = (e: FormEvent) => {
+  const handleSubmit = (e: React.SubmitEvent) => {
     e.preventDefault();
 
-    const params = new URLSearchParams(searchParams.toString());
-    if (search) params.set('search', search);
-    else params.delete('search');
-    params.delete('page');
-
+    const params = buildFiltersSearchParams(filtersState);
     router.push(params.size ? `${pathname}?${params}` : pathname);
   };
 
@@ -42,7 +39,7 @@ const Search = () => {
           type="text"
           placeholder="Пошук"
           className={css.input}
-          value={search}
+          value={filtersState.search}
           onChange={e => setSearch(e.target.value)}
         />
       </div>

@@ -15,7 +15,7 @@ const VacanciesList = ({ vacancies: { vacancies } }: VacanciesListProps) => {
         <li
           key={vacancy._id}
           className="rounded-4xl p-6 max-w-83.75 w-full bg-(--color-scheme-4-foreground) font-(--font-family) font-normal leading-normal
-          md:max-w-3xl xl:max-w-[975px]">
+          md:max-w-3xl xl:max-w-243.75">
           <div className="md:flex justify-between flex-row-reverse items-center mb-4">
             <Image
               src="/images/emptyImg.jpg"

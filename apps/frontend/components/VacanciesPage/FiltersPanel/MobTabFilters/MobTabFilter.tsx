@@ -39,7 +39,11 @@ const MobTabFilters = ({ meta, filters }: MobTabFiltersProps) => {
 
         <div
           className={`${css.filtersContent} ${active ? css.active : ''} flex flex-col gap-6`}>
-          <FiltersFields filters={filters} onApplied={() => setActive(false)} />
+          <FiltersFields
+            filters={filters}
+            idPrefix="mobile"
+            onApplied={() => setActive(false)}
+          />
         </div>
       </div>
     </div>

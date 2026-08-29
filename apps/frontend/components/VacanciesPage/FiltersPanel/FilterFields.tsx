@@ -3,7 +3,10 @@
 import { useState } from 'react';
 import { useRouter, usePathname } from 'next/navigation';
 import { SvgIcon } from '@/components/SvgIcon/SvgIcon';
-import { useFiltersStore } from '@/store/filtersStore';
+import {
+  buildFiltersSearchParams,
+  useFiltersStore,
+} from '@/store/filtersStore';
 import {
   EmploymentType,
   ExperienceLevel,
@@ -22,10 +25,15 @@ export interface FiltersOptions {
 
 interface FiltersFieldsProps {
   filters: FiltersOptions;
+  idPrefix: string;
   onApplied?: () => void;
 }
 
-const FiltersFields = ({ filters, onApplied }: FiltersFieldsProps) => {
+const FiltersFields = ({
+  filters,
+  idPrefix,
+  onApplied,
+}: FiltersFieldsProps) => {
   const router = useRouter();
   const pathname = usePathname();
   const [locationOpen, setLocationOpen] = useState(false);
@@ -42,14 +50,14 @@ const FiltersFields = ({ filters, onApplied }: FiltersFieldsProps) => {
       : undefined;
 
   const handleApply = () => {
-    const params = new URLSearchParams();
-
-    if (search) params.set('search', search);
-    industry.forEach(id => params.append('industry', id));
-    experience.forEach(id => params.append('experience', id));
-    if (location) params.set('location', location);
-    employmentType.forEach(id => params.append('employmentType', id));
-    if (isRemote !== null) params.set('isRemote', String(isRemote));
+    const params = buildFiltersSearchParams({
+      search,
+      industry,
+      experience,
+      location,
+      employmentType,
+      isRemote,
+    });
 
     router.push(params.size ? `${pathname}?${params}` : pathname);
     onApplied?.();
@@ -72,12 +80,14 @@ const FiltersFields = ({ filters, onApplied }: FiltersFieldsProps) => {
                 <li key={item._id} className={css.item}>
                   <input
                     type="checkbox"
-                    id={item._id}
+                    id={`${idPrefix}-${item._id}`}
                     className={css.checkboxInput}
                     checked={industry.includes(item._id)}
                     onChange={() => toggleValue('industry', item._id)}
                   />
-                  <label htmlFor={item._id} className={css.label}>
+                  <label
+                    htmlFor={`${idPrefix}-${item._id}`}
+                    className={css.label}>
                     <div className={css.checkboxWrapper}>
                       <SvgIcon
                         name="checkbox"
@@ -102,12 +112,14 @@ const FiltersFields = ({ filters, onApplied }: FiltersFieldsProps) => {
                 <li key={item._id} className={css.item}>
                   <input
                     type="checkbox"
-                    id={item._id}
+                    id={`${idPrefix}-${item._id}`}
                     className={css.checkboxInput}
                     checked={experience.includes(item._id)}
                     onChange={() => toggleValue('experience', item._id)}
                   />
-                  <label htmlFor={item._id} className={css.label}>
+                  <label
+                    htmlFor={`${idPrefix}-${item._id}`}
+                    className={css.label}>
                     <div className={css.checkboxWrapper}>
                       <SvgIcon
                         name="checkbox"
@@ -180,12 +192,14 @@ const FiltersFields = ({ filters, onApplied }: FiltersFieldsProps) => {
                 <li key={item._id} className={css.item}>
                   <input
                     type="checkbox"
-                    id={item._id}
+                    id={`${idPrefix}-${item._id}`}
                     className={css.checkboxInput}
                     checked={employmentType.includes(item._id)}
                     onChange={() => toggleValue('employmentType', item._id)}
                   />
-                  <label htmlFor={item._id} className={css.label}>
+                  <label
+                    htmlFor={`${idPrefix}-${item._id}`}
+                    className={css.label}>
                     <div className={css.checkboxWrapper}>
                       <SvgIcon
                         name="checkbox"

@@ -63,3 +63,16 @@ export const useFiltersStore = create<FiltersStore>((set, get) => ({
 
   reset: () => set(initialState),
 }));
+
+export const buildFiltersSearchParams = (state: VacancyFiltersState) => {
+  const params = new URLSearchParams();
+
+  if (state.search) params.set('search', state.search);
+  state.industry.forEach(id => params.append('industry', id));
+  state.experience.forEach(id => params.append('experience', id));
+  if (state.location) params.set('location', state.location);
+  state.employmentType.forEach(id => params.append('employmentType', id));
+  if (state.isRemote !== null) params.set('isRemote', String(state.isRemote));
+
+  return params;
+};
