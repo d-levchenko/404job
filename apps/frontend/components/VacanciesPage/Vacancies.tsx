@@ -30,6 +30,7 @@ const Vacancies = ({ filters }: VacanciesProps) => {
     industry: searchParams.get('industry'),
     experience: searchParams.get('experience'),
     location: searchParams.get('location'),
+    search: searchParams.get('search') || undefined,
     isRemote:
       searchParams.get('isRemote') === null
         ? null
