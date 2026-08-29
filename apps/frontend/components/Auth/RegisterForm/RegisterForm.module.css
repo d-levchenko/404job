@@ -76,6 +76,7 @@
 
   font-size: 16px;
   cursor: pointer;
+  transition: var(--transition);
 }
 
 .button:hover,
@@ -99,4 +100,5 @@
   border-radius: 100px;
   background: var(--color-curious-blue);
   opacity: 0.3;
+  cursor: not-allowed;
 }
