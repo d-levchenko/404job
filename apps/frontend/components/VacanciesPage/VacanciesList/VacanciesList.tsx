@@ -1,21 +1,31 @@
-import { AllVacancies } from '@/types/vacancyType';
+'use client';
 
-import css from './VacanciesList.module.css';
+import { AllVacancies } from '@/types/vacancyType';
 import { SvgIcon } from '@/components/SvgIcon/SvgIcon';
 import Image from 'next/image';
+
+import css from './VacanciesList.module.css';
+import { useRouter } from 'next/navigation';
 
 interface VacanciesListProps {
   vacancies: AllVacancies;
 }
 
 const VacanciesList = ({ vacancies: { vacancies } }: VacanciesListProps) => {
+  const router = useRouter();
+
+  const handleVacancyClick = (vacancyId: string) => {
+    router.push(`/vacancies/${vacancyId}`);
+  };
+
   return (
     <ul className="flex flex-col gap-6">
       {vacancies.map(vacancy => (
         <li
           key={vacancy._id}
+          onClick={() => handleVacancyClick(vacancy._id)}
           className="rounded-4xl p-6 max-w-83.75 w-full bg-(--color-scheme-4-foreground) font-(--font-family) font-normal leading-normal
-          md:max-w-3xl xl:max-w-243.75">
+          md:max-w-3xl xl:max-w-243.75 cursor-pointer hover:bg-(--color-scheme-4-background) transition-(--transition) hover:shadow-[0_4px_16px_rgba(0,0,0,0.1)] hover:scale-[1.005]">
           <div className="md:flex justify-between flex-row-reverse items-center mb-4">
             <Image
               src="/images/emptyImg.jpg"
