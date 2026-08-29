@@ -62,4 +62,6 @@ export interface Vacancy {
   updatedAt: string;
   salaryRange: string;
   hotVacancy: boolean;
+  isFavorite?: boolean;
+  isApplied?: boolean;
 }

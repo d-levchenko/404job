@@ -50,3 +50,27 @@ export const getVacancyById = async (id: string): Promise<Vacancy> => {
     throw error;
   }
 };
+
+export const addToFavorites = async (vacancyId: string): Promise<void> => {
+  try {
+    await api.post(`/vacancies/${vacancyId}/favorite`);
+  } catch (error) {
+    throw error;
+  }
+};
+
+export const removeFromFavorites = async (vacancyId: string): Promise<void> => {
+  try {
+    await api.delete(`/vacancies/${vacancyId}/favorite`);
+  } catch (error) {
+    throw error;
+  }
+};
+
+export const applyToVacancy = async (vacancyId: string): Promise<void> => {
+  try {
+    await api.post(`/vacancies/${vacancyId}/apply`);
+  } catch (error) {
+    throw error;
+  }
+};
