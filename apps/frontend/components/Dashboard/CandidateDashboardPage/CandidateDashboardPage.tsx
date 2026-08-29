@@ -22,8 +22,7 @@ const CandidateDashboardPage = () => {
               className={`${css.navButton} ${isProfileTab ? css.active : ''}`}
               type="button"
               onClick={() => setActiveTab('profile')}
-              aria-current={isProfileTab ? 'page' : undefined}
-            >
+              aria-current={isProfileTab ? 'page' : undefined}>
               Мій профіль
             </button>
 
@@ -31,8 +30,7 @@ const CandidateDashboardPage = () => {
               className={`${css.navButton} ${!isProfileTab ? css.active : ''}`}
               type="button"
               onClick={() => setActiveTab('saved')}
-              aria-current={!isProfileTab ? 'page' : undefined}
-            >
+              aria-current={!isProfileTab ? 'page' : undefined}>
               Збережені вакансії
             </button>
           </nav>
@@ -40,8 +38,7 @@ const CandidateDashboardPage = () => {
           <section
             className={`${css.content} ${
               isProfileTab ? css.profileContent : css.savedContent
-            }`}
-          >
+            }`}>
             <h2 className={css.sectionTitle}>
               {isProfileTab ? 'Особиста інформація' : 'Збережені вакансії'}
             </h2>
