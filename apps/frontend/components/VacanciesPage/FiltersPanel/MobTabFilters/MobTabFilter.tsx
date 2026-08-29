@@ -15,6 +15,14 @@ interface MobTabFiltersProps {
 const MobTabFilters = ({ meta, filters }: MobTabFiltersProps) => {
   const [active, setActive] = useState(false);
 
+  const handleBackdropClick = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (active) {
+      if (e.target !== e.currentTarget) {
+        setActive(false);
+      }
+    }
+  };
+
   const handleDropdownClick = () => {
     setActive(!active);
   };
@@ -26,8 +34,10 @@ const MobTabFilters = ({ meta, filters }: MobTabFiltersProps) => {
       }
     };
 
-    document.addEventListener('keydown', handleKeyDown);
-    document.body.style.overflow = 'hidden';
+    if (active) {
+      document.addEventListener('keydown', handleKeyDown);
+      document.body.style.overflow = 'hidden';
+    }
 
     return () => {
       document.removeEventListener('keydown', handleKeyDown);
@@ -36,7 +46,9 @@ const MobTabFilters = ({ meta, filters }: MobTabFiltersProps) => {
   }, [active]);
 
   return (
-    <div className="mb-8 relative desktop:hidden md:flex md:justify-between">
+    <div
+      className="mb-8 relative desktop:hidden md:flex md:justify-between"
+      onClick={handleBackdropClick}>
       <p className={css.description}>
         Показано {meta?.vacancies.length} зі {meta?.totalVacancies}
       </p>
