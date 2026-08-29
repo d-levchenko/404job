@@ -1,57 +1,14 @@
-'use client';
+import type { Metadata } from 'next';
 
-import { useState } from 'react';
+import CandidateDashboardPage from '@/components/Dashboard/CandidateDashboardPage/CandidateDashboardPage';
 
-import css from './page.module.css';
-
-type ActiveTab = 'profile' | 'saved';
-
-const CandidateDashboardPage = () => {
-  const [activeTab, setActiveTab] = useState<ActiveTab>('profile');
-
-  const isProfileTab = activeTab === 'profile';
-
-  return (
-    <main className={css.page}>
-      <div className={css.container}>
-        <h1 className={css.title}>Мій профіль</h1>
-
-        <div className={css.dashboard}>
-          <nav className={css.sidebar} aria-label="Навігація профілю">
-            <button
-              className={`${css.navButton} ${isProfileTab ? css.active : ''}`}
-              type="button"
-              onClick={() => setActiveTab('profile')}
-              aria-current={isProfileTab ? 'page' : undefined}
-            >
-              Мій профіль
-            </button>
-
-            <button
-              className={`${css.navButton} ${!isProfileTab ? css.active : ''}`}
-              type="button"
-              onClick={() => setActiveTab('saved')}
-              aria-current={!isProfileTab ? 'page' : undefined}
-            >
-              Збережені вакансії
-            </button>
-          </nav>
-
-          <section
-            className={`${css.content} ${
-              isProfileTab ? css.profileContent : css.savedContent
-            }`}
-          >
-            <h2 className={css.sectionTitle}>
-              {isProfileTab ? 'Особиста інформація' : 'Збережені вакансії'}
-            </h2>
-
-            <div className={css.contentSlot} />
-          </section>
-        </div>
-      </div>
-    </main>
-  );
+export const metadata: Metadata = {
+  title: 'Мій профіль | JobSpace',
+  description: 'Особистий кабінет кандидата на JobSpace',
 };
 
-export default CandidateDashboardPage;
+const Page = () => {
+  return <CandidateDashboardPage />;
+};
+
+export default Page;
