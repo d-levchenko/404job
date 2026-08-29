@@ -2,6 +2,11 @@ import { User } from '../models/user.js';
 import createHttpError from 'http-errors';
 import { Vacancy } from '../models/vacancy.js';
 
+const toArray = value => {
+  if (value === undefined || value === null || value === '') return undefined;
+  return Array.isArray(value) ? value : [value];
+};
+
 export const getAllVacancies = async (req, res, next) => {
   try {
     const {
@@ -16,21 +21,30 @@ export const getAllVacancies = async (req, res, next) => {
     } = req.query;
     const skip = (page - 1) * perPage;
 
-    const vacanciesQuery = Vacancy.find().populate(
+    const filter = {};
+
+    if (search) filter.title = { $regex: search, $options: 'i' };
+
+    const industryIds = toArray(industry);
+    if (industryIds) filter.industryId = { $in: industryIds };
+
+    const experienceIds = toArray(experience);
+    if (experienceIds) filter.experienceLevelId = { $in: experienceIds };
+
+    const locationIds = toArray(location);
+    if (locationIds) filter.locationId = { $in: locationIds };
+
+    const employmentTypeIds = toArray(employmentType);
+    if (employmentTypeIds) filter.employmentTypeId = { $in: employmentTypeIds };
+
+    if (isRemote) filter.isRemote = isRemote === 'true';
+
+    const vacanciesQuery = Vacancy.find(filter).populate(
       'industryId experienceLevelId locationId employmentTypeId employerId',
     );
 
-    if (search)
-      vacanciesQuery.find({ title: { $regex: search, $options: 'i' } });
-    if (industry) vacanciesQuery.find({ industryId: industry });
-    if (experience) vacanciesQuery.find({ experienceLevelId: experience });
-    if (location) vacanciesQuery.find({ locationId: location });
-    if (employmentType)
-      vacanciesQuery.find({ employmentTypeId: employmentType });
-    if (isRemote) vacanciesQuery.find({ isRemote: isRemote === 'true' });
-
     const [totalItems, vacancies] = await Promise.all([
-      vacanciesQuery.clone().countDocuments(),
+      Vacancy.countDocuments(filter),
       vacanciesQuery.skip(skip).limit(perPage),
     ]);
 
