@@ -1,14 +1,14 @@
-import ProfileForm from '@/components/Dashboard/CandidateDashboardPage/ProfileForm/ProfileForm';
+import type { Metadata } from 'next';
 
-const testUser = {
-  name: 'Іван',
-  githubUrl: 'https://github.com/test',
-  linkedinUrl: 'https://linkedin.com/in/test',
-  behanceUrl: '',
+import CandidateDashboardPage from '@/components/Dashboard/CandidateDashboardPage/CandidateDashboardPage';
+
+export const metadata: Metadata = {
+  title: 'Мій профіль | JobSpace',
+  description: 'Особистий кабінет кандидата на JobSpace',
 };
 
 const Page = () => {
-  return <ProfileForm user={testUser} />;
+  return <CandidateDashboardPage />;
 };
 
 export default Page;
