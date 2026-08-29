@@ -12,8 +12,8 @@ interface RouteContext {
 
 export async function PATCH(req: NextRequest, { params }: RouteContext) {
   try {
-    const cookie = req.headers.get('cookie') ?? '';
     const { vacancyId } = await params;
+    const cookie = req.headers.get('cookie') ?? '';
 
     const res = await api.patch(
       `/vacancies/${vacancyId}/close`,
@@ -47,8 +47,12 @@ export async function PATCH(req: NextRequest, { params }: RouteContext) {
     });
 
     return NextResponse.json(
-      { message: 'Internal Server Error' },
-      { status: 500 },
+      {
+        message: 'Internal Server Error',
+      },
+      {
+        status: 500,
+      },
     );
   }
 }

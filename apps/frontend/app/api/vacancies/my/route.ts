@@ -6,19 +6,21 @@ import { api } from '../../api';
 
 export async function GET(req: NextRequest) {
   try {
-    const cookie = req.headers.get('cookie') ?? '';
     const { searchParams } = new URL(req.url);
+    const cookie = req.headers.get('cookie') ?? '';
 
-    const page = searchParams.get('page') ?? '1';
-    const perPage = searchParams.get('perPage') ?? '4';
-    const status = searchParams.get('status') ?? 'active';
+    const params = {
+      page: searchParams.get('page')
+        ? Number(searchParams.get('page'))
+        : undefined,
+      perPage: searchParams.get('perPage')
+        ? Number(searchParams.get('perPage'))
+        : undefined,
+      status: searchParams.get('status') || undefined,
+    };
 
     const res = await api.get('/vacancies/my/vacancies', {
-      params: {
-        page,
-        perPage,
-        status,
-      },
+      params,
       headers: {
         cookie,
       },
@@ -46,8 +48,12 @@ export async function GET(req: NextRequest) {
     });
 
     return NextResponse.json(
-      { message: 'Internal Server Error' },
-      { status: 500 },
+      {
+        message: 'Internal Server Error',
+      },
+      {
+        status: 500,
+      },
     );
   }
 }

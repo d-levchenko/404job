@@ -11,10 +11,25 @@ export const getAllVacanciesSchema = {
 
     search: Joi.string().allow('', null),
 
-    industry: Joi.string().custom(objectIdValidator).allow('', null),
-    experience: Joi.string().custom(objectIdValidator).allow('', null),
-    location: Joi.string().custom(objectIdValidator).allow('', null),
-    employmentType: Joi.string().custom(objectIdValidator).allow('', null),
+    industry: Joi.array()
+      .items(Joi.string().custom(objectIdValidator))
+      .single()
+      .allow(null),
+
+    experience: Joi.array()
+      .items(Joi.string().custom(objectIdValidator))
+      .single()
+      .allow(null),
+
+    location: Joi.array()
+      .items(Joi.string().custom(objectIdValidator))
+      .single()
+      .allow(null),
+
+    employmentType: Joi.array()
+      .items(Joi.string().custom(objectIdValidator))
+      .single()
+      .allow(null),
 
     isRemote: Joi.string().valid('true', 'false').allow('', null),
   }),

@@ -6,10 +6,10 @@ export interface getAllVacanciesRequest {
   page?: number;
   perPage?: number;
   search?: string;
-  industry?: string | null;
-  experience?: string | null;
+  industry?: string | string[] | null;
+  experience?: string | string[] | null;
   location?: string | null;
-  employmentType?: string | null;
+  employmentType?: string | string[] | null;
   isRemote?: boolean | null;
 }
 interface GetMyVacanciesRequest {
