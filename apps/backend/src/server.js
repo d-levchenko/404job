@@ -21,7 +21,12 @@ dns.setServers(['1.1.1.1', '8.8.8.8']);
 const app = express();
 const PORT = Number(process.env.PORT) || 4000;
 
-app.use(cors());
+app.use(
+  cors({
+    origin: process.env.CLIENT_URL || 'http://localhost:3000',
+    credentials: true,
+  }),
+);
 app.use(express.json());
 app.use(logger);
 app.use(cookieParser());
