@@ -181,6 +181,11 @@
   margin-bottom: 16px;
 }
 
+.geography {
+  font-weight: 400;
+  font-size: 14px;
+}
+
 .industry {
   border-top: none;
   padding-top: 0;

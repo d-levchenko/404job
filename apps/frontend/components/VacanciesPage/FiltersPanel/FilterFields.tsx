@@ -71,9 +71,12 @@ const FiltersFields = ({
 
   return (
     <>
-      <div className={css.filtersScroll}>
+      <div
+        className={`${css.filtersScroll} desktop:flex desktop:flex-col desktop:gap-4 desktop:[border-top:1px_solid_var(--color-scheme-1-border)] w-full`}>
         <fieldset>
-          <legend className={`${css.legend} ${css.industry}`}>Галузі</legend>
+          <legend className={`${css.legend} ${css.industry} desktop:w-full`}>
+            Галузі
+          </legend>
           <ul className="flex flex-col">
             {filters.industries.status === 'fulfilled' &&
               filters.industries.value.map(item => (
@@ -136,7 +139,11 @@ const FiltersFields = ({
           </ul>
         </fieldset>
 
-        <fieldset className="relative">
+        <fieldset className="relative mb-5">
+          <legend className={`${css.legend} ${css.geography}`}>
+            Географія
+          </legend>
+
           <div className={css.locationDropdown}>
             <button
               type="button"
