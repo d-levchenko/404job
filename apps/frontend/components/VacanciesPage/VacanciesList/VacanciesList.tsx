@@ -41,10 +41,12 @@ const VacanciesList = ({ vacancies: { vacancies } }: VacanciesListProps) => {
 
           <p className={css.description}>{vacancy.description}</p>
 
-          <div className="flex gap-2 items-center">
-            <SvgIcon name="payments" width={24} height={24} />
-            <p className={css.salary}>{vacancy.salaryRange}</p>
-          </div>
+          {vacancy.salaryRange.length > 0 && (
+            <div className="flex gap-2 items-center">
+              <SvgIcon name="payments" width={24} height={24} />
+              <p className={css.salary}>{vacancy.salaryRange}</p>
+            </div>
+          )}
         </li>
       ))}
     </ul>

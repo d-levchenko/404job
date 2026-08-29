@@ -43,6 +43,7 @@ const FiltersFields = ({
   const toggleValue = useFiltersStore(state => state.toggleValue);
   const setLocation = useFiltersStore(state => state.setLocation);
   const resetStore = useFiltersStore(state => state.reset);
+  const setIsRemote = useFiltersStore(state => state.setIsRemote);
 
   const selectedLocationName =
     filters.locations.status === 'fulfilled'
@@ -74,9 +75,7 @@ const FiltersFields = ({
       <div
         className={`${css.filtersScroll} desktop:flex desktop:flex-col desktop:gap-4 desktop:[border-top:1px_solid_var(--color-scheme-1-border)] w-full`}>
         <fieldset>
-          <legend className={`${css.legend} ${css.industry} desktop:w-full`}>
-            Галузі
-          </legend>
+          <legend className={`${css.legend} ${css.industry}`}>Галузі</legend>
           <ul className="flex flex-col">
             {filters.industries.status === 'fulfilled' &&
               filters.industries.value.map(item => (
@@ -188,6 +187,28 @@ const FiltersFields = ({
                   ))}
               </ul>
             )}
+          </div>
+
+          <div className="pt-3">
+            <input
+              type="checkbox"
+              id={`${idPrefix}-isRemote`}
+              className={css.checkboxInput}
+              checked={Boolean(isRemote)}
+              onChange={e => setIsRemote(e.target.checked)}
+            />
+            <label htmlFor={`${idPrefix}-isRemote`} className={css.label}>
+              <div className={css.checkboxWrapper}>
+                <SvgIcon
+                  name="checkbox"
+                  width={20}
+                  height={20}
+                  className={css.checkbox}
+                  aria-hidden="true"
+                />
+              </div>
+              Віддалено
+            </label>
           </div>
         </fieldset>
 
