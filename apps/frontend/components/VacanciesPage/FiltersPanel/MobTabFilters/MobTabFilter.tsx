@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { SvgIcon } from '@/components/SvgIcon/SvgIcon';
 import { AllVacancies } from '@/types/vacancyType';
 import FiltersFields, { FiltersOptions } from '../FilterFields';
@@ -15,6 +15,26 @@ interface MobTabFiltersProps {
 const MobTabFilters = ({ meta, filters }: MobTabFiltersProps) => {
   const [active, setActive] = useState(false);
 
+  const handleDropdownClick = () => {
+    setActive(!active);
+  };
+
+  useEffect(() => {
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') {
+        setActive(false);
+      }
+    };
+
+    document.addEventListener('keydown', handleKeyDown);
+    document.body.style.overflow = 'hidden';
+
+    return () => {
+      document.removeEventListener('keydown', handleKeyDown);
+      document.body.style.overflow = '';
+    };
+  }, [active]);
+
   return (
     <div className="mb-8 relative desktop:hidden md:flex md:justify-between">
       <p className={css.description}>
@@ -25,7 +45,7 @@ const MobTabFilters = ({ meta, filters }: MobTabFiltersProps) => {
         <button
           type="button"
           className={`${css.button} ${active ? css.activeButton : ''}`}
-          onClick={() => setActive(prev => !prev)}
+          onClick={handleDropdownClick}
           aria-expanded={active}>
           Фільтри
           <SvgIcon
