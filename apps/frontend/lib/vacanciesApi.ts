@@ -13,6 +13,10 @@ interface getAllVacanciesRequest {
   isRemote?: boolean | null;
 }
 
+export interface VacancyByIdResponse {
+  vacancy: Vacancy;
+}
+
 export const getHotVacancies = async (limit = 6): Promise<Vacancy[]> => {
   try {
     const { data } = await api.get<Vacancy[]>('/vacancies/hot', {
@@ -33,6 +37,15 @@ export const getAllVacancies = async (
     });
 
     return data;
+  } catch (error) {
+    throw error;
+  }
+};
+
+export const getVacancyById = async (id: string): Promise<Vacancy> => {
+  try {
+    const { data } = await api.get<VacancyByIdResponse>(`/vacancies/${id}`);
+    return data.vacancy;
   } catch (error) {
     throw error;
   }
