@@ -1,14 +1,57 @@
-import ProfileForm from '@/components/Dashboard/CandidateDashboardPage/ProfileForm/ProfileForm';
+'use client';
 
-const testUser = {
-  name: 'Іван',
-  githubUrl: 'https://github.com/test',
-  linkedinUrl: 'https://linkedin.com/in/test',
-  behanceUrl: '',
+import { useState } from 'react';
+
+import css from './page.module.css';
+
+type ActiveTab = 'profile' | 'saved';
+
+const CandidateDashboardPage = () => {
+  const [activeTab, setActiveTab] = useState<ActiveTab>('profile');
+
+  const isProfileTab = activeTab === 'profile';
+
+  return (
+    <main className={css.page}>
+      <div className={css.container}>
+        <h1 className={css.title}>Мій профіль</h1>
+
+        <div className={css.dashboard}>
+          <nav className={css.sidebar} aria-label="Навігація профілю">
+            <button
+              className={`${css.navButton} ${isProfileTab ? css.active : ''}`}
+              type="button"
+              onClick={() => setActiveTab('profile')}
+              aria-current={isProfileTab ? 'page' : undefined}
+            >
+              Мій профіль
+            </button>
+
+            <button
+              className={`${css.navButton} ${!isProfileTab ? css.active : ''}`}
+              type="button"
+              onClick={() => setActiveTab('saved')}
+              aria-current={!isProfileTab ? 'page' : undefined}
+            >
+              Збережені вакансії
+            </button>
+          </nav>
+
+          <section
+            className={`${css.content} ${
+              isProfileTab ? css.profileContent : css.savedContent
+            }`}
+          >
+            <h2 className={css.sectionTitle}>
+              {isProfileTab ? 'Особиста інформація' : 'Збережені вакансії'}
+            </h2>
+
+            <div className={css.contentSlot} />
+          </section>
+        </div>
+      </div>
+    </main>
+  );
 };
 
-const Page = () => {
-  return <ProfileForm user={testUser} />;
-};
-
-export default Page;
+export default CandidateDashboardPage;
