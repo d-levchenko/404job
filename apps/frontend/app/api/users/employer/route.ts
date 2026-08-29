@@ -8,7 +8,7 @@ export async function PATCH(request: NextRequest) {
     const cookie = request.headers.get('cookie') ?? '';
     const body = await request.json();
 
-    const response = await api.patch('/api/users/employer', body, {
+    const response = await api.patch('/users/employer', body, {
       headers: {
         cookie,
       },

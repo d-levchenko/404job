@@ -7,7 +7,7 @@ export async function GET(request: NextRequest) {
   try {
     const cookie = request.headers.get('cookie') ?? '';
 
-    const response = await api.get('/api/users/me', {
+    const response = await api.get('/users/me', {
       headers: {
         cookie,
       },

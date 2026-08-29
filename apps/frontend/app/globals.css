@@ -72,71 +72,286 @@
     visibility var(--transition-speed) var(--transition-ease);
 }
 
-*,
-*::before,
-*::after {
-  box-sizing: border-box;
+/* ========================================
+   BASE: 320–374px
+   гумова верстка
+   ======================================== */
+
+.wrapper {
+  width: 100%;
+  margin-bottom: 48px;
 }
 
-@theme {
-  --breakpoint-xs: 375px;
-  --breakpoint-desktop: 90rem;
+.title {
+  margin-bottom: 16px;
+
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 1.5;
+
+  color: var(--color-scheme-2-text);
 }
 
-html {
-  scroll-behavior: smooth;
+/* LIST */
+
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
 }
 
-body {
-  margin: 0;
-  min-height: 100vh;
-  font-family: var(--font-family);
+/* CARD */
+
+.card {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+
+  width: 100%;
+  padding: 24px;
+
+  border-radius: 32px;
+
+  background-color: var(--color-scheme-4-foreground);
+}
+
+.cardContent {
+  flex: 1;
+  min-width: 0;
+}
+
+.meta {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+
+  margin-bottom: 8px;
+
+  font-size: 12px;
+  line-height: 1.5;
+
+  color: var(--color-scheme-1-text);
+}
+
+.vacancyTitle {
+  margin-bottom: 12px;
+
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 1.4;
+  letter-spacing: -0.01em;
+
+  color: var(--color-scheme-1-text);
+}
+
+.description {
+  display: -webkit-box;
+  overflow: hidden;
+
+  margin-bottom: 12px;
+
   font-size: 14px;
   line-height: 1.5;
+
+  color: var(--color-scheme-1-text);
+
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  line-clamp: 3;
 }
 
-h1,
-h2,
-h3,
-h4,
-h5,
-h6,
-p {
-  margin: 0;
+.salary {
+  font-size: 14px;
+  line-height: 1.5;
+
+  color: var(--color-scheme-1-text);
 }
 
-ul,
-ol {
-  margin: 0;
-  padding: 0;
-  list-style: none;
+/* RIGHT SIDE */
+
+.cardActions {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 16px;
 }
 
-a {
-  text-decoration: none;
+.companyName {
+  order: -1;
+
+  font-size: 20px;
+  font-weight: 500;
 }
 
-input,
-textarea,
-select {
-  font: inherit;
-  outline: none;
+.closeButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 100%;
+  padding: 10px 16px;
+
+  border: none;
+  border-radius: 24px;
+
+  font-size: 14px;
 }
 
-button {
-  cursor: pointer;
+.closeButton:disabled {
+  cursor: default;
 }
 
-img {
+/* SHOW MORE */
+
+.showMoreButton {
   display: block;
-  max-width: 100%;
-  height: auto;
+
+  width: 100%;
+  margin: 24px auto 0;
+  padding: 10px 24px;
+
+  border: none;
+  border-radius: 24px;
+
+  font-size: 14px;
 }
 
-svg {
-  display: block;
+/* EMPTY STATE */
+
+.empty {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 16px;
+
+  width: 100%;
+  padding: 24px;
+
+  border-radius: 24px;
+
+  background-color: var(--color-scheme-4-foreground);
 }
 
-textarea {
-  resize: none;
+.emptyTitle {
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 1.5;
+
+  color: var(--color-scheme-1-text);
+}
+
+.emptyText {
+  font-size: 14px;
+  line-height: 1.5;
+
+  color: var(--color-scheme-1-text);
+}
+
+.createButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 100%;
+  min-height: 33px;
+  padding: 6px 12px;
+
+  border: 1px solid var(--color-curious-blue);
+  border-radius: 100px;
+
+  font-size: 14px;
+
+  color: var(--color-white);
+  background-color: var(--color-curious-blue);
+
+  transition:
+    background-color var(--transition),
+    border-color var(--transition),
+    color var(--transition),
+    opacity var(--transition);
+}
+
+.createButton:hover,
+.createButton:focus {
+  background-color: var(--color-curious-blue-lighter);
+  border-color: var(--color-curious-blue);
+  color: var(--color-scheme-1-text);
+}
+
+.createButton:active {
+  background-color: var(--color-curious-blue-light);
+  border-color: var(--color-curious-blue);
+  color: var(--color-scheme-1-text);
+}
+
+/* ========================================
+   MOBILE: 375–767px
+   ======================================== */
+
+@media (min-width: 375px) {
+  /*
+    Поки тут нічого не потрібно,
+    якщо макет 375–767 не відрізняється
+    від базового 320–374.
+  */
+}
+
+/* ========================================
+   TABLET: 768–1439px
+   ======================================== */
+
+@media (min-width: 768px) {
+  .list {
+    gap: 20px;
+  }
+
+  .card {
+    flex-direction: row;
+    justify-content: space-between;
+    gap: 16px;
+  }
+
+  .meta {
+    gap: 24px;
+  }
+
+  .vacancyTitle {
+    font-size: 20px;
+  }
+
+  .cardActions {
+    align-items: flex-end;
+    justify-content: space-between;
+    flex-shrink: 0;
+  }
+
+  .companyName {
+    order: 0;
+  }
+
+  .closeButton {
+    width: auto;
+  }
+
+  .showMoreButton {
+    width: fit-content;
+  }
+
+  .createButton {
+    width: 287px;
+  }
+}
+
+/* ========================================
+   DESKTOP: 1440px+
+   ======================================== */
+
+@media (min-width: 1440px) {
+  .empty {
+    padding: 32px;
+  }
+}
+.empty {
+  padding: 40px !important;
+  outline: 5px solid red !important;
 }
