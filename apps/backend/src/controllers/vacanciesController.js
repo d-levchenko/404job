@@ -173,3 +173,64 @@ export const createVacancy = async (req, res) => {
   });
   res.status(201).json(vacancy);
 };
+
+export const closeVacancy = async (req, res) => {
+  const { vacancyId } = req.params;
+  const { _id: userId, userType } = req.user;
+
+  if (userType !== 'employer') {
+    throw createHttpError(403, 'Only employers can close vacancies');
+  }
+
+  const vacancy = await Vacancy.findById(vacancyId);
+
+  if (!vacancy) {
+    throw createHttpError(404, 'Vacancy not found');
+  }
+
+  if (String(vacancy.employerId) !== String(userId)) {
+    throw createHttpError(403, 'You can only close your own vacancies');
+  }
+
+  vacancy.status = 'closed';
+  await vacancy.save();
+
+  res.status(200).json(vacancy);
+};
+
+export const getMyVacancies = async (req, res, next) => {
+  try {
+    const { _id: userId, userType } = req.user;
+
+    if (userType !== 'employer') {
+      throw createHttpError(403, 'Only employers can view their vacancies');
+    }
+
+    const { page = 1, perPage = 10, status } = req.query;
+    const skip = (page - 1) * perPage;
+
+    const query = { employerId: userId };
+    if (status) query.status = status;
+
+    const [totalItems, vacancies] = await Promise.all([
+      Vacancy.countDocuments(query),
+      Vacancy.find(query)
+        .sort({ createdAt: -1 })
+        .skip(skip)
+        .limit(perPage)
+        .populate('industryId experienceLevelId locationId employmentTypeId'),
+    ]);
+
+    const totalPages = Math.ceil(totalItems / perPage);
+
+    res.status(200).json({
+      page,
+      perPage,
+      totalVacancies: totalItems,
+      totalPages,
+      vacancies,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
