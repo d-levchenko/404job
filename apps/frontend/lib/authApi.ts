@@ -1,4 +1,4 @@
-import { LoginData, RegisterData } from '@/types/auth';
+import { AuthUser, LoginData, RegisterData } from '@/types/auth';
 import { api } from './api';
 
 export const registerUser = async (payload: RegisterData) => {
@@ -11,6 +11,6 @@ export const registerUser = async (payload: RegisterData) => {
 };
 
 export const loginUser = async (payload: LoginData) => {
-  const { data } = await api.post('auth/login', payload);
+  const { data } = await api.post<AuthUser>('auth/login', payload);
   return data;
 };

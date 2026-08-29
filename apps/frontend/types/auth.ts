@@ -25,3 +25,13 @@ export interface UpdateProfileData {
   linkedinUrl?: string;
   behanceUrl?: string;
 }
+
+export interface AuthUser {
+  _id: string;
+  userType: 'candidate' | 'employer';
+  name?: string;
+  companyName?: string;
+  email: string;
+  createdAt: string;
+  updatedAt: string;
+}
