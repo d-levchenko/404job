@@ -59,7 +59,6 @@ const RootLayout = ({ children }: LayoutProps<'/'>) => {
       <body className="min-h-full flex flex-col">
         <TanStackProvider>
           <Header />
-
           {children}
           <Footer />
         </TanStackProvider>
