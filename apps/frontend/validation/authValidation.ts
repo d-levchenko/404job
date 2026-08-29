@@ -22,6 +22,7 @@ export const RegisterValidation = (type: UserType) =>
     email: Yup.string()
       .trim()
       .email('Електронна адреса має бути валідною, приклад: example@gmail.com')
+      .max(64, 'Електронна адреса має бути не більше 64 символів')
       .required('Вкажіть електронну адресу'),
     password: Yup.string()
       .min(8, 'Пароль має бути не менше 8 символів')
