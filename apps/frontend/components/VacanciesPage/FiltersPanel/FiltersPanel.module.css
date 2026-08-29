@@ -276,6 +276,7 @@
   height: 20px;
 
   position: relative;
+  cursor: pointer;
 }
 
 .checkbox {
