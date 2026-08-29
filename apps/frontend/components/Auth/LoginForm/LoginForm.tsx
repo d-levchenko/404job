@@ -7,6 +7,8 @@ import Link from 'next/link';
 import { ErrorMessage, Field, Form, Formik } from 'formik';
 import * as Yup from 'yup';
 import { useRouter } from 'next/navigation';
+import { loginUser } from '@/lib/authApi';
+import toast from 'react-hot-toast';
 
 interface LoginFormValues {
   email: string;
@@ -33,12 +35,13 @@ const LoginForm = () => {
     password: '',
   };
 
-  const handleSubmit = (values: LoginFormValues) => {
-    console.log(values);
-
-    //   ПОКИ ТАК, БЕЗ ЛОГІКИ
-
-    router.push('/');
+  const handleSubmit = async (values: LoginFormValues) => {
+    try {
+      await loginUser(values);
+      router.push('/');
+    } catch {
+      toast.error('Неправильний email або пароль');
+    }
   };
 
   const id = useId();

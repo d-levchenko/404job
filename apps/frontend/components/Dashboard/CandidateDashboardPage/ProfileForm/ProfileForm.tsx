@@ -4,6 +4,7 @@ import { useId } from 'react';
 import css from './ProfileForm.module.css';
 import { Field, Form, Formik, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
+import { type UpdateProfileData } from '@/types/auth';
 
 interface ProfileValidation {
   name: string;
@@ -12,11 +13,8 @@ interface ProfileValidation {
   behanceUrl?: string;
 }
 
-interface User {
-  name: string;
-  githubUrl?: string;
-  linkedinUrl?: string;
-  behanceUrl?: string;
+interface ProfileFormProps {
+  user: UpdateProfileData;
 }
 
 const validationSchema = Yup.object({
@@ -26,7 +24,7 @@ const validationSchema = Yup.object({
   behanceUrl: Yup.string().url().max(512).optional(),
 });
 
-const ProfileForm = ({ user }: { user: User }) => {
+const ProfileForm = ({ user }: ProfileFormProps) => {
   const id = useId();
 
   const handleSubmit = (values: ProfileValidation) => {
