@@ -14,5 +14,8 @@
   },
   "devDependencies": {
     "prettier": "^3.9.6"
+  },
+  "dependencies": {
+    "cookie": "^2.0.1"
   }
 }
