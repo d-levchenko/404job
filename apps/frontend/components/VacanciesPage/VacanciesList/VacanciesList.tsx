@@ -1,17 +1,17 @@
 'use client';
 
-import { AllVacancies } from '@/types/vacancyType';
+import { Vacancy } from '@/types/vacancyType';
 import { SvgIcon } from '@/components/SvgIcon/SvgIcon';
+import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 
 import css from './VacanciesList.module.css';
-import { useRouter } from 'next/navigation';
 
 interface VacanciesListProps {
-  vacancies: AllVacancies;
+  vacancies: Vacancy[];
 }
 
-const VacanciesList = ({ vacancies: { vacancies } }: VacanciesListProps) => {
+const VacanciesList = ({ vacancies }: VacanciesListProps) => {
   const router = useRouter();
 
   const handleVacancyClick = (vacancyId: string) => {
@@ -19,7 +19,7 @@ const VacanciesList = ({ vacancies: { vacancies } }: VacanciesListProps) => {
   };
 
   return (
-    <ul className="flex flex-col gap-6">
+    <ul className={css.list}>
       {vacancies.map(vacancy => (
         <li
           key={vacancy._id}

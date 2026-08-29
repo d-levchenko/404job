@@ -1,0 +1,36 @@
+.button {
+  font-family: var(--font-family);
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--color-white);
+
+  border: 1px solid var(--color-curious-blue);
+  border-radius: 100px;
+
+  width: 100%;
+  max-width: 335px;
+  height: 36px;
+
+  background: var(--color-curious-blue);
+
+  display: block;
+  margin: 0 auto;
+
+  transition: var(--transition);
+
+  @media screen and (min-width: 768px) {
+    max-width: 137px;
+  }
+
+  @media screen and (min-width: 1440px) {
+    max-width: 153px;
+    font-size: 16px;
+  }
+
+  &:hover,
+  &:focus-visible {
+    background: var(--color-curious-blue-lighter);
+    color: var(--color-scheme-1-text);
+  }
+}
