@@ -25,7 +25,7 @@ const VacanciesList = ({ vacancies }: VacanciesListProps) => {
           key={vacancy._id}
           onClick={() => handleVacancyClick(vacancy._id)}
           className="rounded-4xl p-6 max-w-83.75 w-full bg-(--color-scheme-4-foreground) font-(--font-family) font-normal leading-normal
-          md:max-w-3xl xl:max-w-243.75 cursor-pointer hover:bg-(--color-scheme-4-background) transition-(--transition) hover:shadow-[0_4px_16px_rgba(0,0,0,0.1)] hover:scale-[1.005]">
+          md:max-w-3xl xl:max-w-243.75 cursor-pointer hover:bg-(--color-scheme-4-background) transition-(--transition) hover:shadow-[0_4px_16px_rgba(0,0,0,0.1)] hover:scale-[1.01]">
           <div className="md:flex justify-between flex-row-reverse items-center mb-4">
             <Image
               src="/images/emptyImg.jpg"
