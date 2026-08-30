@@ -56,7 +56,7 @@ const ProfileForm = ({ user }: { user: CandidateProfile }) => {
         {({ errors, touched, resetForm }) => {
           return (
             <Form className={css['profile-form']}>
-              <h2 className={css['title-form']}>Особиста інформація</h2>
+              {/* <h2 className={css['title-form']}>Особиста інформація</h2> */}
               <div>
                 <label htmlFor={`${id}-name`}>Імʼя</label>
                 <Field
