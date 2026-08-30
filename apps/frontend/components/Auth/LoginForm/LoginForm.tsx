@@ -8,6 +8,13 @@ import { ErrorMessage, Field, Form, Formik } from 'formik';
 import * as Yup from 'yup';
 import { useRouter } from 'next/navigation';
 import { LoginFormData } from '@/types/auth';
+import { loginUser } from '@/lib/authApi';
+import toast from 'react-hot-toast';
+
+interface LoginFormValues {
+  email: string;
+  password: string;
+}
 
 const loginSchema = Yup.object({
   email: Yup.string()
@@ -29,12 +36,13 @@ const LoginForm = () => {
     password: '',
   };
 
-  const handleSubmit = (values: LoginFormData) => {
-    console.log(values);
-
-    //   ПОКИ ТАК, БЕЗ ЛОГІКИ
-
-    router.push('/');
+  const handleSubmit = async (values: LoginFormValues) => {
+    try {
+      await loginUser(values);
+      router.push('/');
+    } catch {
+      toast.error('Неправильний email або пароль');
+    }
   };
 
   const id = useId();

@@ -4,9 +4,24 @@ import { useId } from 'react';
 import css from './ProfileForm.module.css';
 import { Field, Form, Formik, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
+<<<<<<< HEAD
 import { CandidateProfile } from '@/types/userType';
 import { updateUser } from '@/lib/userApi';
 import toast from 'react-hot-toast';
+=======
+import { type UpdateProfileData } from '@/types/auth';
+
+interface ProfileValidation {
+  name: string;
+  githubUrl?: string;
+  linkedinUrl?: string;
+  behanceUrl?: string;
+}
+
+interface ProfileFormProps {
+  user: UpdateProfileData;
+}
+>>>>>>> origin/feature/login-page
 
 const validationSchema = Yup.object({
   name: Yup.string()
@@ -27,7 +42,11 @@ const validationSchema = Yup.object({
     .optional(),
 });
 
+<<<<<<< HEAD
 const ProfileForm = ({ user }: { user: CandidateProfile }) => {
+=======
+const ProfileForm = ({ user }: ProfileFormProps) => {
+>>>>>>> origin/feature/login-page
   const id = useId();
 
   const handleSubmit = async (values: CandidateProfile) => {
