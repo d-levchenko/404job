@@ -2,6 +2,8 @@
 
 import { useState } from 'react';
 
+import SavedVacanciesList from './SavedVacanciesList/SavedVacanciesList';
+
 import css from './CandidateDashboardPage.module.css';
 
 type ActiveTab = 'profile' | 'saved';
@@ -36,14 +38,18 @@ const CandidateDashboardPage = () => {
           </nav>
 
           <section
-            className={`${css.content} ${
-              isProfileTab ? css.profileContent : css.savedContent
-            }`}>
-            <h2 className={css.sectionTitle}>
-              {isProfileTab ? 'Особиста інформація' : 'Збережені вакансії'}
-            </h2>
+           className={`${css.content} ${
+           isProfileTab ? css.profileContent : css.savedContent
+           }`}>
+           <h2 className={css.sectionTitle}>
+            {isProfileTab ? 'Особиста інформація' : 'Збережені вакансії'}
+           </h2>
 
-            <div className={css.contentSlot} />
+           {isProfileTab ? (
+           <div className={css.contentSlot} />
+           ) : (
+           <SavedVacanciesList />
+           )}
           </section>
         </div>
       </div>

@@ -37,3 +37,32 @@ export const getAllVacancies = async (
     throw error;
   }
 };
+
+interface FavoriteVacanciesResponse {
+  message: string;
+  savedVacancies: Vacancy[];
+}
+
+export const getFavoriteVacancies = async (): Promise<Vacancy[]> => {
+  try {
+    const { data } = await api.get<Vacancy[]>('/vacancies/favorite');
+
+    return data;
+  } catch (error) {
+    throw error;
+  }
+};
+
+export const removeVacancyFromFavorites = async (
+  vacancyId: string,
+): Promise<FavoriteVacanciesResponse> => {
+  try {
+    const { data } = await api.delete<FavoriteVacanciesResponse>(
+      `/vacancies/${vacancyId}/favorite`,
+    );
+
+    return data;
+  } catch (error) {
+    throw error;
+  }
+};
