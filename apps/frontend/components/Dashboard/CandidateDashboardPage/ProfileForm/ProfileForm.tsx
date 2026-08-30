@@ -30,6 +30,8 @@ const ProfileForm = ({ user }: { user: User }) => {
   const id = useId();
 
   const handleSubmit = (values: ProfileValidation) => {
+    console.log(values);
+
     //   ДАЛІ ЛОГІКА ЗАПИТУ
   };
 
