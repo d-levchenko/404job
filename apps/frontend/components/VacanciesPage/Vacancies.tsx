@@ -53,11 +53,21 @@ const Vacancies = ({ filters }: VacanciesProps) => {
   const vacancies = data?.pages.flatMap(page => page.vacancies) ?? [];
   const meta = data?.pages.at(-1);
   const hasResults = vacancies.length > 0;
+  const totalDisplayed = vacancies.length;
+  const totalVacancies = data?.pages.at(0)?.totalVacancies ?? 0;
+
+  const adjustedMeta = meta
+    ? {
+        ...meta,
+        totalVacancies: totalVacancies,
+        perPage: totalDisplayed,
+      }
+    : undefined;
 
   return (
     <div className="desktop:flex desktop:gap-8 items-start">
-      <FiltersPanel meta={meta} filters={filters} />
-      <MobTabFilters meta={meta} filters={filters} />
+      <FiltersPanel meta={adjustedMeta} filters={filters} />
+      <MobTabFilters meta={adjustedMeta} filters={filters} />
 
       <div className="flex-1 w-full items-center">
         <Search />
