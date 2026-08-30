@@ -14,7 +14,6 @@ export default function Error({ reset }: { error: Error; reset: () => void }) {
       <button onClick={() => reset()} className={css.button}>
         Спробувати ще раз
       </button>
-      Я
     </div>
   );
 }
