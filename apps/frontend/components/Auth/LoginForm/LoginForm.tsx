@@ -34,8 +34,6 @@ const LoginForm = () => {
   };
 
   const handleSubmit = (values: LoginFormValues) => {
-    console.log(values);
-
     //   ПОКИ ТАК, БЕЗ ЛОГІКИ
 
     router.push('/');
