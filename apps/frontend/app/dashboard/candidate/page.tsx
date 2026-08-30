@@ -18,8 +18,9 @@ const user = {
 const Page = () => {
   return (
     <>
-      <CandidateDashboardPage />
-      <ProfileForm user={user} />
+      <CandidateDashboardPage>
+        <ProfileForm user={user} />
+      </CandidateDashboardPage>
     </>
   );
 };
