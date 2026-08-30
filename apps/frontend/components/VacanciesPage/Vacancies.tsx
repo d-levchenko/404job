@@ -2,7 +2,7 @@
 
 import { useEffect } from 'react';
 import { useSearchParams } from 'next/navigation';
-import { useQuery } from '@tanstack/react-query';
+import { useInfiniteQuery } from '@tanstack/react-query';
 import { getAllVacancies } from '@/lib/vacanciesApi';
 import { useFiltersStore } from '@/store/filtersStore';
 import FiltersPanel from './FiltersPanel/FiltersPanel';
@@ -11,6 +11,8 @@ import RequestReturnedNothing from './RequestReturnedNothing/RequestReturnedNoth
 import Search from './Search/Search';
 import { FiltersOptions } from './FiltersPanel/FilterFields';
 import MobTabFilters from './FiltersPanel/MobTabFilters/MobTabFilter';
+
+import css from './Vacancies.module.css';
 
 interface VacanciesProps {
   filters: FiltersOptions;
@@ -24,8 +26,8 @@ const Vacancies = ({ filters }: VacanciesProps) => {
     setFromParams(searchParams);
   }, [searchParams, setFromParams]);
 
-  const params = {
-    page: Number(searchParams.get('page') || 1),
+  const filterParams = {
+    perPage: Number(searchParams.get('perPage') || 8),
     search: searchParams.get('search') || undefined,
     industry: searchParams.getAll('industry'),
     experience: searchParams.getAll('experience'),
@@ -37,24 +39,43 @@ const Vacancies = ({ filters }: VacanciesProps) => {
         : searchParams.get('isRemote') === 'true',
   };
 
-  const { data, isFetching } = useQuery({
-    queryKey: ['vacancies', params],
-    queryFn: () => getAllVacancies(params),
-    placeholderData: prev => prev,
-  });
+  const { data, isFetching, fetchNextPage, hasNextPage, isFetchingNextPage } =
+    useInfiniteQuery({
+      queryKey: ['vacancies', filterParams],
+      queryFn: ({ pageParam }) =>
+        getAllVacancies({ ...filterParams, page: pageParam }),
+      initialPageParam: 1,
+      getNextPageParam: lastPage =>
+        lastPage.page < lastPage.totalPages ? lastPage.page + 1 : undefined,
+      placeholderData: prev => prev,
+    });
 
-  const hasResults = !!data && data.vacancies.length > 0;
+  const vacancies = data?.pages.flatMap(page => page.vacancies) ?? [];
+  const meta = data?.pages.at(-1);
+  const hasResults = vacancies.length > 0;
 
   return (
     <div className="desktop:flex desktop:gap-8 items-start">
-      <FiltersPanel meta={data} filters={filters} />
-      <MobTabFilters meta={data} filters={filters} />
+      <FiltersPanel meta={meta} filters={filters} />
+      <MobTabFilters meta={meta} filters={filters} />
 
-      <div className="flex-1 w-full">
+      <div className="flex-1 w-full items-center">
         <Search />
 
         {hasResults ? (
-          <VacanciesList vacancies={data} />
+          <>
+            <VacanciesList vacancies={vacancies} />
+
+            {hasNextPage && (
+              <button
+                type="button"
+                onClick={() => fetchNextPage()}
+                disabled={isFetchingNextPage}
+                className={css.button}>
+                {isFetchingNextPage ? 'Завантаження...' : 'Показати більше'}
+              </button>
+            )}
+          </>
         ) : (
           !isFetching && <RequestReturnedNothing />
         )}
