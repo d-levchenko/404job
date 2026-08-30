@@ -1,11 +1,11 @@
 'use client';
 import { ErrorMessage, Field, Form, Formik, FormikHelpers } from 'formik';
-import * as Yup from 'yup';
 import css from './RegisterForm.module.css';
 import { RegisterData } from '@/types/auth';
 import toast from 'react-hot-toast';
 import { useRouter } from 'next/navigation';
 import { registerUser } from '@/lib/authApi';
+import { RegisterValidation } from '@/validation/authValidation';
 interface RegisterFormValidation {
   name: string;
   companyName: string;
@@ -25,32 +25,7 @@ interface RegistrationFormProps {
 
 const RegistrationForm = ({ type }: RegistrationFormProps) => {
   const router = useRouter();
-  const RegisterFormSchema = Yup.object().shape({
-    name:
-      type === 'candidate'
-        ? Yup.string()
-            .trim()
-            .min(2, "Ім'я має бути не менше 2 символів")
-            .max(32, "Ім'я має бути не більше 32 символів")
-            .required("Вкажіть ім'я")
-        : Yup.string(),
-    companyName:
-      type === 'employer'
-        ? Yup.string()
-            .trim()
-            .min(2, 'Назва компанії має бути не менше 2 символів')
-            .max(64, 'Назва компанії має бути не більше 64 символів')
-            .required('Вкажіть назву компанії')
-        : Yup.string(),
-    email: Yup.string()
-      .trim()
-      .email('Електронна адреса має бути валідною, приклад: example@gmail.com')
-      .required('Вкажіть електронну адресу'),
-    password: Yup.string()
-      .min(8, 'Пароль має бути не менше 8 символів')
-      .max(128, 'Пароль має бути не більше 128 символів')
-      .required('Вкажіть пароль'),
-  });
+  const RegisterFormSchema = RegisterValidation(type);
 
   const handleSubmit = async (
     values: RegisterFormValidation,
