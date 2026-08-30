@@ -20,6 +20,7 @@ import {
   getVacancyByIdSchema,
   closeVacancySchema,
   getMyVacanciesSchema,
+  savedVacanciesScema,
 } from '../validations/vacanciesValidator.js';
 import { celebrate } from 'celebrate';
 
@@ -32,9 +33,14 @@ vacancyRouter.get(
 );
 
 vacancyRouter.get('/hot', celebrate(getHotVacanciesSchema), getHotVacancies);
+vacancyRouter.get(
+  '/favorite',
+  authenticate,
+  celebrate(savedVacanciesScema),
+  getFavoriteVacancies,
+);
 
 vacancyRouter.get('/:id', celebrate(getVacancyByIdSchema), getVacancyById);
-vacancyRouter.get('/favorite', authenticate, getFavoriteVacancies);
 
 vacancyRouter.post('/:vacancyId/favorite', authenticate, addVacancyToFavorites);
 

@@ -188,16 +188,35 @@ export const createVacancy = async (req, res) => {
   res.status(201).json(vacancy);
 };
 
-export const getFavoriteVacancies = async (req, res) => {
-  const { _id: userId } = req.user;
-  const user = await User.findById(userId).populate({
-    path: 'savedVacancies',
-    populate: {
-      path: 'industryId experienceLevelId locationId employmentTypeId employerId',
-    },
-  });
+export const getFavoriteVacancies = async (req, res, next) => {
+  try {
+    const { _id: userId, userType } = req.user;
+    const page = Number(req.query.page) || 1;
+    const perPage = Number(req.query.perPage) || 4;
 
-  res.status(200).json(user.savedVacancies);
+    if (userType !== 'candidate')
+      throw createHttpError(403, 'Only candidates can view saved vacancies');
+
+    const user = await User.findById(userId).populate({
+      path: 'savedVacancies',
+      populate: {
+        path: 'industryId experienceLevelId locationId employmentTypeId employerId',
+      },
+    });
+    if (!user) {
+      throw createHttpError(404, 'User not found');
+    }
+    const skip = (page - 1) * perPage;
+    const savedVacancies = user.savedVacancies.slice(skip, skip + perPage);
+    const totalSavedVacancies = user?.savedVacancies?.length || 0;
+    const totalPages = Math.ceil(totalSavedVacancies / perPage) || 1;
+
+    res
+      .status(200)
+      .json({ page, perPage, totalPages, totalSavedVacancies, savedVacancies });
+  } catch (error) {
+    next(error);
+  }
 };
 
 export const closeVacancy = async (req, res) => {
