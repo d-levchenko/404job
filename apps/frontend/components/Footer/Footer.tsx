@@ -2,6 +2,7 @@ import React from 'react';
 import SocialNavList from '../SocialNavList/SocialNavList';
 import FooterNavList from '../FooterNavList/FooterNavList';
 import { SvgIcon } from '../SvgIcon/SvgIcon';
+import Link from 'next/link';
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
@@ -9,7 +10,7 @@ const Footer = () => {
     <footer className="mx-auto w-full py-12 px-8 max-w-93.75 md:max-w-3xl desktop:max-w-360  desktop:px-16 flex flex-col justify-center items-center  gap-6 bg-(--color-scheme-4-background) md:">
       <div className="flex flex-col gap-12.5 md:flex-row md:justify-between md:w-full desktop:items-start desktop:justify-center">
         <div className="flex gap-2.5  md:flex-1 md:items-start ">
-          <div className="flex items-center gap-2.5 md:gap-1 ">
+          <Link href="/" className="flex items-center gap-2.5 md:gap-1 ">
             <SvgIcon
               name="logo"
               width={60}
@@ -19,7 +20,7 @@ const Footer = () => {
             <span className="font-medium text-[34px] leading-normal text-(--color-neutral-darkest) md:text-[14px] desktop:text-[16px]">
               JobSpace
             </span>
-          </div>
+          </Link>
         </div>
         <div className="flex flex-col gap-10  md:flex-row md:flex-2 md:justify-between desktop:flex-1 desktop:justify-end">
           <div className="flex flex-col gap-6 md:items-start md:w-52.75">
