@@ -14,7 +14,6 @@
   letter-spacing: -0.01em;
 }
 
-/* MOBILE: navigation зверху, children знизу */
 .dashboard {
   display: flex;
   flex-direction: column;
@@ -58,13 +57,6 @@
   min-width: 0;
 }
 
-/* ========================================
-   TABLET: 768px — 1439px
-
-   navigation зверху
-   children знизу
-   ======================================== */
-
 @media screen and (min-width: 768px) and (max-width: 1439px) {
   .page {
     padding-inline: 32px;
@@ -100,13 +92,6 @@
     width: 100%;
   }
 }
-
-/* ========================================
-   DESKTOP: 1440px+
-
-   navigation зліва
-   children справа
-   ======================================== */
 
 @media screen and (min-width: 1440px) {
   .page {

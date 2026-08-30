@@ -1,7 +1,3 @@
-/* ========================================
-   MOBILE FIRST
-   ======================================== */
-
 .wrapper {
   display: flex;
   flex-direction: column;
@@ -20,10 +16,6 @@
   color: var(--color-scheme-1-text);
 }
 
-/* =========================
-   LIST
-   ========================= */
-
 .list {
   display: flex;
   flex-direction: column;
@@ -33,10 +25,6 @@
   padding: 0;
   list-style: none;
 }
-
-/* =========================
-   CARD
-   ========================= */
 
 .card {
   display: flex;
@@ -63,10 +51,6 @@
   color: inherit;
   text-decoration: none;
 }
-
-/* =========================
-   LOGO
-   ========================= */
 
 .companyMobile {
   display: block;
@@ -104,10 +88,6 @@
   fill: #bdbdbd;
 }
 
-/* =========================
-   META
-   ========================= */
-
 .meta {
   display: flex;
   align-items: center;
@@ -144,10 +124,6 @@
   white-space: nowrap;
 }
 
-/* =========================
-   VACANCY TITLE
-   ========================= */
-
 .vacancyTitle {
   width: 100%;
   margin: 0 0 16px;
@@ -157,10 +133,6 @@
   letter-spacing: -0.01em;
   color: var(--color-scheme-1-text);
 }
-
-/* =========================
-   DESCRIPTION
-   ========================= */
 
 .description {
   display: -webkit-box;
@@ -176,10 +148,6 @@
   -webkit-line-clamp: 3;
   line-clamp: 3;
 }
-
-/* =========================
-   SALARY
-   ========================= */
 
 .salary {
   display: flex;
@@ -200,17 +168,9 @@
   flex-shrink: 0;
 }
 
-/* =========================
-   CARD ACTIONS
-   ========================= */
-
 .cardActions {
   display: none;
 }
-
-/* =========================
-   BUTTONS — SHARED
-   ========================= */
 
 .createButton,
 .closeButton,
@@ -262,19 +222,11 @@
   opacity: 0.6;
 }
 
-/* =========================
-   SHOW MORE
-   ========================= */
-
 .showMoreButton {
   align-self: center;
   min-height: 33px;
   font-weight: 500;
 }
-
-/* =========================
-   EMPTY STATE
-   ========================= */
 
 .empty {
   display: flex;
@@ -313,10 +265,6 @@
 
   font-weight: 500;
 }
-
-/* ========================================
-   TABLET + DESKTOP SHARED: 767px
-   ======================================== */
 
 @media screen and (min-width: 767px) {
   .card {
@@ -406,10 +354,6 @@
   }
 }
 
-/* ========================================
-   TABLET: 767px — 1439px
-   ======================================== */
-
 @media screen and (min-width: 767px) and (max-width: 1439px) {
   .card {
     min-height: 277px;
@@ -433,10 +377,6 @@
     min-height: 33px;
   }
 }
-
-/* ========================================
-   DESKTOP: 1440px
-   ======================================== */
 
 @media screen and (min-width: 1440px) {
   .title {
