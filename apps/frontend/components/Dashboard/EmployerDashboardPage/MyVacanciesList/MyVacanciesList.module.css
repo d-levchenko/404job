@@ -7,19 +7,16 @@
   flex-direction: column;
   align-items: stretch;
   gap: 16px;
-
   width: 100%;
   min-width: 0;
 }
 
 .title {
   margin: 0;
-
-  font-size: 20px;
+  font-size: 18px;
   font-weight: 700;
   line-height: 1.4;
   letter-spacing: -0.01em;
-
   color: var(--color-scheme-1-text);
 }
 
@@ -31,11 +28,9 @@
   display: flex;
   flex-direction: column;
   gap: 24px;
-
   width: 100%;
   margin: 0;
   padding: 0;
-
   list-style: none;
 }
 
@@ -46,13 +41,10 @@
 .card {
   display: flex;
   flex-direction: column;
-
   width: 100%;
   min-width: 0;
   padding: 24px;
-
   border-radius: 32px;
-
   background-color: var(--color-scheme-4-foreground);
 }
 
@@ -60,17 +52,14 @@
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-
   width: 100%;
   min-width: 0;
 }
 
 .cardLink {
   display: block;
-
   width: 100%;
   min-width: 0;
-
   color: inherit;
   text-decoration: none;
 }
@@ -92,9 +81,7 @@
 .companyLogoPlaceholder {
   width: 157px;
   height: 67px;
-
   flex-shrink: 0;
-
   border-radius: 24px;
   overflow: hidden;
 }
@@ -108,15 +95,12 @@
   display: flex;
   align-items: center;
   justify-content: center;
-
   background-color: #d9d9d9;
 }
 
 .noImageIcon {
   width: 56px;
   height: auto;
-
-  stroke: #bdbdbd;
   fill: #bdbdbd;
 }
 
@@ -129,16 +113,13 @@
   align-items: center;
   justify-content: flex-start;
   gap: 24px;
-
   width: 100%;
   min-width: 0;
   min-height: 24px;
   margin: 0 0 8px;
-
   font-size: 14px;
   font-weight: 400;
   line-height: 1.5;
-
   color: var(--color-scheme-1-text);
 }
 
@@ -146,21 +127,18 @@
   display: flex;
   align-items: center;
   gap: 8px;
-
   min-width: 0;
 }
 
 .locationIcon {
   width: 24px;
   height: 24px;
-
   flex-shrink: 0;
 }
 
 .location > span,
 .metaCompany {
   min-width: 0;
-
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -173,12 +151,10 @@
 .vacancyTitle {
   width: 100%;
   margin: 0 0 16px;
-
   font-size: 20px;
   font-weight: 700;
   line-height: 1.4;
   letter-spacing: -0.01em;
-
   color: var(--color-scheme-1-text);
 }
 
@@ -188,22 +164,16 @@
 
 .description {
   display: -webkit-box;
-
   width: 100%;
   min-width: 0;
   margin: 0 0 8px;
-
   overflow: hidden;
-
   font-size: 14px;
   font-weight: 400;
   line-height: 1.5;
-
   color: var(--color-scheme-1-text);
-
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 3;
-
   line-clamp: 3;
 }
 
@@ -215,22 +185,18 @@
   display: flex;
   align-items: center;
   gap: 8px;
-
   width: 100%;
   min-height: 24px;
   margin: 0;
-
   font-size: 14px;
   font-weight: 400;
   line-height: 1.5;
-
   color: var(--color-scheme-1-text);
 }
 
 .salaryIcon {
   width: 24px;
   height: 24px;
-
   flex-shrink: 0;
 }
 
@@ -251,20 +217,14 @@
 .showMoreButton {
   align-items: center;
   justify-content: center;
-
   padding: 6px 12px;
-
   border: 1px solid var(--color-curious-blue);
   border-radius: 100px;
-
   font-size: 14px;
   line-height: 1.5;
-
   color: var(--color-white);
   background-color: var(--color-curious-blue);
-
   cursor: pointer;
-
   transition:
     background-color var(--transition),
     border-color var(--transition),
@@ -284,7 +244,6 @@
 .showMoreButton:hover,
 .showMoreButton:focus {
   border-color: var(--color-curious-blue);
-
   color: var(--color-scheme-1-text);
   background-color: var(--color-curious-blue-lighter);
 }
@@ -293,7 +252,6 @@
 .closeButton:active,
 .showMoreButton:active {
   border-color: var(--color-curious-blue);
-
   color: var(--color-scheme-1-text);
   background-color: var(--color-curious-blue-light);
 }
@@ -310,9 +268,7 @@
 
 .showMoreButton {
   align-self: center;
-
   min-height: 33px;
-
   font-weight: 500;
 }
 
@@ -325,33 +281,29 @@
   flex-direction: column;
   align-items: flex-start;
   gap: 16px;
-
   width: 100%;
   padding: 24px;
-
-  border-radius: 24px;
-
+  border-radius: 32px;
   background-color: var(--color-scheme-4-foreground);
 }
 
 .emptyTitle {
   margin: 0;
-
+  width: max-content;
+  max-width: none;
   font-size: 20px;
   font-weight: 700;
   line-height: 1.4;
   letter-spacing: -0.01em;
-
+  white-space: nowrap;
   color: var(--color-scheme-1-text);
 }
 
 .emptyText {
   margin: 0;
-
   font-size: 14px;
   font-weight: 400;
   line-height: 1.5;
-
   color: var(--color-scheme-1-text);
 }
 
@@ -363,8 +315,7 @@
 }
 
 /* ========================================
-   TABLET + DESKTOP SHARED: 767px+
-   Структура картки однакова
+   TABLET + DESKTOP SHARED: 767px
    ======================================== */
 
 @media screen and (min-width: 767px) {
@@ -382,21 +333,16 @@
       'heading logo'
       'description description'
       'salary salary';
-
     column-gap: 16px;
-
     width: 100%;
     min-width: 0;
   }
 
   .companyMobile {
     grid-area: logo;
-
     display: block;
-
     justify-self: end;
     align-self: start;
-
     margin: 0;
   }
 
@@ -410,19 +356,16 @@
 
   .vacancyTitle {
     grid-area: heading;
-
     margin: 0;
   }
 
   .description {
     grid-area: description;
-
     margin: 16px 0 0;
   }
 
   .salary {
     grid-area: salary;
-
     margin-top: 8px;
   }
 
@@ -430,12 +373,7 @@
     display: flex;
     align-items: center;
     justify-content: flex-end;
-
     width: 100%;
-
-    /*
-      Притискає кнопку до низу картки
-    */
     margin-top: auto;
   }
 
@@ -470,7 +408,6 @@
 
 /* ========================================
    TABLET: 767px — 1439px
-   Тільки те, що відрізняється від desktop
    ======================================== */
 
 @media screen and (min-width: 767px) and (max-width: 1439px) {
@@ -483,8 +420,12 @@
   }
 
   .closeButton {
-    width: 144px;
+    width: fit-content;
+    min-width: 144px;
     min-height: 33px;
+
+    white-space: nowrap;
+    flex-shrink: 0;
   }
 
   .showMoreButton {
@@ -494,7 +435,7 @@
 }
 
 /* ========================================
-   DESKTOP: 1440px+
+   DESKTOP: 1440px
    ======================================== */
 
 @media screen and (min-width: 1440px) {
@@ -558,5 +499,6 @@
 
   .createButton {
     min-height: 36px;
+    font-size: 16px;
   }
 }
