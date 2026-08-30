@@ -4,6 +4,7 @@ import '@blossom-carousel/react/style.css';
 import './globals.css';
 import TanStackProvider from '@/providers/TanStackProvider';
 import Header from '@/components/Header/Header';
+import Footer from '@/components/Footer/Footer';
 
 const roboto = Roboto({
   weight: ['400', '500', '700'],
@@ -58,8 +59,8 @@ const RootLayout = ({ children }: LayoutProps<'/'>) => {
       <body className="min-h-full flex flex-col">
         <TanStackProvider>
           <Header />
-
           {children}
+          <Footer />
         </TanStackProvider>
       </body>
     </html>

@@ -10,12 +10,16 @@ import {
   removeVacancyFromFavorites,
   createVacancy,
   getFavoriteVacancies,
+  closeVacancy,
+  getMyVacancies,
 } from '../controllers/vacanciesController.js';
 import {
   createVacancySchema,
   getAllVacanciesSchema,
   getHotVacanciesSchema,
   getVacancyByIdSchema,
+  closeVacancySchema,
+  getMyVacanciesSchema,
 } from '../validations/vacanciesValidator.js';
 import { celebrate } from 'celebrate';
 
@@ -45,6 +49,20 @@ vacancyRouter.post(
   authenticate,
   celebrate(createVacancySchema),
   createVacancy,
+);
+
+vacancyRouter.patch(
+  '/:vacancyId/close',
+  authenticate,
+  celebrate(closeVacancySchema),
+  closeVacancy,
+);
+
+vacancyRouter.get(
+  '/my/vacancies',
+  authenticate,
+  celebrate(getMyVacanciesSchema),
+  getMyVacancies,
 );
 
 export default vacancyRouter;

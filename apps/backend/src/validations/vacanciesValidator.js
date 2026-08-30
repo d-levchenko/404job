@@ -11,10 +11,25 @@ export const getAllVacanciesSchema = {
 
     search: Joi.string().allow('', null),
 
-    industry: Joi.string().custom(objectIdValidator).allow('', null),
-    experience: Joi.string().custom(objectIdValidator).allow('', null),
-    location: Joi.string().custom(objectIdValidator).allow('', null),
-    employmentType: Joi.string().custom(objectIdValidator).allow('', null),
+    industry: Joi.array()
+      .items(Joi.string().custom(objectIdValidator))
+      .single()
+      .allow(null),
+
+    experience: Joi.array()
+      .items(Joi.string().custom(objectIdValidator))
+      .single()
+      .allow(null),
+
+    location: Joi.array()
+      .items(Joi.string().custom(objectIdValidator))
+      .single()
+      .allow(null),
+
+    employmentType: Joi.array()
+      .items(Joi.string().custom(objectIdValidator))
+      .single()
+      .allow(null),
 
     isRemote: Joi.string().valid('true', 'false').allow('', null),
   }),
@@ -46,5 +61,19 @@ export const createVacancySchema = {
     locationId: Joi.string().custom(objectIdValidator).required(),
     employmentTypeId: Joi.string().custom(objectIdValidator).required(),
     isRemote: Joi.boolean().required(),
+  }),
+};
+
+export const closeVacancySchema = {
+  [Segments.PARAMS]: Joi.object({
+    vacancyId: Joi.string().custom(objectIdValidator).required(),
+  }),
+};
+
+export const getMyVacanciesSchema = {
+  [Segments.QUERY]: Joi.object({
+    page: Joi.number().min(1).default(1),
+    perPage: Joi.number().min(1).max(100).default(10),
+    status: Joi.string().valid('active', 'closed').allow('', null),
   }),
 };

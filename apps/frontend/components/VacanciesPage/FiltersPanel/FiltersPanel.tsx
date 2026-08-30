@@ -1,56 +1,26 @@
 'use client';
 
-import { SvgIcon } from '@/components/SvgIcon/SvgIcon';
-import { useState } from 'react';
 import { AllVacancies } from '@/types/vacancyType';
+import FiltersFields, { FiltersOptions } from './FilterFields';
 
 import css from './FiltersPanel.module.css';
 
 interface FiltersPanelProps {
-  params: AllVacancies | undefined;
+  meta: AllVacancies | undefined;
+  filters: FiltersOptions;
 }
 
-const FiltersPanel = ({ params }: FiltersPanelProps) => {
-  const [active, setActive] = useState(false);
-
-  const handleClick = () => {
-    setActive(!active);
-  };
-
+const FiltersPanel = ({ meta, filters }: FiltersPanelProps) => {
   return (
-    <aside className="mb-6">
+    <aside className="hidden desktop:flex desktop:flex-col desktop:items-start desktop:max-w-76.25 desktop:w-full">
       <h2 className={css.title}>Фільтри</h2>
       <p className={css.description}>
-        Показано {params?.perPage} зі {params?.totalVacancies}
+        Показано {meta?.perPage} зі {meta?.totalVacancies}
       </p>
 
-      <form>
-        <button className={css.button} type="button" onClick={handleClick}>
-          Фільтри
-          <SvgIcon
-            name="keyboardArrowDown"
-            width={24}
-            height={24}
-            className={`${css.selectIcon} ${active ? css.activeIcon : ''}`}
-            aria-label="Показати фільтри"
-          />
-        </button>
-
-        <div className={css.searchWrapper}>
-          <SvgIcon
-            name="search"
-            width={24}
-            height={24}
-            aria-label="Пошук"
-            className={css.searchIcon}
-          />
-          <input type="text" placeholder="Пошук" className={css.input} />
-        </div>
-
-        <button type="submit" className={css.submitButton}>
-          Знайти вакансії
-        </button>
-      </form>
+      <div className="flex flex-col gap-6 w-full">
+        <FiltersFields filters={filters} idPrefix="desktop" />
+      </div>
     </aside>
   );
 };

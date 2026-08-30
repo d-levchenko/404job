@@ -2,6 +2,11 @@ import { User } from '../models/user.js';
 import createHttpError from 'http-errors';
 import { Vacancy } from '../models/vacancy.js';
 
+const toArray = value => {
+  if (value === undefined || value === null || value === '') return undefined;
+  return Array.isArray(value) ? value : [value];
+};
+
 export const getAllVacancies = async (req, res, next) => {
   try {
     const {
@@ -16,21 +21,30 @@ export const getAllVacancies = async (req, res, next) => {
     } = req.query;
     const skip = (page - 1) * perPage;
 
-    const vacanciesQuery = Vacancy.find().populate(
+    const filter = {};
+
+    if (search) filter.title = { $regex: search, $options: 'i' };
+
+    const industryIds = toArray(industry);
+    if (industryIds) filter.industryId = { $in: industryIds };
+
+    const experienceIds = toArray(experience);
+    if (experienceIds) filter.experienceLevelId = { $in: experienceIds };
+
+    const locationIds = toArray(location);
+    if (locationIds) filter.locationId = { $in: locationIds };
+
+    const employmentTypeIds = toArray(employmentType);
+    if (employmentTypeIds) filter.employmentTypeId = { $in: employmentTypeIds };
+
+    if (isRemote) filter.isRemote = isRemote === 'true';
+
+    const vacanciesQuery = Vacancy.find(filter).populate(
       'industryId experienceLevelId locationId employmentTypeId employerId',
     );
 
-    if (search)
-      vacanciesQuery.find({ title: { $regex: search, $options: 'i' } });
-    if (industry) vacanciesQuery.find({ industryId: industry });
-    if (experience) vacanciesQuery.find({ experienceLevelId: experience });
-    if (location) vacanciesQuery.find({ locationId: location });
-    if (employmentType)
-      vacanciesQuery.find({ employmentTypeId: employmentType });
-    if (isRemote) vacanciesQuery.find({ isRemote: isRemote === 'true' });
-
     const [totalItems, vacancies] = await Promise.all([
-      vacanciesQuery.clone().countDocuments(),
+      Vacancy.countDocuments(filter),
       vacanciesQuery.skip(skip).limit(perPage),
     ]);
 
@@ -184,4 +198,65 @@ export const getFavoriteVacancies = async (req, res) => {
   });
 
   res.status(201).json(user.savedVacancies);
+};
+
+export const closeVacancy = async (req, res) => {
+  const { vacancyId } = req.params;
+  const { _id: userId, userType } = req.user;
+
+  if (userType !== 'employer') {
+    throw createHttpError(403, 'Only employers can close vacancies');
+  }
+
+  const vacancy = await Vacancy.findById(vacancyId);
+
+  if (!vacancy) {
+    throw createHttpError(404, 'Vacancy not found');
+  }
+
+  if (String(vacancy.employerId) !== String(userId)) {
+    throw createHttpError(403, 'You can only close your own vacancies');
+  }
+
+  vacancy.status = 'closed';
+  await vacancy.save();
+
+  res.status(200).json(vacancy);
+};
+
+export const getMyVacancies = async (req, res, next) => {
+  try {
+    const { _id: userId, userType } = req.user;
+
+    if (userType !== 'employer') {
+      throw createHttpError(403, 'Only employers can view their vacancies');
+    }
+
+    const { page = 1, perPage = 10, status } = req.query;
+    const skip = (page - 1) * perPage;
+
+    const query = { employerId: userId };
+    if (status) query.status = status;
+
+    const [totalItems, vacancies] = await Promise.all([
+      Vacancy.countDocuments(query),
+      Vacancy.find(query)
+        .sort({ createdAt: -1 })
+        .skip(skip)
+        .limit(perPage)
+        .populate('industryId experienceLevelId locationId employmentTypeId'),
+    ]);
+
+    const totalPages = Math.ceil(totalItems / perPage);
+
+    res.status(200).json({
+      page,
+      perPage,
+      totalVacancies: totalItems,
+      totalPages,
+      vacancies,
+    });
+  } catch (error) {
+    next(error);
+  }
 };

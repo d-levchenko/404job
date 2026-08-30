@@ -140,3 +140,24 @@ svg {
 textarea {
   resize: none;
 }
+
+.container {
+  width: 100%;
+  margin: 0 auto;
+  padding: 0 16px;
+
+  @media only screen and (min-width: 375px) {
+    max-width: 375px;
+    padding: 0 20px;
+  }
+
+  @media only screen and (min-width: 768px) {
+    max-width: 768px;
+    padding: 0 32px;
+  }
+
+  @media only screen and (min-width: 1440px) {
+    max-width: 1440px;
+    padding: 0 64px;
+  }
+}
