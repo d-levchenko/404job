@@ -7,33 +7,29 @@ import Link from 'next/link';
 import { ErrorMessage, Field, Form, Formik } from 'formik';
 import * as Yup from 'yup';
 import { useRouter } from 'next/navigation';
-
-interface LoginFormValues {
-  email: string;
-  password: string;
-}
+import { LoginFormData } from '@/types/auth';
 
 const loginSchema = Yup.object({
   email: Yup.string()
     .trim()
-    .email('електронна адреса має бути валідною, приклад: example@gmail.com')
-    .max(64, 'максимум 64 символи')
-    .required('це поле обовʼязкове для заповнення'),
+    .email('Електронна адреса має бути валідною, приклад: example@gmail.com')
+    .max(64, 'Максимум 64 символи')
+    .required('Це поле обовʼязкове для заповнення'),
   password: Yup.string()
-    .min(8, 'пароль має бути не меньше 8 символів')
-    .max(128, 'пароль має бути не більше 128 символів')
-    .required('це поле обовʼязкове для заповнення'),
+    .min(8, 'Пароль має бути не меньше 8 символів')
+    .max(128, 'Пароль має бути не більше 128 символів')
+    .required('Це поле обовʼязкове для заповнення'),
 });
 
 const LoginForm = () => {
   const router = useRouter();
 
-  const initialValues: LoginFormValues = {
+  const initialValues: LoginFormData = {
     email: '',
     password: '',
   };
 
-  const handleSubmit = (values: LoginFormValues) => {
+  const handleSubmit = (values: LoginFormData) => {
     console.log(values);
 
     //   ПОКИ ТАК, БЕЗ ЛОГІКИ

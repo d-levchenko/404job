@@ -15,3 +15,8 @@ export interface EmployerRegisterData {
 export type RegisterData = CandidateRegisterData | EmployerRegisterData;
 
 export type UserType = 'candidate' | 'employer';
+
+export interface LoginFormData {
+  email: string;
+  password: string;
+}

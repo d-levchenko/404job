@@ -4,38 +4,41 @@ import { useId } from 'react';
 import css from './ProfileForm.module.css';
 import { Field, Form, Formik, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
-
-interface ProfileValidation {
-  name: string;
-  githubUrl?: string;
-  linkedinUrl?: string;
-  behanceUrl?: string;
-}
-
-interface User {
-  name: string;
-  githubUrl?: string;
-  linkedinUrl?: string;
-  behanceUrl?: string;
-}
+import { CandidateProfile } from '@/types/userType';
+import { updateUser } from '@/lib/userApi';
+import toast from 'react-hot-toast';
 
 const validationSchema = Yup.object({
-  name: Yup.string().min(2).max(32).required(),
-  githubUrl: Yup.string().url().max(512).optional(),
-  linkedinUrl: Yup.string().url().max(512).optional(),
-  behanceUrl: Yup.string().url().max(512).optional(),
+  name: Yup.string()
+    .min(2, 'Мінімум 2 символи в цьому полі')
+    .max(32, 'Максимум 32 символи в цьому полі')
+    .required('Це поле є обов’язковим'),
+  githubUrl: Yup.string()
+    .url()
+    .max(512, 'Максимум 512 символів в цьому полі')
+    .optional(),
+  linkedinUrl: Yup.string()
+    .url()
+    .max(512, 'Максимум 512 символів в цьому полі')
+    .optional(),
+  behanceUrl: Yup.string()
+    .url()
+    .max(512, 'Максимум 512 символів в цьому полі')
+    .optional(),
 });
 
-const ProfileForm = ({ user }: { user: User }) => {
+const ProfileForm = ({ user }: { user: CandidateProfile }) => {
   const id = useId();
 
-  const handleSubmit = (values: ProfileValidation) => {
-    console.log(values);
-
-    //   ДАЛІ ЛОГІКА ЗАПИТУ
+  const handleSubmit = async (values: CandidateProfile) => {
+    try {
+      await updateUser(values);
+    } catch {
+      toast.error('Server error');
+    }
   };
 
-  const initialValues: ProfileValidation = {
+  const initialValues: CandidateProfile = {
     name: user.name,
     githubUrl: user.githubUrl || '',
     linkedinUrl: user.linkedinUrl || '',
