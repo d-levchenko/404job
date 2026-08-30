@@ -43,6 +43,7 @@ const FiltersFields = ({
   const toggleValue = useFiltersStore(state => state.toggleValue);
   const setLocation = useFiltersStore(state => state.setLocation);
   const resetStore = useFiltersStore(state => state.reset);
+  const setIsRemote = useFiltersStore(state => state.setIsRemote);
 
   const selectedLocationName =
     filters.locations.status === 'fulfilled'
@@ -71,24 +72,25 @@ const FiltersFields = ({
 
   return (
     <>
-      <div className={css.filtersScroll}>
+      <div
+        className={`${css.filtersScroll} desktop:flex desktop:flex-col desktop:gap-4 desktop:[border-top:1px_solid_var(--color-scheme-1-border)] w-full`}>
         <fieldset>
           <legend className={`${css.legend} ${css.industry}`}>Галузі</legend>
           <ul className="flex flex-col">
             {filters.industries.status === 'fulfilled' &&
               filters.industries.value.map(item => (
                 <li key={item._id} className={css.item}>
-                  <input
-                    type="checkbox"
-                    id={`${idPrefix}-${item._id}`}
-                    className={css.checkboxInput}
-                    checked={industry.includes(item._id)}
-                    onChange={() => toggleValue('industry', item._id)}
-                  />
                   <label
                     htmlFor={`${idPrefix}-${item._id}`}
                     className={css.label}>
                     <div className={css.checkboxWrapper}>
+                      <input
+                        type="checkbox"
+                        id={`${idPrefix}-${item._id}`}
+                        className={css.checkboxInput}
+                        checked={industry.includes(item._id)}
+                        onChange={() => toggleValue('industry', item._id)}
+                      />
                       <SvgIcon
                         name="checkbox"
                         width={20}
@@ -97,6 +99,7 @@ const FiltersFields = ({
                         aria-hidden="true"
                       />
                     </div>
+
                     {item.name}
                   </label>
                 </li>
@@ -110,17 +113,17 @@ const FiltersFields = ({
             {filters.experienceLevels.status === 'fulfilled' &&
               filters.experienceLevels.value.map(item => (
                 <li key={item._id} className={css.item}>
-                  <input
-                    type="checkbox"
-                    id={`${idPrefix}-${item._id}`}
-                    className={css.checkboxInput}
-                    checked={experience.includes(item._id)}
-                    onChange={() => toggleValue('experience', item._id)}
-                  />
                   <label
                     htmlFor={`${idPrefix}-${item._id}`}
                     className={css.label}>
                     <div className={css.checkboxWrapper}>
+                      <input
+                        type="checkbox"
+                        id={`${idPrefix}-${item._id}`}
+                        className={css.checkboxInput}
+                        checked={experience.includes(item._id)}
+                        onChange={() => toggleValue('experience', item._id)}
+                      />
                       <SvgIcon
                         name="checkbox"
                         width={20}
@@ -129,6 +132,7 @@ const FiltersFields = ({
                         aria-hidden="true"
                       />
                     </div>
+
                     {item.name}
                   </label>
                 </li>
@@ -136,7 +140,11 @@ const FiltersFields = ({
           </ul>
         </fieldset>
 
-        <fieldset className="relative">
+        <fieldset className="relative mb-5">
+          <legend className={`${css.legend} ${css.geography}`}>
+            Географія
+          </legend>
+
           <div className={css.locationDropdown}>
             <button
               type="button"
@@ -182,6 +190,28 @@ const FiltersFields = ({
               </ul>
             )}
           </div>
+
+          <div className="pt-3 flex gap-2">
+            <label htmlFor={`${idPrefix}-isRemote`} className={css.label}>
+              <div className={css.checkboxWrapper}>
+                <input
+                  type="checkbox"
+                  id={`${idPrefix}-isRemote`}
+                  className={css.checkboxInput}
+                  checked={Boolean(isRemote)}
+                  onChange={e => setIsRemote(e.target.checked)}
+                />
+                <SvgIcon
+                  name="checkbox"
+                  width={20}
+                  height={20}
+                  className={css.checkbox}
+                  aria-hidden="true"
+                />
+              </div>
+              Віддалено
+            </label>
+          </div>
         </fieldset>
 
         <fieldset>
@@ -190,17 +220,17 @@ const FiltersFields = ({
             {filters.employmentTypes.status === 'fulfilled' &&
               filters.employmentTypes.value.map(item => (
                 <li key={item._id} className={css.item}>
-                  <input
-                    type="checkbox"
-                    id={`${idPrefix}-${item._id}`}
-                    className={css.checkboxInput}
-                    checked={employmentType.includes(item._id)}
-                    onChange={() => toggleValue('employmentType', item._id)}
-                  />
                   <label
                     htmlFor={`${idPrefix}-${item._id}`}
                     className={css.label}>
                     <div className={css.checkboxWrapper}>
+                      <input
+                        type="checkbox"
+                        id={`${idPrefix}-${item._id}`}
+                        className={css.checkboxInput}
+                        checked={employmentType.includes(item._id)}
+                        onChange={() => toggleValue('employmentType', item._id)}
+                      />
                       <SvgIcon
                         name="checkbox"
                         width={20}
@@ -209,6 +239,7 @@ const FiltersFields = ({
                         aria-hidden="true"
                       />
                     </div>
+
                     {item.name}
                   </label>
                 </li>

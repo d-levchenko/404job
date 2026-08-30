@@ -35,3 +35,4 @@ export interface AuthUser {
   createdAt: string;
   updatedAt: string;
 }
+export type UserType = 'candidate' | 'employer';
