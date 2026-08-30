@@ -1,109 +1,452 @@
+/* ========================================
+   MOBILE FIRST: 320px+
+   ======================================== */
+
 .wrapper {
   width: 100%;
-  max-width: 560px;
+  min-width: 0;
 }
 
 .title {
-  margin: 0 0 24px;
-  font-size: 20px;
+  margin: 0 0 16px;
+
+  font-size: 18px;
   font-weight: 700;
+  line-height: 1.5;
+
+  color: var(--color-scheme-2-text);
 }
+
+/* ========================================
+   FORM
+   ======================================== */
 
 .form {
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  align-items: stretch;
+  gap: 16px;
+
+  width: 100%;
+  min-width: 0;
 }
+
+/* ========================================
+   LABEL / FIELD GROUP
+   ======================================== */
 
 .label {
   display: flex;
   flex-direction: column;
+  align-items: stretch;
   gap: 8px;
+
+  width: 100%;
+  min-width: 0;
+
   font-size: 14px;
+  font-weight: 400;
+  line-height: 1.5;
+
+  color: var(--color-scheme-1-text);
 }
 
-.input {
+.label > span:first-child {
+  display: block;
+}
+
+/* ========================================
+   INPUT / TEXTAREA COMMON
+   ======================================== */
+
+.input,
+.textarea {
   width: 100%;
-  height: 44px;
-  padding: 0 16px;
-  border: 1px solid #d9d9d9;
-  border-radius: 22px;
+  min-width: 0;
+
+  padding: 8px 16px;
+
+  border: 1px solid var(--opacity-neutral-darkest-15);
   outline: none;
-  transition: border-color var(--transition);
+
+  font: inherit;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.5;
+
+  color: var(--color-scheme-1-text);
+  background-color: transparent;
+
+  transition:
+    border-color var(--transition),
+    box-shadow var(--transition);
+}
+
+.input::placeholder,
+.textarea::placeholder {
+  color: var(--opacity-neutral-darkest-60);
+  opacity: 1;
+}
+
+.input:hover,
+.textarea:hover {
+  border-color: var(--opacity-neutral-darkest-60);
 }
 
 .input:focus,
 .textarea:focus {
   border-color: var(--color-curious-blue);
-  outline: none;
 }
 
+/* ========================================
+   INPUT
+   ======================================== */
+
+.input {
+  height: 40px;
+  border-radius: 32px;
+}
+
+/* ========================================
+   TEXTAREA
+   ======================================== */
+
+.textarea {
+  display: block;
+  height: 162px;
+
+  resize: none;
+  border-radius: 16px;
+}
+
+/* ========================================
+   ERROR STATE
+   ======================================== */
+
 .inputError {
-  border-color: #d92d20;
+  border-color: var(--color-red);
+}
+
+.inputError:hover,
+.inputError:focus {
+  border-color: var(--color-red);
+}
+
+.error,
+.hint {
+  display: block;
+
+  width: 100%;
+  margin: 0;
+
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.5;
 }
 
 .error {
-  font-size: 14px;
-  line-height: 1.5;
-  color: #d92d20;
+  color: var(--color-red);
 }
 
-.textarea {
-  width: 100%;
-  min-height: 140px;
-  padding: 16px;
-  border: 1px solid #d9d9d9;
-  border-radius: 16px;
-  resize: vertical;
-  outline: none;
+.hint {
+  color: var(--opacity-neutral-darkest-60);
 }
+
+/* ========================================
+   LOGO
+   ======================================== */
 
 .logoPlaceholder {
   display: flex;
   align-items: center;
   justify-content: center;
 
-  width: 304px;
-  height: 99px;
-  border-radius: 24px;
+  width: 100%;
+  height: 109px;
+
   overflow: hidden;
 
-  background-color: var(--color-neutral-lighter);
+  border-radius: 24px;
+  background-color: #d9d9d9;
+}
+
+.logoLoaded {
+  background-color: transparent;
 }
 
 .logo {
+  display: block;
+
   width: 100%;
   height: 100%;
+
+  border-radius: inherit;
   object-fit: contain;
 }
 
 .noImage {
-  width: 12%;
-  height: auto;
-  fill: var(--color-white);
+  width: 40px;
+  height: 40px;
+
+  fill: #bdbdbd;
 }
 
-.error {
-  font-size: 12px;
-  color: #d32f2f;
+/* ========================================
+   FILE INPUT
+   ======================================== */
+
+.fileInput {
+  position: absolute;
+
+  width: 1px;
+  height: 1px;
+
+  padding: 0;
+  margin: -1px;
+
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+
+  white-space: nowrap;
+  border: 0;
 }
+
+/* ========================================
+   BUTTONS — COMMON
+   ======================================== */
+
+.uploadButton,
+.resetButton,
+.submitButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  min-height: 33px;
+
+  padding: 6px 12px;
+
+  border-radius: 100px;
+
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.5;
+  white-space: nowrap;
+
+  cursor: pointer;
+
+  transition:
+    background-color var(--transition),
+    color var(--transition),
+    border-color var(--transition),
+    opacity var(--transition);
+}
+
+/* ========================================
+   SECONDARY BUTTONS
+   Upload file + Reset
+   ======================================== */
+
+.uploadButton,
+.resetButton {
+  border: 1px solid var(--opacity-neutral-darkest-15);
+
+  color: var(--color-neutral-darkest);
+  background-color: transparent;
+}
+
+/* Hover / Focus */
+
+.uploadButton:hover,
+.uploadButton:focus-visible,
+.resetButton:hover:not(:disabled),
+.resetButton:focus-visible:not(:disabled) {
+  color: var(--color-white);
+  background-color: var(--color-curious-blue);
+
+  outline: none;
+}
+
+/* Active */
+
+.uploadButton:active,
+.resetButton:active:not(:disabled) {
+  color: var(--color-white);
+  background-color: var(--color-curious-blue-dark);
+}
+
+/* Disabled */
+
+.resetButton:disabled,
+.uploadButton[aria-disabled='true'] {
+  color: var(--color-neutral-darkest);
+  background-color: transparent;
+
+  opacity: 0.3;
+
+  cursor: default;
+  pointer-events: none;
+}
+
+/* ========================================
+   UPLOAD BUTTON
+   ======================================== */
+
+.uploadButton {
+  width: 100%;
+}
+
+/* ========================================
+   ACTIONS
+   ======================================== */
 
 .actions {
   display: flex;
+  flex-direction: column;
   gap: 12px;
+
+  width: 100%;
 }
+
+/* ========================================
+   ACTION BUTTONS
+   ======================================== */
 
 .resetButton,
 .submitButton {
-  padding: 10px 16px;
-  border-radius: 20px;
-  cursor: pointer;
+  width: 100%;
 }
+
+/* ========================================
+   PRIMARY BUTTON
+   Save changes
+   ======================================== */
 
 .submitButton {
-  border: none;
+  border: 1px solid var(--color-curious-blue);
+
+  color: var(--color-white);
+  background-color: var(--color-curious-blue);
 }
 
-.resetButton {
-  background: transparent;
+.submitButton:hover:not(:disabled),
+.submitButton:focus-visible:not(:disabled) {
+  border-color: var(--color-curious-blue);
+
+  color: var(--color-scheme-1-text);
+  background-color: var(--color-curious-blue-lighter);
+
+  outline: none;
+}
+
+.submitButton:active:not(:disabled) {
+  background-color: var(--color-curious-blue-light);
+}
+
+.submitButton:disabled {
+  opacity: 0.3;
+
+  cursor: default;
+}
+
+/* ========================================
+   TABLET: 768px – 1439px
+   ======================================== */
+
+@media screen and (min-width: 768px) and (max-width: 1439px) {
+  .wrapper,
+  .form {
+    max-width: 640px;
+  }
+
+  .logoPlaceholder {
+    width: 304px;
+    height: 99px;
+  }
+
+  .uploadButton {
+    width: 150px;
+  }
+
+  .textarea {
+    height: 180px;
+  }
+
+  .actions {
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 8px;
+
+    width: auto;
+  }
+
+  .resetButton {
+    width: 120px;
+  }
+
+  .submitButton {
+    width: 125px;
+  }
+}
+
+/* ========================================
+   DESKTOP: 1440px+
+   ======================================== */
+
+@media screen and (min-width: 1440px) {
+  .wrapper,
+  .form {
+    max-width: 640px;
+  }
+
+  .title {
+    font-size: 20px;
+  }
+
+  .label,
+  .input,
+  .textarea,
+  .error,
+  .hint {
+    font-size: 16px;
+  }
+
+  .logoPlaceholder {
+    width: 304px;
+    height: 99px;
+  }
+
+  .uploadButton,
+  .resetButton,
+  .submitButton {
+    min-height: 36px;
+
+    font-size: 16px;
+  }
+
+  .uploadButton {
+    width: 168px;
+  }
+
+  .textarea {
+    height: 180px;
+  }
+
+  .actions {
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 8px;
+
+    width: auto;
+  }
+
+  .resetButton {
+    width: 134px;
+  }
+
+  .submitButton {
+    width: 140px;
+  }
 }

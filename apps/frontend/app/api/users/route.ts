@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { NextRequest, NextResponse } from 'next/server';
 
-import { api } from '@/lib/api';
+import { api } from '../api';
 
 export async function GET(request: NextRequest) {
   try {
@@ -29,8 +29,12 @@ export async function GET(request: NextRequest) {
     }
 
     return NextResponse.json(
-      { message: 'Internal server error' },
-      { status: 500 },
+      {
+        message: 'Internal server error',
+      },
+      {
+        status: 500,
+      },
     );
   }
 }

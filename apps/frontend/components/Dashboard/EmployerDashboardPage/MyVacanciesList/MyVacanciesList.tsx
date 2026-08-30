@@ -2,10 +2,10 @@
 
 import Link from 'next/link';
 import Image from 'next/image';
-
 import NoImage from '@/assets/no-image.svg';
 import LocationIcon from '@/assets/location-on.svg';
 import PaymentsIcon from '@/assets/payments.svg';
+
 import {
   useInfiniteQuery,
   useMutation,
@@ -14,9 +14,12 @@ import {
 
 import { closeVacancy, getMyVacancies } from '@/lib/vacanciesApi';
 import { useState } from 'react';
+import toast from 'react-hot-toast';
+
 import css from './MyVacanciesList.module.css';
 
 const VACANCIES_PER_PAGE = 4;
+
 interface VacancyLogoProps {
   logo?: string;
   companyName: string;
@@ -81,6 +84,14 @@ const MyVacanciesList = () => {
       await queryClient.invalidateQueries({
         queryKey: ['myVacancies', 'active'],
       });
+
+      toast.success('Вакансію успішно закрито');
+    },
+
+    onError: error => {
+      console.error('Failed to close vacancy:', error);
+
+      toast.error('Не вдалося закрити вакансію. Спробуйте ще раз.');
     },
   });
 
@@ -154,6 +165,7 @@ const MyVacanciesList = () => {
 
                 <p className={css.salary}>
                   <PaymentsIcon className={css.salaryIcon} />
+
                   <span>{vacancy.salaryRange}</span>
                 </p>
               </div>

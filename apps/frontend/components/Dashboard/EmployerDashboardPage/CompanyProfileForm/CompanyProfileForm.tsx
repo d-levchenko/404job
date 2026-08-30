@@ -172,7 +172,10 @@ const CompanyProfileForm = () => {
             <div className={css.label}>
               <span>Логотип</span>
 
-              <div className={css.logoPlaceholder}>
+              <div
+                className={`${css.logoPlaceholder} ${
+                  logoPreview || initialValues.logo ? css.logoLoaded : ''
+                }`}>
                 {logoPreview ? (
                   <Image
                     src={logoPreview}
@@ -196,10 +199,16 @@ const CompanyProfileForm = () => {
               </div>
 
               <input
+                id="company-logo"
                 type="file"
                 accept="image/png,image/jpeg,image/webp"
+                className={css.fileInput}
                 onChange={handleLogoChange}
               />
+
+              <label htmlFor="company-logo" className={css.uploadButton}>
+                Завантажити файл
+              </label>
             </div>
 
             <label className={css.label}>
