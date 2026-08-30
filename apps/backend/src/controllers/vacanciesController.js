@@ -190,14 +190,14 @@ export const createVacancy = async (req, res) => {
 
 export const getFavoriteVacancies = async (req, res) => {
   const { _id: userId } = req.user;
-  const user = await User.find({ _id: userId }).populate({
+  const user = await User.findById(userId).populate({
     path: 'savedVacancies',
     populate: {
       path: 'industryId experienceLevelId locationId employmentTypeId employerId',
     },
   });
 
-  res.status(201).json(user.savedVacancies);
+  res.status(200).json(user.savedVacancies);
 };
 
 export const closeVacancy = async (req, res) => {
