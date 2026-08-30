@@ -15,8 +15,8 @@ const renderContent = (content?: string) => {
 
   const lines = content
     .split(/\r?\n/)
-    .flatMap((line) => line.split(/(?<=\.)\s+/))
-    .map((line) => line.replace(/^[•\-\*]\s*/, '').trim())
+    .flatMap(line => line.split(/(?<=\.)\s+/))
+    .map(line => line.replace(/^[•\-\*]\s*/, '').trim())
     .filter(Boolean);
 
   if (lines.length > 1) {

@@ -2,7 +2,13 @@
 
 import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
+import { isAxiosError } from 'axios';
 import { SvgIcon } from '@/components/SvgIcon/SvgIcon';
+import {
+  applyToVacancy,
+  addToFavorites,
+  removeFromFavorites,
+} from '@/lib/vacanciesApi';
 import css from './VacancyHeader.module.css';
 
 interface VacancyHeaderProps {
@@ -11,7 +17,10 @@ interface VacancyHeaderProps {
   salaryRange?: string;
   createdAt?: string;
   isFavoriteInitial?: boolean;
-  isAuthenticated?: boolean;
+}
+
+interface ApiErrorResponse {
+  message?: string;
 }
 
 const VacancyHeader: React.FC<VacancyHeaderProps> = ({
@@ -20,12 +29,12 @@ const VacancyHeader: React.FC<VacancyHeaderProps> = ({
   salaryRange,
   createdAt,
   isFavoriteInitial = false,
-  isAuthenticated = true, // для тесту тримаємо true
 }) => {
   const router = useRouter();
-  const [isFavorite, setIsFavorite] = useState(isFavoriteInitial);
-  const [isApplying, setIsApplying] = useState(false);
-  const [isApplied, setIsApplied] = useState(false);
+  const [isFavorite, setIsFavorite] = useState<boolean>(isFavoriteInitial);
+  const [isFavoriteLoading, setIsFavoriteLoading] = useState<boolean>(false);
+  const [isApplying, setIsApplying] = useState<boolean>(false);
+  const [isApplied, setIsApplied] = useState<boolean>(false);
 
   const formattedDate = createdAt
     ? new Date(createdAt).toLocaleDateString('uk-UA', {
@@ -36,37 +45,51 @@ const VacancyHeader: React.FC<VacancyHeaderProps> = ({
     : '';
 
   const handleApply = async () => {
-    if (!isAuthenticated) {
-      router.push('/auth/login');
-      return;
-    }
-
     if (isApplied || isApplying) return;
 
     try {
       setIsApplying(true);
-      console.log('Відправка резюме на вакансію:', vacancyId);
-
-      // Імітуємо очікування відповіді від сервера (700 мс)
-      await new Promise(resolve => setTimeout(resolve, 700));
-
+      await applyToVacancy(vacancyId);
       setIsApplied(true);
-      console.log('Успішно відгукнулись на вакансію:', vacancyId);
-    } catch (error) {
-      console.error('Помилка при відгуку:', error);
+    } catch (error: unknown) {
+      if (isAxiosError<ApiErrorResponse>(error)) {
+        if (error.response?.status === 401) {
+          router.push('/auth/login');
+          return;
+        }
+
+        if (error.response?.status === 409) {
+          setIsApplied(true);
+        }
+      }
     } finally {
       setIsApplying(false);
     }
   };
 
-  const handleToggleFavorite = () => {
-    if (!isAuthenticated) {
-      router.push('/auth/login');
-      return;
-    }
+  const handleToggleFavorite = async () => {
+    if (isFavoriteLoading) return;
 
-    setIsFavorite(prev => !prev);
-    console.log('Зміна статусу обраного для:', vacancyId);
+    try {
+      setIsFavoriteLoading(true);
+
+      if (isFavorite) {
+        await removeFromFavorites(vacancyId);
+        setIsFavorite(false);
+      } else {
+        await addToFavorites(vacancyId);
+        setIsFavorite(true);
+      }
+    } catch (error: unknown) {
+      if (isAxiosError<ApiErrorResponse>(error)) {
+        if (error.response?.status === 401) {
+          router.push('/auth/login');
+          return;
+        }
+      }
+    } finally {
+      setIsFavoriteLoading(false);
+    }
   };
 
   return (
@@ -126,6 +149,7 @@ const VacancyHeader: React.FC<VacancyHeaderProps> = ({
           type="button"
           className={`${css.favoriteButton} ${isFavorite ? css.favoriteActive : ''}`}
           onClick={handleToggleFavorite}
+          disabled={isFavoriteLoading}
           aria-label={isFavorite ? 'Видалити з обраного' : 'Додати в обране'}>
           <SvgIcon
             name={isFavorite ? 'heartFilled' : 'heart'}

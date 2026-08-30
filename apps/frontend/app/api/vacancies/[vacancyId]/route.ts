@@ -4,7 +4,7 @@ const BACKEND_URL = process.env.BACKEND_API_URL || 'http://localhost:4000/api';
 
 export async function GET(
   request: NextRequest,
-  { params }: { params: Promise<{ vacancyId: string }> }
+  { params }: { params: Promise<{ vacancyId: string }> },
 ) {
   try {
     const { vacancyId } = await params;
@@ -21,7 +21,7 @@ export async function GET(
     if (!response.ok) {
       return NextResponse.json(
         { message: data.message || 'Вакансію не знайдено' },
-        { status: response.status }
+        { status: response.status },
       );
     }
 
@@ -29,7 +29,7 @@ export async function GET(
   } catch {
     return NextResponse.json(
       { message: 'Внутрішня помилка сервера при отриманні вакансії' },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }

@@ -1,6 +1,8 @@
 import { Router } from 'express';
 
 import authenticate from '../middleware/authenticate.js';
+import { applyToVacancy } from '../controllers/vacanciesController.js';
+import { applyToVacancySchema } from '../validations/vacanciesValidator.js';
 
 import {
   getAllVacancies,
@@ -61,6 +63,12 @@ vacancyRouter.get(
   authenticate,
   celebrate(getMyVacanciesSchema),
   getMyVacancies,
+);
+vacancyRouter.post(
+  '/:vacancyId/apply',
+  authenticate,
+  celebrate(applyToVacancySchema),
+  applyToVacancy,
 );
 
 export default vacancyRouter;

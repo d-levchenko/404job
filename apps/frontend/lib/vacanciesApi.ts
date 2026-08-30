@@ -15,6 +15,7 @@ export interface getAllVacanciesRequest {
 
 export interface VacancyByIdResponse {
   vacancy: Vacancy;
+  similarVacancies?: Vacancy[];
 }
 
 export const getHotVacancies = async (limit = 6): Promise<Vacancy[]> => {

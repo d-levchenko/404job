@@ -77,3 +77,8 @@ export const getMyVacanciesSchema = {
     status: Joi.string().valid('active', 'closed').allow('', null),
   }),
 };
+export const applyToVacancySchema = {
+  [Segments.PARAMS]: Joi.object({
+    vacancyId: Joi.string().custom(objectIdValidator).required(),
+  }),
+};
