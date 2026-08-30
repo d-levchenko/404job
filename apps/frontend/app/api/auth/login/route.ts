@@ -5,7 +5,6 @@ import { AuthUser } from '@/types/auth';
 import { api } from '../../api';
 
 export const POST = async (request: NextRequest) => {
-  console.log('LOGIN ROUTE СПРАЦЮВАВ');
   try {
     const body = await request.json();
 
