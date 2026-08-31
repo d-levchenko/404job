@@ -16,8 +16,9 @@ const ProfileForm = ({ user }: { user: CandidateProfile }) => {
   const handleSubmit = async (values: CandidateProfile) => {
     try {
       await updateUser(values);
+      toast.success('Зміни збережено');
     } catch {
-      toast.error('Server error');
+      toast.error('Не вдалося зберегти зміни');
     }
   };
 
