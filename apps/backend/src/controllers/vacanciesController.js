@@ -134,7 +134,7 @@ export const getHotVacancies = async (req, res, next) => {
       status: 'active',
       hotVacancy: true,
     })
-      .sort({ createdAt: -1 })
+      .sort({ createdAt: -1, _id: 1 })
       .limit(Number(limit))
       .populate('employerId', 'companyName logo')
       .populate('locationId', 'name');
