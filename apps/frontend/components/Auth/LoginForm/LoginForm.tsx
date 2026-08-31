@@ -39,7 +39,6 @@ const LoginForm = () => {
   const handleSubmit = async (values: LoginFormData) => {
     try {
       await loginUser(values);
-      // router.push('/dashboard/candidate');
       router.push('/');
     } catch {
       toast.error('Неправильний email або пароль');

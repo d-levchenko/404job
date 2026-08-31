@@ -2,35 +2,13 @@
 
 import { useId } from 'react';
 import { ErrorMessage, Field, Form, Formik } from 'formik';
-import * as Yup from 'yup';
 import toast from 'react-hot-toast';
 
 import { CandidateProfile } from '@/types/userType';
 import { updateUser } from '@/lib/userApi';
 
 import css from './ProfileForm.module.css';
-
-const validationSchema = Yup.object({
-  name: Yup.string()
-    .min(2, 'Мінімум 2 символи в цьому полі')
-    .max(32, 'Максимум 32 символи в цьому полі')
-    .required('Це поле є обов’язковим'),
-
-  githubUrl: Yup.string()
-    .url()
-    .max(512, 'Максимум 512 символів в цьому полі')
-    .optional(),
-
-  linkedinUrl: Yup.string()
-    .url()
-    .max(512, 'Максимум 512 символів в цьому полі')
-    .optional(),
-
-  behanceUrl: Yup.string()
-    .url()
-    .max(512, 'Максимум 512 символів в цьому полі')
-    .optional(),
-});
+import { updateUserProfileValidationSchema } from '@/validation/authValidation';
 
 const ProfileForm = ({ user }: { user: CandidateProfile }) => {
   const id = useId();
@@ -54,7 +32,7 @@ const ProfileForm = ({ user }: { user: CandidateProfile }) => {
     <section className={css['profile-section']}>
       <Formik
         initialValues={initialValues}
-        validationSchema={validationSchema}
+        validationSchema={updateUserProfileValidationSchema}
         onSubmit={handleSubmit}>
         {({ errors, touched, resetForm }) => (
           <Form className={css['profile-form']}>
