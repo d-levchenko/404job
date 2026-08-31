@@ -13,6 +13,7 @@ import { FiltersOptions } from './FiltersPanel/FilterFields';
 import MobTabFilters from './FiltersPanel/MobTabFilters/MobTabFilter';
 
 import css from './Vacancies.module.css';
+import VacancySkeleton from './VacanciesList/VacancySkeleton/VacancySkeleton';
 
 interface VacanciesProps {
   filters: FiltersOptions;
@@ -71,6 +72,14 @@ const Vacancies = ({ filters }: VacanciesProps) => {
 
       <div className="flex-1 w-full items-center">
         <Search />
+
+        {isFetching && (
+          <ul className="flex flex-col gap-6 mb-6">
+            {Array.from({ length: 8 }).map((_, index) => (
+              <VacancySkeleton key={index} />
+            ))}
+          </ul>
+        )}
 
         {hasResults ? (
           <>
