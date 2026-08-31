@@ -55,7 +55,7 @@
   height: 176px;
   border-radius: 24px;
   overflow: hidden;
-  background: var(--color-scheme-1-background);
+  background: var(--color-scheme-4-foreground);
   display: flex;
   align-items: center;
   justify-content: center;
