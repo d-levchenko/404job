@@ -1,12 +1,16 @@
 'use client';
 
-import { useState } from 'react';
+import { ReactNode, useState } from 'react';
 
 import css from './CandidateDashboardPage.module.css';
 
 type ActiveTab = 'profile' | 'saved';
 
-const CandidateDashboardPage = () => {
+interface CandidateDashboardPageProps {
+  children: ReactNode;
+}
+
+const CandidateDashboardPage = ({ children }: CandidateDashboardPageProps) => {
   const [activeTab, setActiveTab] = useState<ActiveTab>('profile');
 
   const isProfileTab = activeTab === 'profile';
@@ -43,7 +47,7 @@ const CandidateDashboardPage = () => {
               {isProfileTab ? 'Особиста інформація' : 'Збережені вакансії'}
             </h2>
 
-            <div className={css.contentSlot} />
+            <div className={css.contentSlot}>{isProfileTab && children}</div>
           </section>
         </div>
       </div>
