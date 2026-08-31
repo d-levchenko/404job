@@ -69,7 +69,7 @@ function HotVacancies() {
             {data?.map(vacancy => (
               <div
                 key={vacancy._id}
-                className={css.slide}
+                className={`${css.slide} slide`}
                 onClick={() => router.push('/vacancies/' + vacancy._id)}>
                 <div className={css.noImageBox}>
                   <SvgIcon

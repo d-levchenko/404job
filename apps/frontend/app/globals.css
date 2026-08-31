@@ -78,6 +78,40 @@
   box-sizing: border-box;
 }
 
+* {
+  cursor:
+    url('/cursor/cursor-normal.png') 3 3,
+    auto;
+}
+
+html,
+button,
+button *,
+a,
+a *,
+.slide,
+.slide p,
+.slide div,
+.slide svg,
+.slide path,
+.slide img,
+.vacancyItem,
+.swiper-pagination-bullet,
+[role='button'],
+[role='button'] *,
+.embla__button,
+.embla__button *,
+.embla__dot,
+.embla__dot * {
+  cursor:
+    url('/cursor/cursor-hover.png') 3 3,
+    pointer !important;
+}
+
+.embla__container:active {
+  cursor: grabbing !important;
+}
+
 @theme {
   --breakpoint-xs: 375px;
   --breakpoint-desktop: 90rem;
