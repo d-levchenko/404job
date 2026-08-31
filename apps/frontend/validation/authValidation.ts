@@ -29,3 +29,25 @@ export const RegisterValidation = (type: UserType) =>
       .max(128, 'Пароль має бути не більше 128 символів')
       .required('Вкажіть пароль'),
   });
+
+export const updateUserProfileValidationSchema = Yup.object({
+  name: Yup.string()
+    .min(2, 'Мінімум 2 символи в цьому полі')
+    .max(32, 'Максимум 32 символи в цьому полі')
+    .required('Це поле є обов’язковим'),
+
+  githubUrl: Yup.string()
+    .url()
+    .max(512, 'Максимум 512 символів в цьому полі')
+    .optional(),
+
+  linkedinUrl: Yup.string()
+    .url()
+    .max(512, 'Максимум 512 символів в цьому полі')
+    .optional(),
+
+  behanceUrl: Yup.string()
+    .url()
+    .max(512, 'Максимум 512 символів в цьому полі')
+    .optional(),
+});

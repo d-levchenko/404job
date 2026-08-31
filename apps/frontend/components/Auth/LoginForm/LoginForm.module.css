@@ -102,11 +102,18 @@
   line-height: 1.5;
   color: var(--color-white);
   margin-bottom: 24px;
+  transition: var(--transition);
 
   @media (min-width: 768px) {
     max-width: none;
     width: 100%;
   }
+}
+
+.submit-form-btn:hover,
+.submit-form-btn:focus {
+  background: var(--color-curious-blue-lighter);
+  color: var(--color-scheme-1-text);
 }
 
 .register-info {

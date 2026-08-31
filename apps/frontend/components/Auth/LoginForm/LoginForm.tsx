@@ -8,7 +8,10 @@ import { ErrorMessage, Field, Form, Formik } from 'formik';
 import * as Yup from 'yup';
 import { useRouter } from 'next/navigation';
 
-interface LoginFormValues {
+import { loginUser } from '@/lib/authApi';
+import toast from 'react-hot-toast';
+
+interface LoginFormData {
   email: string;
   password: string;
 }
@@ -16,27 +19,30 @@ interface LoginFormValues {
 const loginSchema = Yup.object({
   email: Yup.string()
     .trim()
-    .email('електронна адреса має бути валідною, приклад: example@gmail.com')
-    .max(64, 'максимум 64 символи')
-    .required('це поле обовʼязкове для заповнення'),
+    .email('Електронна адреса має бути валідною, приклад: example@gmail.com')
+    .max(64, 'Максимум 64 символи')
+    .required('Це поле обовʼязкове для заповнення'),
   password: Yup.string()
-    .min(8, 'пароль має бути не меньше 8 символів')
-    .max(128, 'пароль має бути не більше 128 символів')
-    .required('це поле обовʼязкове для заповнення'),
+    .min(8, 'Пароль має бути не меньше 8 символів')
+    .max(128, 'Пароль має бути не більше 128 символів')
+    .required('Це поле обовʼязкове для заповнення'),
 });
 
 const LoginForm = () => {
   const router = useRouter();
 
-  const initialValues: LoginFormValues = {
+  const initialValues: LoginFormData = {
     email: '',
     password: '',
   };
 
-  const handleSubmit = (values: LoginFormValues) => {
-    //   ПОКИ ТАК, БЕЗ ЛОГІКИ
-
-    router.push('/');
+  const handleSubmit = async (values: LoginFormData) => {
+    try {
+      await loginUser(values);
+      router.push('/');
+    } catch {
+      toast.error('Неправильний email або пароль');
+    }
   };
 
   const id = useId();
@@ -78,6 +84,7 @@ const LoginForm = () => {
                   <Field
                     type="password"
                     id={`${id}-password`}
+                    placeholder="********"
                     className={
                       errors.password && touched.password
                         ? css['input-error']
