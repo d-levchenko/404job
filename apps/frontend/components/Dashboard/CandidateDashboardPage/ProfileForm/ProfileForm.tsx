@@ -1,41 +1,28 @@
 'use client';
 
 import { useId } from 'react';
+import { ErrorMessage, Field, Form, Formik } from 'formik';
+import toast from 'react-hot-toast';
+
+import { CandidateProfile } from '@/types/userType';
+import { updateUser } from '@/lib/userApi';
+
 import css from './ProfileForm.module.css';
-import { Field, Form, Formik, ErrorMessage } from 'formik';
-import * as Yup from 'yup';
+import { updateUserProfileValidationSchema } from '@/validation/authValidation';
 
-interface ProfileValidation {
-  name: string;
-  githubUrl?: string;
-  linkedinUrl?: string;
-  behanceUrl?: string;
-}
-
-interface User {
-  name: string;
-  githubUrl?: string;
-  linkedinUrl?: string;
-  behanceUrl?: string;
-}
-
-const validationSchema = Yup.object({
-  name: Yup.string().min(2).max(32).required(),
-  githubUrl: Yup.string().url().max(512).optional(),
-  linkedinUrl: Yup.string().url().max(512).optional(),
-  behanceUrl: Yup.string().url().max(512).optional(),
-});
-
-const ProfileForm = ({ user }: { user: User }) => {
+const ProfileForm = ({ user }: { user: CandidateProfile }) => {
   const id = useId();
 
-  const handleSubmit = (values: ProfileValidation) => {
-    console.log(values);
-
-    //   ДАЛІ ЛОГІКА ЗАПИТУ
+  const handleSubmit = async (values: CandidateProfile) => {
+    try {
+      await updateUser(values);
+      toast.success('Зміни збережено');
+    } catch {
+      toast.error('Не вдалося зберегти зміни');
+    }
   };
 
-  const initialValues: ProfileValidation = {
+  const initialValues: CandidateProfile = {
     name: user.name,
     githubUrl: user.githubUrl || '',
     linkedinUrl: user.linkedinUrl || '',
@@ -46,114 +33,110 @@ const ProfileForm = ({ user }: { user: User }) => {
     <section className={css['profile-section']}>
       <Formik
         initialValues={initialValues}
+        validationSchema={updateUserProfileValidationSchema}
+        onSubmit={handleSubmit}>
+        {({ errors, touched, resetForm }) => (
+          <Form className={css['profile-form']}>
+            <div className={css.field}>
+              <label htmlFor={`${id}-name`}>Імʼя</label>
 
-        onSubmit={handleSubmit}
+              <Field
+                type="text"
+                id={`${id}-name`}
+                name="name"
+                placeholder="Ваше ім’я"
+                className={
+                  errors.name && touched.name ? css['error-input'] : css.input
+                }
+              />
 
-        validationSchema={validationSchema}>
-        {({ errors, touched, resetForm }) => {
-          return (
-            <Form className={css['profile-form']}>
-              <h2 className={css['title-form']}>Особиста інформація</h2>
-              <div>
-                <label htmlFor={`${id}-name`}>Імʼя</label>
-                <Field
-                  type="text"
-                  id={`${id}-name`}
-                  placeholder="Ваше ім’я"
-                  name="name"
-                  className={
-                    errors.name && touched.name
-                      ? css['error-input']
-                      : css['input']
-                  }
-                />
+              <ErrorMessage
+                component="span"
+                name="name"
+                className={css['error-message']}
+              />
+            </div>
 
-                <ErrorMessage
-                  component="span"
-                  name="name"
-                  className={css['error-message']}
-                />
-              </div>
+            <div className={css.field}>
+              <label htmlFor={`${id}-github`}>Посилання на GitHub</label>
 
-              <div>
-                <label htmlFor={`${id}-github`}>Посилання на GitHub</label>
-                <Field
-                  type="text"
-                  id={`${id}-github`}
-                  placeholder="Ваше посилання"
-                  name="githubUrl"
-                  className={
-                    errors.githubUrl && touched.githubUrl
-                      ? css['error-input']
-                      : css['input']
-                  }
-                />
+              <Field
+                type="text"
+                id={`${id}-github`}
+                name="githubUrl"
+                placeholder="Ваше посилання"
+                className={
+                  errors.githubUrl && touched.githubUrl
+                    ? css['error-input']
+                    : css.input
+                }
+              />
 
-                <ErrorMessage
-                  component="span"
-                  name="githubUrl"
-                  className={css['error-message']}
-                />
-              </div>
+              <ErrorMessage
+                component="span"
+                name="githubUrl"
+                className={css['error-message']}
+              />
+            </div>
 
-              <div>
-                <label htmlFor={`${id}-linkedin`}>Посилання на LinkedIn</label>
-                <Field
-                  type="text"
-                  id={`${id}-linkedin`}
-                  placeholder="Ваше посилання"
-                  name="linkedinUrl"
-                  className={
-                    errors.linkedinUrl && touched.linkedinUrl
-                      ? css['error-input']
-                      : css['input']
-                  }
-                />
+            <div className={css.field}>
+              <label htmlFor={`${id}-linkedin`}>Посилання на LinkedIn</label>
 
-                <ErrorMessage
-                  component="span"
-                  name="linkedinUrl"
-                  className={css['error-message']}
-                />
-              </div>
+              <Field
+                type="text"
+                id={`${id}-linkedin`}
+                name="linkedinUrl"
+                placeholder="Ваше посилання"
+                className={
+                  errors.linkedinUrl && touched.linkedinUrl
+                    ? css['error-input']
+                    : css.input
+                }
+              />
 
-              <div>
-                <label htmlFor={`${id}-behance`}>Посилання на Behance</label>
-                <Field
-                  type="text"
-                  id={`${id}-behance`}
-                  placeholder="Ваше посилання"
-                  name="behanceUrl"
-                  className={
-                    errors.behanceUrl && touched.behanceUrl
-                      ? css['error-input']
-                      : css['input']
-                  }
-                />
+              <ErrorMessage
+                component="span"
+                name="linkedinUrl"
+                className={css['error-message']}
+              />
+            </div>
 
-                <ErrorMessage
-                  component="span"
-                  name="behanceUrl"
-                  className={css['error-message']}
-                />
-              </div>
+            <div className={css.field}>
+              <label htmlFor={`${id}-behance`}>Посилання на Behance</label>
 
-              <div className={css['btn-group']}>
-                <button
-                  className={css['reset-btn']}
-                  type="button"
-                  onClick={() => {
-                    resetForm();
-                  }}>
-                  Скинути зміни
-                </button>
-                <button type="submit" className={css['submit-btn']}>
-                  Зберегти зміни
-                </button>
-              </div>
-            </Form>
-          );
-        }}
+              <Field
+                type="text"
+                id={`${id}-behance`}
+                name="behanceUrl"
+                placeholder="Ваше посилання"
+                className={
+                  errors.behanceUrl && touched.behanceUrl
+                    ? css['error-input']
+                    : css.input
+                }
+              />
+
+              <ErrorMessage
+                component="span"
+                name="behanceUrl"
+                className={css['error-message']}
+              />
+            </div>
+
+            <div className={css['btn-group']}>
+              <button
+                type="button"
+                className={css['reset-btn']}
+                onClick={() => resetForm()}>
+                Скинути зміни
+              </button>
+
+              <button type="submit" className={css['submit-btn']}>
+                Зберегти зміни
+              </button>
+            </div>
+          </Form>
+        )}
       </Formik>
     </section>
   );

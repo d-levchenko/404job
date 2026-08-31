@@ -82,3 +82,9 @@ export const applyToVacancySchema = {
     vacancyId: Joi.string().custom(objectIdValidator).required(),
   }),
 };
+export const savedVacanciesScema = {
+  [Segments.QUERY]: Joi.object({
+    page: Joi.number().min(1).default(1),
+    perPage: Joi.number().min(1).max(100).default(10),
+  }),
+};

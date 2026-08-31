@@ -11,6 +11,7 @@ import {
   addVacancyToFavorites,
   removeVacancyFromFavorites,
   createVacancy,
+  getFavoriteVacancies,
   closeVacancy,
   getMyVacancies,
 } from '../controllers/vacanciesController.js';
@@ -21,6 +22,7 @@ import {
   getVacancyByIdSchema,
   closeVacancySchema,
   getMyVacanciesSchema,
+  savedVacanciesScema,
 } from '../validations/vacanciesValidator.js';
 import { celebrate } from 'celebrate';
 
@@ -33,6 +35,12 @@ vacancyRouter.get(
 );
 
 vacancyRouter.get('/hot', celebrate(getHotVacanciesSchema), getHotVacancies);
+vacancyRouter.get(
+  '/favorite',
+  authenticate,
+  celebrate(savedVacanciesScema),
+  getFavoriteVacancies,
+);
 
 vacancyRouter.get('/:id', celebrate(getVacancyByIdSchema), getVacancyById);
 
