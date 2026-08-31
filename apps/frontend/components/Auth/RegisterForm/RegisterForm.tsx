@@ -47,7 +47,6 @@ const RegistrationForm = ({ type }: RegistrationFormProps) => {
           };
     try {
       const user = await registerUser(payload);
-      console.log(user);
       toast.success('Реєстрація успішна');
       router.push('/');
     } catch {

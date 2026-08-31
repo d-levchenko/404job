@@ -12,13 +12,13 @@ interface FiltersPanelProps {
 
 const FiltersPanel = ({ meta, filters }: FiltersPanelProps) => {
   return (
-    <aside className="hidden desktop:flex desktop:flex-col desktop:items-start desktop:max-w-76.25 desktop:w-full">
+    <aside className="hidden desktop:flex desktop:flex-col desktop:items-start desktop:max-w-76.25 desktop:w-full desktop:sticky desktop:top-6">
       <h2 className={css.title}>Фільтри</h2>
       <p className={css.description}>
-        Показано {meta?.perPage} зі {meta?.totalVacancies}
+        Показано {meta?.perPage} зі {meta?.totalVacancies} вакансій
       </p>
 
-      <div className="flex flex-col gap-6 w-full">
+      <div className="flex flex-col gap-6 w-full desktop:max-h-[calc(100vh-150px)] desktop:overflow-y-auto desktop:scrollbar-thin desktop:scrollbar-thumb-blue-300">
         <FiltersFields filters={filters} idPrefix="desktop" />
       </div>
     </aside>
