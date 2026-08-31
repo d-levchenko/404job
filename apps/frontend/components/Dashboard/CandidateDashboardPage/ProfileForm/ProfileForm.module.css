@@ -93,12 +93,16 @@
   }
 }
 
-.reset-btn:hover,
-.reset-btn:focus,
 .submit-btn:hover,
 .submit-btn:focus {
   background: var(--color-curious-blue-lighter);
   color: var(--color-scheme-1-text);
+}
+
+.reset-btn:hover,
+.reset-btn:focus {
+  background: var(--color-curious-blue);
+  color: var(--color-white);
 }
 
 .reset-btn {
