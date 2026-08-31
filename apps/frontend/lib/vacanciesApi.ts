@@ -1,5 +1,4 @@
 import { AllVacancies, Vacancy } from '@/types/vacancyType';
-
 import { api } from './api';
 
 export interface getAllVacanciesRequest {
@@ -15,63 +14,37 @@ export interface getAllVacanciesRequest {
 
 export interface VacancyByIdResponse {
   vacancy: Vacancy;
-  similarVacancies?: Vacancy[];
 }
 
 export const getHotVacancies = async (limit = 6): Promise<Vacancy[]> => {
-  try {
-    const { data } = await api.get<Vacancy[]>('/vacancies/hot', {
-      params: { limit },
-    });
-    return data;
-  } catch (error) {
-    throw error;
-  }
+  const { data } = await api.get<Vacancy[]>('/vacancies/hot', {
+    params: { limit },
+  });
+  return data;
 };
 
 export const getAllVacancies = async (
   params: getAllVacanciesRequest,
 ): Promise<AllVacancies> => {
-  try {
-    const { data } = await api.get<AllVacancies>('/vacancies/get-all', {
-      params,
-    });
-
-    return data;
-  } catch (error) {
-    throw error;
-  }
+  const { data } = await api.get<AllVacancies>('/vacancies/get-all', {
+    params,
+  });
+  return data;
 };
 
 export const getVacancyById = async (id: string): Promise<Vacancy> => {
-  try {
-    const { data } = await api.get<VacancyByIdResponse>(`/vacancies/${id}`);
-    return data.vacancy;
-  } catch (error) {
-    throw error;
-  }
+  const { data } = await api.get<VacancyByIdResponse>(`/vacancies/${id}`);
+  return data.vacancy;
 };
 
 export const addToFavorites = async (vacancyId: string): Promise<void> => {
-  try {
-    await api.post(`/vacancies/${vacancyId}/favorite`);
-  } catch (error) {
-    throw error;
-  }
+  await api.post(`/vacancies/${vacancyId}/favorite`);
 };
 
 export const removeFromFavorites = async (vacancyId: string): Promise<void> => {
-  try {
-    await api.delete(`/vacancies/${vacancyId}/favorite`);
-  } catch (error) {
-    throw error;
-  }
+  await api.delete(`/vacancies/${vacancyId}/favorite`);
 };
 
 export const applyToVacancy = async (vacancyId: string): Promise<void> => {
-  try {
-    await api.post(`/vacancies/${vacancyId}/apply`);
-  } catch (error) {
-    throw error;
-  }
+  await api.post(`/vacancies/${vacancyId}/apply`);
 };

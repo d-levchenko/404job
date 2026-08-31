@@ -3,6 +3,7 @@
 import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { isAxiosError } from 'axios';
+import toast from 'react-hot-toast';
 import { SvgIcon } from '@/components/SvgIcon/SvgIcon';
 import {
   applyToVacancy,
@@ -44,6 +45,11 @@ const VacancyHeader: React.FC<VacancyHeaderProps> = ({
       })
     : '';
 
+  const redirectToLogin = () => {
+    toast.error('Будь ласка, увійдіть у систему');
+    router.push('/auth/login');
+  };
+
   const handleApply = async () => {
     if (isApplied || isApplying) return;
 
@@ -51,17 +57,28 @@ const VacancyHeader: React.FC<VacancyHeaderProps> = ({
       setIsApplying(true);
       await applyToVacancy(vacancyId);
       setIsApplied(true);
-    } catch (error: unknown) {
+      toast.success('Ви успішно відгукнулися на вакансію!');
+    } catch (error) {
       if (isAxiosError<ApiErrorResponse>(error)) {
-        if (error.response?.status === 401) {
-          router.push('/auth/login');
+        if (error.response?.status === 401 || error.response?.status === 403) {
+          redirectToLogin();
           return;
         }
 
         if (error.response?.status === 409) {
           setIsApplied(true);
+          toast('Ви вже відгукнулися на цю вакансію раніше', { icon: 'ℹ️' });
+          return;
         }
+
+        toast.error(
+          error.response?.data?.message ||
+            'Не вдалося відгукнутися на вакансію',
+        );
+        return;
       }
+
+      toast.error('Виникла непередбачена помилка');
     } finally {
       setIsApplying(false);
     }
@@ -76,17 +93,26 @@ const VacancyHeader: React.FC<VacancyHeaderProps> = ({
       if (isFavorite) {
         await removeFromFavorites(vacancyId);
         setIsFavorite(false);
+        toast.success('Вакансію видалено з обраного');
       } else {
         await addToFavorites(vacancyId);
         setIsFavorite(true);
+        toast.success('Вакансію додано в обране');
       }
-    } catch (error: unknown) {
+    } catch (error) {
       if (isAxiosError<ApiErrorResponse>(error)) {
-        if (error.response?.status === 401) {
-          router.push('/auth/login');
+        if (error.response?.status === 401 || error.response?.status === 403) {
+          redirectToLogin();
           return;
         }
+
+        toast.error(
+          error.response?.data?.message || 'Помилка оновлення обраного',
+        );
+        return;
       }
+
+      toast.error('Виникла непередбачена помилка');
     } finally {
       setIsFavoriteLoading(false);
     }
@@ -138,11 +164,13 @@ const VacancyHeader: React.FC<VacancyHeaderProps> = ({
           className={css.applyButton}
           onClick={handleApply}
           disabled={isApplying || isApplied}>
-          {isApplying
-            ? 'Відправка...'
-            : isApplied
-              ? 'Ви відгукнулися'
-              : 'Відгукнутись на вакансію'}
+          {isApplying ? (
+            <span className={css.buttonLoader}>Відправка...</span>
+          ) : isApplied ? (
+            'Ви відгукнулися'
+          ) : (
+            'Відгукнутись на вакансію'
+          )}
         </button>
 
         <button
@@ -151,12 +179,16 @@ const VacancyHeader: React.FC<VacancyHeaderProps> = ({
           onClick={handleToggleFavorite}
           disabled={isFavoriteLoading}
           aria-label={isFavorite ? 'Видалити з обраного' : 'Додати в обране'}>
-          <SvgIcon
-            name={isFavorite ? 'heartFilled' : 'heart'}
-            width={24}
-            height={24}
-            className={css.heartIcon}
-          />
+          {isFavoriteLoading ? (
+            <span className={css.iconSpinner} />
+          ) : (
+            <SvgIcon
+              name={isFavorite ? 'heartFilled' : 'heart'}
+              width={24}
+              height={24}
+              className={css.heartIcon}
+            />
+          )}
         </button>
       </div>
     </aside>
