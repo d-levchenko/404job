@@ -1,18 +1,30 @@
 'use client';
 import Link from 'next/link';
-import React, { useEffect } from 'react';
 import { SvgIcon } from '../SvgIcon/SvgIcon';
 import { useAuthStore } from '@/store/authStore';
 import Button from '../UI/Button/Button';
 import AppLink from '../UI/AppLink/AppLink';
 import { useBurgerStore } from '@/store/burgerStore';
+import { useMutation } from '@tanstack/react-query';
+import { logout } from '@/lib/authApi';
 
 const Burger = () => {
-  const { isAuthenticated, userType } = useAuthStore();
+  const { isAuthenticated, userType, clearAuthStore } = useAuthStore();
 
   const { isOpen, closeBurger } = useBurgerStore();
   const handleCloseBurger = () => {
     closeBurger();
+  };
+
+  const { mutate } = useMutation({
+    mutationFn: logout,
+    onSuccess: () => {
+      clearAuthStore();
+    },
+  });
+
+  const handleExit = () => {
+    mutate();
   };
 
   return (
@@ -55,7 +67,9 @@ const Burger = () => {
             ) : (
               <>
                 <Button href="/dashboard/candidate">Мій профіль</Button>
-                <Button primary>Вийти</Button>
+                <Button primary onClick={handleExit}>
+                  Вийти
+                </Button>
               </>
             )
           ) : (

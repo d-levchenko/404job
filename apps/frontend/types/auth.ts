@@ -40,5 +40,3 @@ export interface AuthUser {
 }
 
 export type RegisterData = CandidateRegisterData | EmployerRegisterData;
-export type CandidateData = Omit<CandidateRegisterData, 'password'>;
-export type EmployerData = Omit<EmployerRegisterData, 'password'>;

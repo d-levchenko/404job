@@ -29,7 +29,7 @@ const loginSchema = Yup.object({
 
 const LoginForm = () => {
   const router = useRouter();
-  const { setEmployer, setCandidate, setUserType } = useAuthStore();
+  const { setUser } = useAuthStore();
 
   const initialValues: LoginFormData = {
     email: '',
@@ -38,13 +38,7 @@ const LoginForm = () => {
   const { mutate } = useMutation({
     mutationFn: loginUser,
     onSuccess: data => {
-      if (data.userType === 'employer') {
-        setUserType(data.userType);
-        setEmployer(data);
-      } else {
-        setUserType(data.userType);
-        setCandidate(data);
-      }
+      setUser(data);
       router.push('/');
     },
     onError: error => {

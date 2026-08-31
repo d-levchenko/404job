@@ -6,6 +6,8 @@ import AppLink from '../UI/AppLink/AppLink';
 import { usePathname } from 'next/navigation';
 import { useAuthStore } from '@/store/authStore';
 import { useBurgerStore } from '@/store/burgerStore';
+import { useMutation } from '@tanstack/react-query';
+import { logout } from '@/lib/authApi';
 
 const Header = () => {
   const path = usePathname();
@@ -14,8 +16,18 @@ const Header = () => {
   const handleOpenBurgerMenu = () => {
     openBurger();
   };
-  const { isAuthenticated, userType } = useAuthStore();
+  const { isAuthenticated, userType, clearAuthStore } = useAuthStore();
 
+  const { mutate } = useMutation({
+    mutationFn: logout,
+    onSuccess: () => {
+      clearAuthStore();
+    },
+  });
+
+  const handleExit = () => {
+    mutate();
+  };
   if (path.startsWith('/auth')) return null;
   return (
     <header className="w-full h-18 flex items-center px-5 md:px-8 desktop:px-16 bg-(--color-scheme-1-background)">
@@ -53,7 +65,9 @@ const Header = () => {
               ) : (
                 <>
                   <Button href="/dashboard/candidate">Мій профіль</Button>
-                  <Button primary>Вийти</Button>
+                  <Button primary onClick={handleExit}>
+                    Вийти
+                  </Button>
                 </>
               )
             ) : (

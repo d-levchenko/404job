@@ -8,6 +8,12 @@ import { logErrorResponse } from '../../_utils/utils';
 export async function POST(req: NextRequest) {
   try {
     const cookie = req.headers.get('cookie') ?? '';
+    const hasRefreshToken = cookie
+      .split(';')
+      .some(cookie => cookie.trim().startsWith('refreshToken'));
+    if (!hasRefreshToken) {
+      return NextResponse.json({ error: 'No active session' }, { status: 401 });
+    }
     const apiRes = await api.post(
       'auth/refresh',
       {},
