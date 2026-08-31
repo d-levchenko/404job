@@ -1,7 +1,6 @@
 'use client';
 
 import { Formik, Form, Field, ErrorMessage, FormikHelpers } from 'formik';
-import * as Yup from 'yup';
 
 import css from './CreateVacancyForm.module.css';
 import { getFilterOptions } from '@/lib/optionsApi';
@@ -43,7 +42,9 @@ const CreateVacancyForm = () => {
         setLocations(locationsData);
         setEmploymentTypes(employmentTypesData);
       } catch (error) {
-        console.error('Failed to fetch options:', error);
+        toast.error(
+          error instanceof Error ? error.message : 'Failed to fetch options',
+        );
       }
     };
 
