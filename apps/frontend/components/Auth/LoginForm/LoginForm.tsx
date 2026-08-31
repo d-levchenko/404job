@@ -39,7 +39,8 @@ const LoginForm = () => {
   const handleSubmit = async (values: LoginFormData) => {
     try {
       await loginUser(values);
-      router.push('/dashboard/candidate');
+      // router.push('/dashboard/candidate');
+      router.push('/');
     } catch {
       toast.error('Неправильний email або пароль');
     }
@@ -84,6 +85,7 @@ const LoginForm = () => {
                   <Field
                     type="password"
                     id={`${id}-password`}
+                    placeholder="********"
                     className={
                       errors.password && touched.password
                         ? css['input-error']
