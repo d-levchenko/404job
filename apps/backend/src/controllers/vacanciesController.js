@@ -1,6 +1,7 @@
 import { User } from '../models/user.js';
 import createHttpError from 'http-errors';
 import { Vacancy } from '../models/vacancy.js';
+import { Application } from '../models/application.js';
 
 const toArray = value => {
   if (value === undefined || value === null || value === '') return undefined;
@@ -188,6 +189,37 @@ export const createVacancy = async (req, res) => {
   res.status(201).json(vacancy);
 };
 
+export const getFavoriteVacancies = async (req, res, next) => {
+  try {
+    const { _id: userId, userType } = req.user;
+    const page = Number(req.query.page) || 1;
+    const perPage = Number(req.query.perPage) || 4;
+
+    if (userType !== 'candidate')
+      throw createHttpError(403, 'Only candidates can view saved vacancies');
+
+    const user = await User.findById(userId).populate({
+      path: 'savedVacancies',
+      populate: {
+        path: 'industryId experienceLevelId locationId employmentTypeId employerId',
+      },
+    });
+    if (!user) {
+      throw createHttpError(404, 'User not found');
+    }
+    const skip = (page - 1) * perPage;
+    const savedVacancies = user.savedVacancies.slice(skip, skip + perPage);
+    const totalSavedVacancies = user?.savedVacancies?.length || 0;
+    const totalPages = Math.ceil(totalSavedVacancies / perPage) || 1;
+
+    res
+      .status(200)
+      .json({ page, perPage, totalPages, totalSavedVacancies, savedVacancies });
+  } catch (error) {
+    next(error);
+  }
+};
+
 export const closeVacancy = async (req, res) => {
   const { vacancyId } = req.params;
   const { _id: userId, userType } = req.user;
@@ -243,6 +275,47 @@ export const getMyVacancies = async (req, res, next) => {
       totalVacancies: totalItems,
       totalPages,
       vacancies,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+export const applyToVacancy = async (req, res, next) => {
+  try {
+    const { vacancyId } = req.params;
+    const { _id: userId, userType } = req.user;
+
+    if (userType !== 'candidate') {
+      throw createHttpError(403, 'Only candidates can apply for vacancies');
+    }
+
+    const vacancy = await Vacancy.findById(vacancyId);
+
+    if (!vacancy) {
+      throw createHttpError(404, 'Vacancy not found');
+    }
+
+    if (vacancy.status !== 'active') {
+      throw createHttpError(400, 'This vacancy is closed for applications');
+    }
+
+    const existingApplication = await Application.findOne({
+      vacancyId,
+      candidateId: userId,
+    });
+
+    if (existingApplication) {
+      throw createHttpError(409, 'You have already applied for this vacancy');
+    }
+
+    const application = await Application.create({
+      vacancyId,
+      candidateId: userId,
+    });
+
+    res.status(201).json({
+      message: 'Application submitted successfully',
+      application,
     });
   } catch (error) {
     next(error);

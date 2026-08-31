@@ -1,17 +1,18 @@
-import { NextRequest, NextResponse } from 'next/server';
 import { isAxiosError } from 'axios';
-import { api } from '../api';
-import { logErrorResponse } from '../_utils/utils';
+import { NextRequest, NextResponse } from 'next/server';
 
-export async function GET(req: NextRequest) {
+import { logErrorResponse } from '../../_utils/utils';
+import { api } from '../../api';
+
+export async function POST(req: NextRequest) {
   try {
-    const { searchParams } = new URL(req.url);
-    const type = searchParams.get('type');
-    const res = await api.get('/options', {
-      params: { type },
-    });
+    const body = await req.json();
 
-    return NextResponse.json(res.data);
+    const res = await api.post('/vacancies/create-vacancy', body);
+
+    return NextResponse.json(res.data, {
+      status: res.status,
+    });
   } catch (error) {
     if (isAxiosError(error)) {
       logErrorResponse(error.response?.data);
@@ -27,7 +28,10 @@ export async function GET(req: NextRequest) {
       );
     }
 
-    logErrorResponse({ message: (error as Error).message });
+    logErrorResponse({
+      message: (error as Error).message,
+    });
+
     return NextResponse.json(
       { error: 'Internal Server Error' },
       { status: 500 },

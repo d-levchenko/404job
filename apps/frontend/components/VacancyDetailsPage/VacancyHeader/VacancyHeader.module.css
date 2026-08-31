@@ -1,0 +1,115 @@
+.card {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  width: 100%;
+  padding: 24px 24px 40px;
+  border-radius: 32px;
+  background-color: var(--color-scheme-4-foreground);
+}
+
+.infoList {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.infoItem {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.icon {
+  flex-shrink: 0;
+}
+
+.infoText {
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 1.4;
+  letter-spacing: -0.01em;
+  color: var(--color-scheme-1-text);
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  width: 100%;
+}
+
+.applyButton {
+  flex: 1;
+  height: 48px;
+  padding: 6px 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--color-curious-blue);
+  border-radius: 100px;
+  background-color: var(--color-curious-blue);
+  color: var(--color-white);
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.applyButton:hover {
+  background-color: var(--color-curious-blue-lighter);
+  color: var(--color-scheme-1-text);
+}
+
+.applyButton:active {
+  background-color: var(--color-curious-blue-light);
+  color: var(--color-scheme-1-text);
+}
+
+.applyButton:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+
+.favoriteButton {
+  width: 48px;
+  height: 48px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--opacity-neutral-darkest-15);
+  border-radius: 100px;
+  padding: 6px;
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.favoriteButton:hover,
+.favoriteButton:focus-visible {
+  border-color: var(--color-curious-blue);
+  background-color: var(--color-curious-blue-lighter);
+  color: var(--color-curious-blue);
+}
+
+.favoriteButton:active {
+  background-color: var(--color-curious-blue-light, #e0eeff);
+  border-color: var(--color-curious-blue, #1d77ff);
+}
+
+.favoriteButton:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+.heartIcon {
+  transition: var(--transition);
+}
+
+@media (min-width: 1440px) {
+  .card {
+    max-width: 416px;
+    flex-shrink: 0;
+    position: sticky;
+    top: 24px;
+  }
+}

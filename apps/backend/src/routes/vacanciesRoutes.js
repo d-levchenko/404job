@@ -1,6 +1,8 @@
 import { Router } from 'express';
 
 import authenticate from '../middleware/authenticate.js';
+import { applyToVacancy } from '../controllers/vacanciesController.js';
+import { applyToVacancySchema } from '../validations/vacanciesValidator.js';
 
 import {
   getAllVacancies,
@@ -9,6 +11,7 @@ import {
   addVacancyToFavorites,
   removeVacancyFromFavorites,
   createVacancy,
+  getFavoriteVacancies,
   closeVacancy,
   getMyVacancies,
 } from '../controllers/vacanciesController.js';
@@ -19,6 +22,7 @@ import {
   getVacancyByIdSchema,
   closeVacancySchema,
   getMyVacanciesSchema,
+  savedVacanciesScema,
 } from '../validations/vacanciesValidator.js';
 import { celebrate } from 'celebrate';
 
@@ -31,6 +35,12 @@ vacancyRouter.get(
 );
 
 vacancyRouter.get('/hot', celebrate(getHotVacanciesSchema), getHotVacancies);
+vacancyRouter.get(
+  '/favorite',
+  authenticate,
+  celebrate(savedVacanciesScema),
+  getFavoriteVacancies,
+);
 
 vacancyRouter.get('/:id', celebrate(getVacancyByIdSchema), getVacancyById);
 
@@ -61,6 +71,12 @@ vacancyRouter.get(
   authenticate,
   celebrate(getMyVacanciesSchema),
   getMyVacancies,
+);
+vacancyRouter.post(
+  '/:vacancyId/apply',
+  authenticate,
+  celebrate(applyToVacancySchema),
+  applyToVacancy,
 );
 
 export default vacancyRouter;

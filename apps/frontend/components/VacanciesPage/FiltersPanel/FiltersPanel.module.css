@@ -281,15 +281,31 @@
 
 .checkbox {
   position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+  top: -1px;
+  left: -1px;
   fill: transparent;
+  transform: scale(0);
   transition: var(--transition);
 }
 
 .checkboxInput:checked + .checkbox {
   fill: black;
+  transform: scale(1);
+  animation: check var(--transition-speed) var(--transition-ease);
+}
+
+@keyframes check {
+  0% {
+    transform: scale(0);
+  }
+
+  60% {
+    transform: scale(1.15);
+  }
+
+  100% {
+    transform: scale(1);
+  }
 }
 
 .selectLocation {
