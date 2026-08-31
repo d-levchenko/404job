@@ -1,4 +1,5 @@
-import { AllVacancies, Vacancy } from '@/types/vacancyType';
+import { AllVacancies, Vacancy, VacancyFormValues } from '@/types/vacancyType';
+
 import { api } from './api';
 
 export interface getAllVacanciesRequest {
@@ -47,4 +48,15 @@ export const removeFromFavorites = async (vacancyId: string): Promise<void> => {
 
 export const applyToVacancy = async (vacancyId: string): Promise<void> => {
   await api.post(`/vacancies/${vacancyId}/apply`);
+};
+
+export const createVacancy = async (
+  body: VacancyFormValues,
+): Promise<Vacancy> => {
+  try {
+    const { data } = await api.post<Vacancy>('/vacancies/create-vacancy', body);
+    return data;
+  } catch (error) {
+    throw error;
+  }
 };
