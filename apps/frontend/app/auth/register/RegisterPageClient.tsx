@@ -1,43 +1,19 @@
-'use client';
-import { useState } from 'react';
 import css from './register.module.css';
 import Image from 'next/image';
 import RegistrationForm from '@/components/Auth/RegisterForm/RegisterForm';
 import Link from 'next/link';
-import { UserType } from '@/types/auth';
+import AuthHeader from '@/components/AuthHeader/AuthHeader';
+import AuthFooter from '@/components/AuthFooter/AuthFooter';
 
 const RegisterPageClient = () => {
-  const [userType, setUserType] = useState<UserType>('candidate');
   return (
     <div className={css.container}>
       <div className={css.left}>
-        <h1 className={css.registerTitle}>Реєстрація</h1>
+        <AuthHeader />
         <div className={css.content}>
-          <div className={css.userType}>
-            <label htmlFor="candidate">
-              <input
-                id="candidate"
-                type="radio"
-                name="userType"
-                value="candidate"
-                checked={userType === 'candidate'}
-                onChange={() => setUserType('candidate')}
-              />
-              <span>Шукаю роботу</span>
-            </label>
-            <label htmlFor="employer">
-              <input
-                id="employer"
-                type="radio"
-                name="userType"
-                value="employer"
-                checked={userType === 'employer'}
-                onChange={() => setUserType('employer')}
-              />
-              <span>Шукаю працівників</span>
-            </label>
-          </div>
-          <RegistrationForm type={userType} />
+          <h1 className={css.registerTitle}>Реєстрація</h1>
+
+          <RegistrationForm />
           <div className={css.textLinkContainer}>
             <p>Вже маєте аккаунт?</p>
             <Link href="/auth/login" className={css.link}>
@@ -45,6 +21,7 @@ const RegisterPageClient = () => {
             </Link>
           </div>
         </div>
+        <AuthFooter />
       </div>
       <div className={css.right}>
         <Image

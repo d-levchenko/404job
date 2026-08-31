@@ -7,6 +7,9 @@ import Link from 'next/link';
 import { ErrorMessage, Field, Form, Formik } from 'formik';
 import * as Yup from 'yup';
 import { useRouter } from 'next/navigation';
+import { useMutation } from '@tanstack/react-query';
+import { loginUser } from '@/lib/authApi';
+import { useAuthStore } from '@/store/authStore';
 
 import { loginUser } from '@/lib/authApi';
 import toast from 'react-hot-toast';
@@ -30,20 +33,36 @@ const loginSchema = Yup.object({
 
 const LoginForm = () => {
   const router = useRouter();
+  const { setEmployer, setCandidate, setUserType } = useAuthStore();
 
   const initialValues: LoginFormData = {
     email: '',
     password: '',
   };
+  const { mutate } = useMutation({
+    mutationFn: loginUser,
+    onSuccess: data => {
+      if (data.userType === 'employer') {
+        setUserType(data.userType);
+        setEmployer(data);
+      } else {
+        setUserType(data.userType);
+        setCandidate(data);
+      }
+      router.push('/');
+    },
+    onError: error => {
+      console.log('mutation error', error); // додай це для діагностики
+    },
+  });
 
   const handleSubmit = async (values: LoginFormData) => {
     try {
-      await loginUser(values);
+      mutate(values);
       router.push('/');
     } catch {
       toast.error('Неправильний email або пароль');
     }
-  };
 
   const id = useId();
 

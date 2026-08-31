@@ -1,5 +1,11 @@
-import { AuthUser, LoginData, RegisterData } from '@/types/auth';
+import {
+  CandidateData,
+  EmployerData,
+  LoginData,
+  RegisterData,
+} from '@/types/auth';
 import { api } from './api';
+import { getMe } from './usersApi';
 
 export const registerUser = async (payload: RegisterData) => {
   try {
@@ -10,7 +16,25 @@ export const registerUser = async (payload: RegisterData) => {
   }
 };
 
-export const loginUser = async (payload: LoginData) => {
+export const loginUser = async (
+  payload: LoginData,
+): Promise<CandidateData | EmployerData> => {
   const { data } = await api.post<AuthUser>('auth/login', payload);
   return data;
+};
+export const refreshSession = async () => {
+  const response = await api.post('/auth/refresh');
+  return response;
+};
+
+export const initAuth = async (): Promise<
+  CandidateData | EmployerData | null
+> => {
+  try {
+    await refreshSession();
+    const user = await getMe();
+    return user;
+  } catch {
+    return null;
+  }
 };

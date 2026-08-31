@@ -8,9 +8,7 @@ export const getCurrent = async (req, res, next) => {
   try {
     const user = await getCurrentUser(req.user._id);
 
-    res.status(200).json({
-      data: user,
-    });
+    res.status(200).json(user);
   } catch (error) {
     next(error);
   }

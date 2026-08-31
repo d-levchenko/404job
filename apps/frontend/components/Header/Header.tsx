@@ -3,12 +3,20 @@ import Link from 'next/link';
 import { SvgIcon } from '../SvgIcon/SvgIcon';
 import Button from '../UI/Button/Button';
 import AppLink from '../UI/AppLink/AppLink';
+import { usePathname } from 'next/navigation';
+import { useAuthStore } from '@/store/authStore';
+import { useBurgerStore } from '@/store/burgerStore';
 
 const Header = () => {
-  const handleOpenBurgerMenu = () => {};
-  //для тесту буде стор тоді можна прибрати
-  const isAuthorised = true;
-  const employer = true;
+  const path = usePathname();
+  const { openBurger } = useBurgerStore();
+
+  const handleOpenBurgerMenu = () => {
+    openBurger();
+  };
+  const { isAuthenticated, userType } = useAuthStore();
+
+  if (path.startsWith('/auth')) return null;
   return (
     <header className="w-full h-18 flex items-center px-5 md:px-8 desktop:px-16 bg-(--color-scheme-1-background)">
       <div className="w-full max-w-83.75 md:max-w-176 desktop:max-w-328 mx-auto flex items-center justify-between">
@@ -31,8 +39,8 @@ const Header = () => {
             <AppLink href="/vacancies">Вакансії</AppLink>
           </div>
           <div className="flex gap-4">
-            {isAuthorised ? (
-              employer ? (
+            {isAuthenticated ? (
+              userType === 'employer' ? (
                 <>
                   <Button primary href="/dashboard/employer">
                     Мій профіль

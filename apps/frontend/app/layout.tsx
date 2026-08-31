@@ -5,6 +5,8 @@ import './globals.css';
 import TanStackProvider from '@/providers/TanStackProvider';
 import Header from '@/components/Header/Header';
 import Footer from '@/components/Footer/Footer';
+import AuthProvider from '@/providers/AuthProvider';
+import Burger from '@/components/Burger/Burger';
 
 const roboto = Roboto({
   weight: ['400', '500', '700'],
@@ -58,10 +60,12 @@ const RootLayout = ({ children }: LayoutProps<'/'>) => {
     <html lang="en" className={`${roboto.variable} h-full antialiased`}>
       <body className="min-h-full flex flex-col">
         <TanStackProvider>
-          <Header />
-          {children}
-
-          <Footer />
+          <AuthProvider>
+            <Header />
+            {children}
+            <Footer />
+            <Burger />
+          </AuthProvider>
         </TanStackProvider>
       </body>
     </html>

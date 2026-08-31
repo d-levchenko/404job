@@ -1,13 +1,12 @@
 import axios from 'axios';
 import { NextRequest, NextResponse } from 'next/server';
-
-import { api } from '@/lib/api';
+import { api } from '../api';
 
 export async function GET(request: NextRequest) {
   try {
     const cookie = request.headers.get('cookie') ?? '';
 
-    const response = await api.get('/api/users/me', {
+    const response = await api.get('/users/me', {
       headers: {
         cookie,
       },
