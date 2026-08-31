@@ -86,10 +86,19 @@
   line-height: 1.5;
   white-space: nowrap;
   cursor: pointer;
+  transition: var(--transition);
 
   @media (min-width: 768px) {
     width: auto;
   }
+}
+
+.reset-btn:hover,
+.reset-btn:focus,
+.submit-btn:hover,
+.submit-btn:focus {
+  background: var(--color-curious-blue-lighter);
+  color: var(--color-scheme-1-text);
 }
 
 .reset-btn {
