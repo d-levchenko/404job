@@ -1,4 +1,4 @@
-import { AllVacancies, Vacancy } from '@/types/vacancyType';
+import { AllVacancies, Vacancy, VacancyFormValues } from '@/types/vacancyType';
 
 import { api } from './api';
 
@@ -32,6 +32,17 @@ export const getAllVacancies = async (
       params,
     });
 
+    return data;
+  } catch (error) {
+    throw error;
+  }
+};
+
+export const createVacancy = async (
+  body: VacancyFormValues,
+): Promise<Vacancy> => {
+  try {
+    const { data } = await api.post<Vacancy>('/vacancies/create-vacancy', body);
     return data;
   } catch (error) {
     throw error;

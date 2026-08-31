@@ -63,3 +63,18 @@ export interface Vacancy {
   salaryRange: string;
   hotVacancy: boolean;
 }
+
+export interface VacancyFormValues {
+  title: string;
+  description: string;
+  requirements: string;
+  duties: string;
+  plusWillBe: string;
+  weOffer: string;
+  salaryRange: string;
+  experienceLevelId: string;
+  employmentTypeId: string;
+  industryId: string;
+  locationId: string;
+  isRemote: boolean;
+}
