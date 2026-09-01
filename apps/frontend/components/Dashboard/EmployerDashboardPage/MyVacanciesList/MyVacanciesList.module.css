@@ -1,0 +1,396 @@
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 16px;
+  width: 100%;
+  min-width: 0;
+}
+
+.title {
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 1.4;
+  letter-spacing: -0.01em;
+  color: var(--color-scheme-1-text);
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  width: 100%;
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  min-width: 0;
+  padding: 24px;
+  border-radius: 32px;
+  background-color: var(--color-scheme-4-foreground);
+}
+
+.cardContent {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  width: 100%;
+}
+
+.companyMobile {
+  display: block;
+  margin-bottom: 16px;
+}
+
+.companyDesktop {
+  display: none;
+}
+
+.companyLogo,
+.companyLogoPlaceholder {
+  width: 157px;
+  height: 67px;
+  flex-shrink: 0;
+  border-radius: 24px;
+  overflow: hidden;
+}
+
+.companyLogo {
+  display: block;
+  object-fit: contain;
+}
+
+.companyLogoPlaceholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #d9d9d9;
+}
+
+.noImageIcon {
+  width: 56px;
+  height: auto;
+  fill: #bdbdbd;
+}
+
+.meta {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 24px;
+  width: 100%;
+  min-height: 24px;
+  margin-bottom: 8px;
+  font-weight: 400;
+  line-height: 1.5;
+  color: var(--color-scheme-1-text);
+}
+
+.location {
+  display: flex;
+  align-items: center;
+  font-size: 12px;
+  gap: 8px;
+}
+
+.locationIcon {
+  width: 24px;
+  height: 24px;
+}
+
+.location > span,
+.metaCompany {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.vacancyTitle {
+  width: 100%;
+  margin-bottom: 16px;
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 1.4;
+  letter-spacing: -0.01em;
+  color: var(--color-scheme-1-text);
+}
+
+.description {
+  display: -webkit-box;
+  width: 100%;
+  min-width: 0;
+  margin-bottom: 8px;
+  overflow: hidden;
+  font-weight: 400;
+  line-height: 1.5;
+  color: var(--color-scheme-1-text);
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  line-clamp: 3;
+}
+
+.salary {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  min-height: 24px;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.5;
+  color: var(--color-scheme-1-text);
+}
+
+.salaryIcon {
+  width: 24px;
+  height: 24px;
+}
+
+.cardActions {
+  display: none;
+}
+
+.createButton,
+.closeButton,
+.showMoreButton {
+  align-items: center;
+  justify-content: center;
+  padding: 6px 12px;
+  border: 1px solid var(--color-curious-blue);
+  border-radius: 100px;
+  line-height: 1.5;
+  white-space: nowrap;
+  color: var(--color-white);
+  background-color: var(--color-curious-blue);
+  cursor: pointer;
+  transition:
+    background-color var(--transition),
+    color var(--transition),
+    opacity var(--transition);
+}
+
+.createButton,
+.showMoreButton {
+  display: inline-flex;
+}
+
+.createButton:hover,
+.createButton:focus,
+.closeButton:hover,
+.closeButton:focus,
+.showMoreButton:hover,
+.showMoreButton:focus {
+  color: var(--color-scheme-1-text);
+  background-color: var(--color-curious-blue-lighter);
+}
+
+.createButton:active,
+.closeButton:active,
+.showMoreButton:active {
+  color: var(--color-scheme-1-text);
+  background-color: var(--color-curious-blue-light);
+}
+
+.closeButton:disabled,
+.showMoreButton:disabled {
+  cursor: default;
+  opacity: 0.3;
+}
+
+.showMoreButton {
+  align-self: stretch;
+  width: 100%;
+  min-height: 33px;
+  font-weight: 500;
+}
+
+.empty {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 16px;
+  width: 100%;
+  padding: 20px;
+  border-radius: 32px;
+  background-color: var(--color-scheme-4-foreground);
+}
+
+.emptyTitle {
+  width: 100%;
+  margin: 0;
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 1.4;
+  letter-spacing: -0.01em;
+  white-space: normal;
+  color: var(--color-scheme-1-text);
+}
+
+.emptyText {
+  font-weight: 400;
+  line-height: 1.5;
+  color: var(--color-scheme-1-text);
+}
+
+.createButton {
+  width: 100%;
+  min-height: 33px;
+  font-weight: 500;
+}
+
+@media screen and (min-width: 767px) {
+  .card {
+    align-items: flex-end;
+    gap: 16px;
+  }
+
+  .cardContent {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 157px;
+    grid-template-areas:
+      'meta logo'
+      'heading logo'
+      'description description'
+      'salary salary';
+    column-gap: 16px;
+    width: 100%;
+    min-width: 0;
+  }
+
+  .companyMobile {
+    grid-area: logo;
+    display: block;
+    justify-self: end;
+    align-self: start;
+    margin: 0;
+  }
+
+  .companyDesktop {
+    display: none;
+  }
+
+  .meta {
+    grid-area: meta;
+  }
+
+  .vacancyTitle {
+    grid-area: heading;
+    margin: 0;
+  }
+
+  .description {
+    grid-area: description;
+    margin-top: 16px;
+  }
+
+  .salary {
+    grid-area: salary;
+    margin-top: 8px;
+  }
+
+  .cardActions {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    width: 100%;
+    margin-top: auto;
+  }
+
+  .emptyTitle {
+    white-space: nowrap;
+  }
+
+  .createButton {
+    width: fit-content;
+  }
+
+  .showMoreButton {
+    align-self: center;
+    width: 137px;
+    height: 33px;
+  }
+}
+
+@media screen and (min-width: 767px) and (max-width: 1439px) {
+  .card {
+    min-height: 277px;
+  }
+
+  .location {
+    align-items: center;
+    font-size: 12px;
+  }
+
+  .closeButton {
+    width: fit-content;
+    min-width: 144px;
+    min-height: 33px;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  .showMoreButton {
+    width: 137px;
+    min-height: 33px;
+  }
+}
+
+@media screen and (min-width: 1440px) {
+  .title {
+    font-size: 20px;
+    line-height: 1.5;
+
+    color: var(--color-scheme-2-text);
+  }
+
+  .card {
+    min-height: 265px;
+  }
+
+  .location {
+    font-size: 14px;
+  }
+
+  .metaCompany {
+    font-size: 16px;
+  }
+
+  .vacancyTitle {
+    font-size: 24px;
+  }
+
+  .description {
+    font-size: 16px;
+  }
+
+  .salary {
+    font-size: 16px;
+  }
+
+  .closeButton {
+    min-width: 161px;
+    min-height: 36px;
+  }
+
+  .showMoreButton {
+    min-width: 153px;
+    min-height: 36px;
+    margin-top: 8px;
+  }
+
+  .emptyTitle {
+    font-size: 24px;
+  }
+
+  .emptyText {
+    font-size: 16px;
+  }
+
+  .createButton {
+    min-height: 36px;
+    font-size: 16px;
+  }
+}

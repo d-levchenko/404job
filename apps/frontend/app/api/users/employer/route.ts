@@ -1,14 +1,14 @@
 import axios from 'axios';
 import { NextRequest, NextResponse } from 'next/server';
 
-import { api } from '@/lib/api';
+import { api } from '../../api';
 
 export async function PATCH(request: NextRequest) {
   try {
     const cookie = request.headers.get('cookie') ?? '';
     const body = await request.json();
 
-    const response = await api.patch('/api/users/employer', body, {
+    const response = await api.patch('/users/employer', body, {
       headers: {
         cookie,
       },
@@ -30,8 +30,12 @@ export async function PATCH(request: NextRequest) {
     }
 
     return NextResponse.json(
-      { message: 'Internal server error' },
-      { status: 500 },
+      {
+        message: 'Internal server error',
+      },
+      {
+        status: 500,
+      },
     );
   }
 }

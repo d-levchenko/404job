@@ -4,10 +4,7 @@ import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 
-import {
-  getFavoriteVacancies,
-  removeVacancyFromFavorites,
-} from '@/lib/vacanciesApi';
+import { getFavoriteVacancies, removeFromFavorites } from '@/lib/vacanciesApi';
 import { Vacancy } from '@/types/vacancyType';
 import { SvgIcon } from '@/components/SvgIcon/SvgIcon';
 import VacanciesMissing from '../VacanciesMissing/VacanciesMissing';
@@ -51,7 +48,7 @@ const SavedVacanciesList = () => {
     try {
       setRemovingId(vacancyId);
 
-      await removeVacancyFromFavorites(vacancyId);
+      await removeFromFavorites(vacancyId);
 
       setVacancies(prevVacancies =>
         prevVacancies.filter(vacancy => vacancy._id !== vacancyId),

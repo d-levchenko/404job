@@ -4,10 +4,13 @@ import { NextRequest, NextResponse } from 'next/server';
 import { logErrorResponse } from '../../../_utils/utils';
 import { api } from '../../../api';
 
-export async function PATCH(
-  req: NextRequest,
-  { params }: { params: Promise<{ vacancyId: string }> },
-) {
+interface RouteContext {
+  params: Promise<{
+    vacancyId: string;
+  }>;
+}
+
+export async function PATCH(req: NextRequest, { params }: RouteContext) {
   try {
     const { vacancyId } = await params;
     const cookie = req.headers.get('cookie') ?? '';
@@ -22,26 +25,34 @@ export async function PATCH(
       },
     );
 
-    return NextResponse.json(res.data);
+    return NextResponse.json(res.data, {
+      status: res.status,
+    });
   } catch (error) {
     if (isAxiosError(error)) {
       logErrorResponse(error.response?.data);
 
       return NextResponse.json(
-        {
-          error: error.message,
-          response: error.response?.data || null,
+        error.response?.data ?? {
+          message: 'Failed to close vacancy',
         },
         {
-          status: typeof error.status === 'number' ? error.status : 500,
+          status: error.response?.status ?? 500,
         },
       );
     }
 
-    logErrorResponse({ message: (error as Error).message });
+    logErrorResponse({
+      message: (error as Error).message,
+    });
+
     return NextResponse.json(
-      { error: 'Internal Server Error' },
-      { status: 500 },
+      {
+        message: 'Internal Server Error',
+      },
+      {
+        status: 500,
+      },
     );
   }
 }

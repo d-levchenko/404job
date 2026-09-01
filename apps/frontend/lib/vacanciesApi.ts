@@ -13,6 +13,12 @@ export interface getAllVacanciesRequest {
   isRemote?: boolean | null;
 }
 
+interface GetMyVacanciesRequest {
+  page?: number;
+  perPage?: number;
+  status?: 'active' | 'closed';
+}
+
 export interface VacancyByIdResponse {
   vacancy: Vacancy;
 }
@@ -21,6 +27,7 @@ export const getHotVacancies = async (limit = 6): Promise<Vacancy[]> => {
   const { data } = await api.get<Vacancy[]>('/vacancies/hot', {
     params: { limit },
   });
+
   return data;
 };
 
@@ -30,12 +37,20 @@ export const getAllVacancies = async (
   const { data } = await api.get<AllVacancies>('/vacancies/get-all', {
     params,
   });
+
   return data;
 };
 
 export const getVacancyById = async (id: string): Promise<Vacancy> => {
   const { data } = await api.get<VacancyByIdResponse>(`/vacancies/${id}`);
+
   return data.vacancy;
+};
+
+export const getFavoriteVacancies = async (): Promise<Vacancy[]> => {
+  const { data } = await api.get<Vacancy[]>('/vacancies/favorite');
+
+  return data;
 };
 
 export const addToFavorites = async (vacancyId: string): Promise<void> => {
@@ -53,39 +68,23 @@ export const applyToVacancy = async (vacancyId: string): Promise<void> => {
 export const createVacancy = async (
   body: VacancyFormValues,
 ): Promise<Vacancy> => {
-  try {
-    const { data } = await api.post<Vacancy>('/vacancies/create-vacancy', body);
-    return data;
-  } catch (error) {
-    throw error;
-  }
+  const { data } = await api.post<Vacancy>('/vacancies/create-vacancy', body);
+
+  return data;
 };
 
-interface FavoriteVacanciesResponse {
-  message: string;
-  savedVacancies: Vacancy[];
-}
+export const getMyVacancies = async (
+  params: GetMyVacanciesRequest,
+): Promise<AllVacancies> => {
+  const { data } = await api.get<AllVacancies>('/vacancies/my', {
+    params,
+  });
 
-export const getFavoriteVacancies = async (): Promise<Vacancy[]> => {
-  try {
-    const { data } = await api.get<Vacancy[]>('/vacancies/favorite');
-
-    return data;
-  } catch (error) {
-    throw error;
-  }
+  return data;
 };
 
-export const removeVacancyFromFavorites = async (
-  vacancyId: string,
-): Promise<FavoriteVacanciesResponse> => {
-  try {
-    const { data } = await api.delete<FavoriteVacanciesResponse>(
-      `/vacancies/${vacancyId}/favorite`,
-    );
+export const closeVacancy = async (vacancyId: string): Promise<Vacancy> => {
+  const { data } = await api.patch<Vacancy>(`/vacancies/${vacancyId}/close`);
 
-    return data;
-  } catch (error) {
-    throw error;
-  }
+  return data;
 };
