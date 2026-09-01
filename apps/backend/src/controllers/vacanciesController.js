@@ -147,9 +147,9 @@ export const getHotVacancies = async (req, res, next) => {
 
 export const getVacancyById = async (req, res, next) => {
   try {
-    const { id } = req.params;
+    const { vacancyId } = req.params;
 
-    const vacancy = await Vacancy.findById(id)
+    const vacancy = await Vacancy.findById(vacancyId)
       .populate('employerId', 'companyName logo websiteUrl description')
       .populate('industryId', 'name')
       .populate('experienceLevelId', 'name')

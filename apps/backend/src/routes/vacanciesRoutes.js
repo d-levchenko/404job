@@ -41,8 +41,12 @@ vacancyRouter.get(
   celebrate(savedVacanciesScema),
   getFavoriteVacancies,
 );
-
-vacancyRouter.get('/:id', celebrate(getVacancyByIdSchema), getVacancyById);
+vacancyRouter.get(
+  '/my/vacancies',
+  authenticate,
+  celebrate(getMyVacanciesSchema),
+  getMyVacancies,
+);
 
 vacancyRouter.post('/:vacancyId/favorite', authenticate, addVacancyToFavorites);
 
@@ -59,6 +63,12 @@ vacancyRouter.post(
   createVacancy,
 );
 
+vacancyRouter.get(
+  '/:vacancyId',
+  celebrate(getVacancyByIdSchema),
+  getVacancyById,
+);
+
 vacancyRouter.patch(
   '/:vacancyId/close',
   authenticate,
@@ -66,12 +76,6 @@ vacancyRouter.patch(
   closeVacancy,
 );
 
-vacancyRouter.get(
-  '/my/vacancies',
-  authenticate,
-  celebrate(getMyVacanciesSchema),
-  getMyVacancies,
-);
 vacancyRouter.post(
   '/:vacancyId/apply',
   authenticate,

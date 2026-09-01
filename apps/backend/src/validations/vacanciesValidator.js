@@ -37,7 +37,7 @@ export const getAllVacanciesSchema = {
 
 export const getVacancyByIdSchema = {
   [Segments.PARAMS]: Joi.object({
-    id: Joi.string().custom(objectIdValidator).required(),
+    vacancyId: Joi.string().custom(objectIdValidator).required(),
   }),
 };
 
