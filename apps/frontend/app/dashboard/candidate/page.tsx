@@ -8,20 +8,11 @@ export const metadata: Metadata = {
   description: 'Особистий кабінет кандидата на JobSpace',
 };
 
-const user = {
-  name: 'TEST',
-  githubUrl: 'https://github.com/ivan-alekseev',
-  linkedinUrl: 'https://linkedin.com/in/ivan-alekseev',
-  behanceUrl: 'https://behance.net/ivan-alekseev',
-};
-
 const Page = () => {
   return (
-    <>
-      <CandidateDashboardPage>
-        <ProfileForm user={user} />
-      </CandidateDashboardPage>
-    </>
+    <CandidateDashboardPage>
+      <ProfileForm />
+    </CandidateDashboardPage>
   );
 };
 
