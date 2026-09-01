@@ -9,6 +9,8 @@ RUN npm ci --omit=dev
 
 COPY apps/backend ./apps/backend
 
+ENV NODE_ENV=production
+
 WORKDIR /app/apps/backend
 
 EXPOSE 4000
