@@ -174,3 +174,18 @@ input:active,
 .button:active {
   background: var(--color-curious-blue-light);
 }
+.heroSection .container {
+  animation: hero-drift linear both;
+  animation-timeline: view();
+  animation-range: exit 50% exit 100%;
+}
+
+@keyframes hero-drift {
+  from {
+    transform: translateX(0);
+  }
+
+  to {
+    transform: translateX(-450px);
+  }
+}
