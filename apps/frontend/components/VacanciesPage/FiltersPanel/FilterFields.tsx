@@ -17,10 +17,10 @@ import {
 import css from './FiltersPanel.module.css';
 
 export interface FiltersOptions {
-  industries: PromiseSettledResult<Industry[]>;
-  locations: PromiseSettledResult<Location[]>;
-  experienceLevels: PromiseSettledResult<ExperienceLevel[]>;
-  employmentTypes: PromiseSettledResult<EmploymentType[]>;
+  industries: Industry[];
+  locations: Location[];
+  experienceLevels: ExperienceLevel[];
+  employmentTypes: EmploymentType[];
 }
 
 interface FiltersFieldsProps {
@@ -45,10 +45,9 @@ const FiltersFields = ({
   const resetStore = useFiltersStore(state => state.reset);
   const setIsRemote = useFiltersStore(state => state.setIsRemote);
 
-  const selectedLocationName =
-    filters.locations.status === 'fulfilled'
-      ? filters.locations.value.find(l => l._id === location)?.name
-      : undefined;
+  const selectedLocationName = filters.locations.find(
+    l => l._id === location,
+  )?.name;
 
   const handleApply = () => {
     const params = buildFiltersSearchParams({
@@ -77,66 +76,64 @@ const FiltersFields = ({
         <fieldset>
           <legend className={`${css.legend} ${css.industry}`}>Галузі</legend>
           <ul className="flex flex-col">
-            {filters.industries.status === 'fulfilled' &&
-              filters.industries.value.map(item => (
-                <li key={item._id} className={css.item}>
-                  <label
-                    htmlFor={`${idPrefix}-${item._id}`}
-                    className={css.label}>
-                    <div className={css.checkboxWrapper}>
-                      <input
-                        type="checkbox"
-                        id={`${idPrefix}-${item._id}`}
-                        className={css.checkboxInput}
-                        checked={industry.includes(item._id)}
-                        onChange={() => toggleValue('industry', item._id)}
-                      />
-                      <SvgIcon
-                        name="checkbox"
-                        width={20}
-                        height={20}
-                        className={css.checkbox}
-                        aria-hidden="true"
-                      />
-                    </div>
+            {filters.industries.map(item => (
+              <li key={item._id} className={css.item}>
+                <label
+                  htmlFor={`${idPrefix}-${item._id}`}
+                  className={css.label}>
+                  <div className={css.checkboxWrapper}>
+                    <input
+                      type="checkbox"
+                      id={`${idPrefix}-${item._id}`}
+                      className={css.checkboxInput}
+                      checked={industry.includes(item._id)}
+                      onChange={() => toggleValue('industry', item._id)}
+                    />
+                    <SvgIcon
+                      name="checkbox"
+                      width={20}
+                      height={20}
+                      className={css.checkbox}
+                      aria-hidden="true"
+                    />
+                  </div>
 
-                    {item.name}
-                  </label>
-                </li>
-              ))}
+                  {item.name}
+                </label>
+              </li>
+            ))}
           </ul>
         </fieldset>
 
         <fieldset>
           <legend className={css.legend}>Рівень досвіду</legend>
           <ul className="flex flex-col">
-            {filters.experienceLevels.status === 'fulfilled' &&
-              filters.experienceLevels.value.map(item => (
-                <li key={item._id} className={css.item}>
-                  <label
-                    htmlFor={`${idPrefix}-${item._id}`}
-                    className={css.label}>
-                    <div className={css.checkboxWrapper}>
-                      <input
-                        type="checkbox"
-                        id={`${idPrefix}-${item._id}`}
-                        className={css.checkboxInput}
-                        checked={experience.includes(item._id)}
-                        onChange={() => toggleValue('experience', item._id)}
-                      />
-                      <SvgIcon
-                        name="checkbox"
-                        width={20}
-                        height={20}
-                        className={css.checkbox}
-                        aria-hidden="true"
-                      />
-                    </div>
+            {filters.experienceLevels.map(item => (
+              <li key={item._id} className={css.item}>
+                <label
+                  htmlFor={`${idPrefix}-${item._id}`}
+                  className={css.label}>
+                  <div className={css.checkboxWrapper}>
+                    <input
+                      type="checkbox"
+                      id={`${idPrefix}-${item._id}`}
+                      className={css.checkboxInput}
+                      checked={experience.includes(item._id)}
+                      onChange={() => toggleValue('experience', item._id)}
+                    />
+                    <SvgIcon
+                      name="checkbox"
+                      width={20}
+                      height={20}
+                      className={css.checkbox}
+                      aria-hidden="true"
+                    />
+                  </div>
 
-                    {item.name}
-                  </label>
-                </li>
-              ))}
+                  {item.name}
+                </label>
+              </li>
+            ))}
           </ul>
         </fieldset>
 
@@ -174,19 +171,18 @@ const FiltersFields = ({
                   </button>
                 </li>
 
-                {filters.locations.status === 'fulfilled' &&
-                  filters.locations.value.map(item => (
-                    <li key={item._id}>
-                      <button
-                        type="button"
-                        onClick={() => {
-                          setLocation(location === item._id ? null : item._id);
-                          setLocationOpen(false);
-                        }}>
-                        {item.name}
-                      </button>
-                    </li>
-                  ))}
+                {filters.locations.map(item => (
+                  <li key={item._id}>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setLocation(location === item._id ? null : item._id);
+                        setLocationOpen(false);
+                      }}>
+                      {item.name}
+                    </button>
+                  </li>
+                ))}
               </ul>
             )}
           </div>
@@ -217,33 +213,32 @@ const FiltersFields = ({
         <fieldset>
           <legend className={css.legend}>Тип Зайнятості</legend>
           <ul className="flex flex-col">
-            {filters.employmentTypes.status === 'fulfilled' &&
-              filters.employmentTypes.value.map(item => (
-                <li key={item._id} className={css.item}>
-                  <label
-                    htmlFor={`${idPrefix}-${item._id}`}
-                    className={css.label}>
-                    <div className={css.checkboxWrapper}>
-                      <input
-                        type="checkbox"
-                        id={`${idPrefix}-${item._id}`}
-                        className={css.checkboxInput}
-                        checked={employmentType.includes(item._id)}
-                        onChange={() => toggleValue('employmentType', item._id)}
-                      />
-                      <SvgIcon
-                        name="checkbox"
-                        width={20}
-                        height={20}
-                        className={css.checkbox}
-                        aria-hidden="true"
-                      />
-                    </div>
+            {filters.employmentTypes.map(item => (
+              <li key={item._id} className={css.item}>
+                <label
+                  htmlFor={`${idPrefix}-${item._id}`}
+                  className={css.label}>
+                  <div className={css.checkboxWrapper}>
+                    <input
+                      type="checkbox"
+                      id={`${idPrefix}-${item._id}`}
+                      className={css.checkboxInput}
+                      checked={employmentType.includes(item._id)}
+                      onChange={() => toggleValue('employmentType', item._id)}
+                    />
+                    <SvgIcon
+                      name="checkbox"
+                      width={20}
+                      height={20}
+                      className={css.checkbox}
+                      aria-hidden="true"
+                    />
+                  </div>
 
-                    {item.name}
-                  </label>
-                </li>
-              ))}
+                  {item.name}
+                </label>
+              </li>
+            ))}
           </ul>
         </fieldset>
       </div>
