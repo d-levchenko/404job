@@ -60,6 +60,7 @@ const RootLayout = ({ children }: LayoutProps<'/'>) => {
         <TanStackProvider>
           <Header />
           {children}
+
           <Footer />
         </TanStackProvider>
       </body>

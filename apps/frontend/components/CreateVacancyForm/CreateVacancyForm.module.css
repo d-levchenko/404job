@@ -7,3 +7,8 @@
   display: flex;
   flex-direction: column;
 }
+
+.radioGroup {
+  display: flex;
+  flex-direction: column;
+}

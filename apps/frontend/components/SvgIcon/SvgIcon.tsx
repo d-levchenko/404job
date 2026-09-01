@@ -13,6 +13,9 @@ import checkbox from '@/assets/checkbox.svg';
 import facebook from '@/assets/facebook.svg';
 import x from '@/assets/x.svg';
 import linkedin from '@/assets/linkedIn.svg';
+import dateRange from '@/assets/date_range.svg';
+import heart from '@/assets/heart.svg';
+import heartFilled from '@/assets/heart_filled.svg';
 
 const icons = {
   logo: jobLogo,
@@ -30,6 +33,9 @@ const icons = {
   facebook,
   x,
   linkedin,
+  dateRange,
+  heart,
+  heartFilled,
 };
 
 export type IconName = keyof typeof icons;

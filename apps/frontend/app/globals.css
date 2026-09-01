@@ -78,6 +78,40 @@
   box-sizing: border-box;
 }
 
+* {
+  cursor:
+    url('/cursor/cursor-normal.png') 3 3,
+    auto;
+}
+
+html,
+button,
+button *,
+a,
+a *,
+.slide,
+.slide p,
+.slide div,
+.slide svg,
+.slide path,
+.slide img,
+.vacancyItem,
+.swiper-pagination-bullet,
+[role='button'],
+[role='button'] *,
+.embla__button,
+.embla__button *,
+.embla__dot,
+.embla__dot * {
+  cursor:
+    url('/cursor/cursor-hover.png') 3 3,
+    pointer !important;
+}
+
+.embla__container:active {
+  cursor: grabbing !important;
+}
+
 @theme {
   --breakpoint-xs: 375px;
   --breakpoint-desktop: 90rem;
@@ -160,4 +194,33 @@ textarea {
     max-width: 1440px;
     padding: 0 64px;
   }
+}
+
+@keyframes shimmer {
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+.animate-shimmer {
+  position: relative;
+  overflow: hidden;
+}
+
+.animate-shimmer::after {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  transform: translateX(-100%);
+  background-image: linear-gradient(
+    90deg,
+    rgba(0, 0, 0, 0) 0,
+    rgba(0, 0, 0, 0.05) 20%,
+    rgba(0, 0, 0, 0.2) 60%,
+    rgba(0, 0, 0, 0)
+  );
+  animation: shimmer 2s infinite;
+  content: '';
 }

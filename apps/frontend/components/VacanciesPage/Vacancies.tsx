@@ -13,6 +13,7 @@ import { FiltersOptions } from './FiltersPanel/FilterFields';
 import MobTabFilters from './FiltersPanel/MobTabFilters/MobTabFilter';
 
 import css from './Vacancies.module.css';
+import VacancySkeleton from './VacanciesList/VacancySkeleton/VacancySkeleton';
 
 interface VacanciesProps {
   filters: FiltersOptions;
@@ -53,14 +54,32 @@ const Vacancies = ({ filters }: VacanciesProps) => {
   const vacancies = data?.pages.flatMap(page => page.vacancies) ?? [];
   const meta = data?.pages.at(-1);
   const hasResults = vacancies.length > 0;
+  const totalDisplayed = vacancies.length;
+  const totalVacancies = data?.pages.at(0)?.totalVacancies ?? 0;
+
+  const adjustedMeta = meta
+    ? {
+        ...meta,
+        totalVacancies: totalVacancies,
+        perPage: totalDisplayed,
+      }
+    : undefined;
 
   return (
     <div className="desktop:flex desktop:gap-8 items-start">
-      <FiltersPanel meta={meta} filters={filters} />
-      <MobTabFilters meta={meta} filters={filters} />
+      <FiltersPanel meta={adjustedMeta} filters={filters} />
+      <MobTabFilters meta={adjustedMeta} filters={filters} />
 
       <div className="flex-1 w-full items-center">
         <Search />
+
+        {isFetching && (
+          <ul className="flex flex-col gap-6 mb-6">
+            {Array.from({ length: 8 }).map((_, index) => (
+              <VacancySkeleton key={index} />
+            ))}
+          </ul>
+        )}
 
         {hasResults ? (
           <>
