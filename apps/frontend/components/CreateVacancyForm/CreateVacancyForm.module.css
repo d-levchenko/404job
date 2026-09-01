@@ -1,0 +1,14 @@
+.createForm {
+  display: flex;
+  flex-direction: column;
+}
+
+.inputArea {
+  display: flex;
+  flex-direction: column;
+}
+
+.radioGroup {
+  display: flex;
+  flex-direction: column;
+}

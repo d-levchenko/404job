@@ -1,0 +1,118 @@
+.profile-section {
+  width: 100%;
+  padding: 0;
+
+  @media (min-width: 768px) {
+    max-width: 640px;
+  }
+}
+
+.profile-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.field label {
+  font-family: var(--font-family);
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--color-scheme-2-text);
+}
+
+.input,
+.error-input {
+  width: 100%;
+  height: 40px;
+  padding: 8px 16px;
+  border-radius: 32px;
+  font-family: var(--font-family);
+  font-size: 14px;
+  line-height: 1.5;
+  background: var(--opacity-transparent);
+  outline: none;
+}
+
+.input {
+  border: 1px solid var(--opacity-neutral-darkest-15);
+}
+
+.input:focus {
+  border-color: var(--color-curious-blue);
+}
+
+.error-input {
+  border: 1px solid var(--color-red);
+}
+
+.error-message {
+  font-family: var(--font-family);
+  font-size: 12px;
+  line-height: 1.5;
+  color: var(--color-red);
+}
+
+.btn-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 8px;
+
+  @media (min-width: 768px) {
+    flex-direction: row;
+    gap: 12px;
+  }
+}
+
+.reset-btn,
+.submit-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 33px;
+  padding: 6px 12px;
+  border-radius: 100px;
+  font-family: var(--font-family);
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 1.5;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: var(--transition);
+
+  @media (min-width: 768px) {
+    width: auto;
+  }
+}
+
+.submit-btn:hover,
+.submit-btn:focus {
+  background: var(--color-curious-blue-lighter);
+  color: var(--color-scheme-1-text);
+}
+
+.reset-btn:hover,
+.reset-btn:focus {
+  background: var(--color-curious-blue);
+  color: var(--color-white);
+}
+
+.reset-btn {
+  border: 1px solid var(--opacity-neutral-darkest-15);
+  color: var(--color-neutral-darkest);
+  background: transparent;
+}
+
+.submit-btn {
+  border: 1px solid var(--color-curious-blue);
+  color: var(--color-white);
+  background: var(--color-curious-blue);
+}
