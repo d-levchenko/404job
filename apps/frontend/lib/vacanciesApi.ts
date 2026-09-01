@@ -13,7 +13,7 @@ export interface getAllVacanciesRequest {
   isRemote?: boolean | null;
 }
 
-interface GetMyVacanciesRequest {
+export interface GetMyVacanciesRequest {
   page?: number;
   perPage?: number;
   status?: 'active' | 'closed';
@@ -21,6 +21,7 @@ interface GetMyVacanciesRequest {
 
 export interface VacancyByIdResponse {
   vacancy: Vacancy;
+  similarVacancies?: Vacancy[];
 }
 
 export const getHotVacancies = async (limit = 6): Promise<Vacancy[]> => {
@@ -41,10 +42,12 @@ export const getAllVacancies = async (
   return data;
 };
 
-export const getVacancyById = async (id: string): Promise<Vacancy> => {
+export const getVacancyById = async (
+  id: string,
+): Promise<VacancyByIdResponse> => {
   const { data } = await api.get<VacancyByIdResponse>(`/vacancies/${id}`);
 
-  return data.vacancy;
+  return data;
 };
 
 export const getFavoriteVacancies = async (): Promise<Vacancy[]> => {
@@ -76,7 +79,7 @@ export const createVacancy = async (
 export const getMyVacancies = async (
   params: GetMyVacanciesRequest,
 ): Promise<AllVacancies> => {
-  const { data } = await api.get<AllVacancies>('/vacancies/my', {
+  const { data } = await api.get<AllVacancies>('/vacancies/my/vacancies', {
     params,
   });
 
