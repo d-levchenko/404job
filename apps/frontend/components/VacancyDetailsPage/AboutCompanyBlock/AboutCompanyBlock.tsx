@@ -11,20 +11,35 @@ type AboutCompanyBlockProps = {
   websiteUrl?: string;
 };
 
+const ALLOWED_LOGO_HOSTNAMES = ['res.cloudinary.com'];
+
+const isAllowedLogoUrl = (url?: string): boolean => {
+  if (!url) return false;
+
+  try {
+    const hostname = new URL(url).hostname;
+    return ALLOWED_LOGO_HOSTNAMES.includes(hostname);
+  } catch {
+    return false;
+  }
+};
+
 const AboutCompanyBlock = ({
   companyName,
   logo,
   description,
   websiteUrl,
 }: AboutCompanyBlockProps) => {
+  const showRealLogo = isAllowedLogoUrl(logo);
+
   return (
     <section className={css.wrapper}>
       <h2 className={css.title}>Про компанію</h2>
 
       <div className={css.logoWrapper}>
-        {logo ? (
+        {showRealLogo ? (
           <Image
-            src={logo}
+            src={logo as string}
             alt={companyName}
             fill
             className={css.logo}
