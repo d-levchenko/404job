@@ -258,11 +258,11 @@ const CreateVacancyForm = ({ filters }: VacanciesProps) => {
               component={'span'}
               className={css.error}
             />
-          </div>
 
-          <div>
-            <Field id="isRemote" type="checkbox" name="isRemote" />
-            <label htmlFor="isRemote">Віддалено</label>
+            <div>
+              <Field id="isRemote" type="checkbox" name="isRemote" />
+              <label htmlFor="isRemote">Віддалено</label>
+            </div>
           </div>
 
           <button type="reset" className={css.reset}>
