@@ -3,54 +3,17 @@
 import { Formik, Form, Field, ErrorMessage, FormikHelpers } from 'formik';
 
 import css from './CreateVacancyForm.module.css';
-import { getFilterOptions } from '@/lib/optionsApi';
-import { useEffect, useState } from 'react';
-import {
-  EmploymentType,
-  ExperienceLevel,
-  Industry,
-  Location,
-  VacancyFormValues,
-} from '@/types/vacancyType';
+import { VacancyFormValues } from '@/types/vacancyType';
 import { vacancyFormValidation } from '@/validation/vacancyFormValidation';
 import toast from 'react-hot-toast';
 import { createVacancy } from '@/lib/vacanciesApi';
+import { FiltersOptions } from '../VacanciesPage/FiltersPanel/FilterFields';
 
-const CreateVacancyForm = () => {
-  const [industries, setIndustries] = useState<Industry[]>([]);
-  const [experiences, setExperiences] = useState<ExperienceLevel[]>([]);
-  const [locations, setLocations] = useState<Location[]>([]);
-  const [employmentTypes, setEmploymentTypes] = useState<EmploymentType[]>([]);
+interface VacanciesProps {
+  filters: FiltersOptions;
+}
 
-  useEffect(() => {
-    const fetchOptions = async () => {
-      try {
-        const [
-          industriesData,
-          experiencesData,
-          locationsData,
-          employmentTypesData,
-        ] = await Promise.all([
-          getFilterOptions('industries'),
-          getFilterOptions('experienceLevels'),
-          getFilterOptions('locations'),
-          getFilterOptions('employmentTypes'),
-        ]);
-
-        setIndustries(industriesData);
-        setExperiences(experiencesData);
-        setLocations(locationsData);
-        setEmploymentTypes(employmentTypesData);
-      } catch (error) {
-        toast.error(
-          error instanceof Error ? error.message : 'Failed to fetch options',
-        );
-      }
-    };
-
-    fetchOptions();
-  }, []);
-
+const CreateVacancyForm = ({ filters }: VacanciesProps) => {
   const initialValues = {
     title: '',
     description: '',
@@ -65,6 +28,9 @@ const CreateVacancyForm = () => {
     locationId: '',
     isRemote: false,
   };
+
+  const { industries, locations, experienceLevels, employmentTypes } = filters;
+
   const handleSubmit = async (
     values: VacancyFormValues,
     actions: FormikHelpers<VacancyFormValues>,
@@ -80,20 +46,21 @@ const CreateVacancyForm = () => {
 
   return (
     <div>
-      <h2>Створення вакансії</h2>
-
       <Formik
         initialValues={initialValues}
         onSubmit={handleSubmit}
         validationSchema={vacancyFormValidation}>
         <Form className={css.createForm}>
           <div className={css.inputArea}>
-            <label htmlFor="title">Назва вакансії</label>
+            <label htmlFor="title" className={css.inputLabel}>
+              Назва вакансії
+            </label>
             <Field
               id="title"
               type="text"
               name="title"
               placeholder="Назва вакансії"
+              className={css.inputField}
             />
             <ErrorMessage
               name="title"
@@ -103,12 +70,15 @@ const CreateVacancyForm = () => {
           </div>
 
           <div className={css.inputArea}>
-            <label htmlFor="description">Опис</label>
+            <label htmlFor="description" className={css.inputLabel}>
+              Опис
+            </label>
             <Field
               id="description"
-              type="text"
+              as="textarea"
               name="description"
               placeholder="Короткий опис"
+              className={`${css.inputField} ${css.highField}`}
             />
             <ErrorMessage
               name="description"
@@ -118,12 +88,15 @@ const CreateVacancyForm = () => {
           </div>
 
           <div className={css.inputArea}>
-            <label htmlFor="requirements">Вимоги</label>
+            <label htmlFor="requirements" className={css.inputLabel}>
+              Вимоги
+            </label>
             <Field
               id="requirements"
-              type="text"
+              as="textarea"
               name="requirements"
               placeholder="Вимоги до кандидата"
+              className={`${css.inputField} ${css.highField}`}
             />
             <ErrorMessage
               name="requirements"
@@ -132,58 +105,79 @@ const CreateVacancyForm = () => {
             />
           </div>
 
-          <div className={css.radioGroup}>
-            <span className={css.title}>Рівень кандидата</span>
-            {experiences.map(experience => (
-              <label key={experience._id} className={css.radioLabel}>
-                <Field
-                  type="radio"
-                  name="experienceLevelId"
-                  value={experience._id}
-                  className={css.radioInput}
-                />
-                <span>{experience.name}</span>
-              </label>
-            ))}
-          </div>
-
-          <div className={css.radioGroup}>
-            <span className={css.title}>Тип зайнятості</span>
-            {employmentTypes.map(employment => (
-              <label key={employment._id} className={css.radioLabel}>
-                <Field
-                  type="radio"
-                  name="employmentTypeId"
-                  value={employment._id}
-                  className={css.radioInput}
-                />
-                <span>{employment.name}</span>
-              </label>
-            ))}
-          </div>
-
-          <div className={css.radioGroup}>
-            <span className={css.title}>Галузь</span>
-            {industries.map(industry => (
-              <label key={industry._id} className={css.radioLabel}>
-                <Field
-                  type="radio"
-                  name="industryId"
-                  value={industry._id}
-                  className={css.radioInput}
-                />
-                <span>{industry.name}</span>
-              </label>
-            ))}
+          <div className={css.radioBlock}>
+            <div className={css.radioGroup}>
+              <span className={css.title}>Рівень кандидата</span>
+              {experienceLevels.status === 'fulfilled' &&
+                experienceLevels.value.map(experience => (
+                  <label key={experience._id} className={css.radioLabel}>
+                    <Field
+                      type="radio"
+                      name="experienceLevelId"
+                      value={experience._id}
+                      className={css.radioInput}
+                    />
+                    <span>{experience.name}</span>
+                  </label>
+                ))}
+              <ErrorMessage
+                name="experienceLevelId"
+                component={'span'}
+                className={css.error}
+              />
+            </div>
+            <div className={css.radioGroup}>
+              <span className={css.title}>Тип зайнятості</span>
+              {employmentTypes.status === 'fulfilled' &&
+                employmentTypes.value.map(employment => (
+                  <label key={employment._id} className={css.radioLabel}>
+                    <Field
+                      type="radio"
+                      name="employmentTypeId"
+                      value={employment._id}
+                      className={css.radioInput}
+                    />
+                    <span>{employment.name}</span>
+                  </label>
+                ))}
+              <ErrorMessage
+                name="employmentTypeId"
+                component={'span'}
+                className={css.error}
+              />
+            </div>
+            <div className={css.radioGroup}>
+              <span className={css.title}>Галузь</span>
+              {industries.status === 'fulfilled' &&
+                industries.value.map(industry => (
+                  <label key={industry._id} className={css.radioLabel}>
+                    <Field
+                      type="radio"
+                      name="industryId"
+                      value={industry._id}
+                      className={css.radioInput}
+                    />
+                    <span>{industry.name}</span>
+                  </label>
+                ))}
+              <ErrorMessage
+                name="industryId"
+                component={'span'}
+                className={css.error}
+              />
+            </div>
           </div>
 
           <div className={css.inputArea}>
-            <label htmlFor="title">Обовʼязки</label>
+            <label htmlFor="duties" className={css.inputLabel}>
+              Обовʼязки
+            </label>
             <Field
               id="duties"
-              type="text"
+              as="textarea"
               name="duties"
               placeholder="Обовʼязки кандидата"
+              className={`${css.inputField} ${css.highField}`}
             />
             <ErrorMessage
               name="duties"
@@ -193,12 +187,15 @@ const CreateVacancyForm = () => {
           </div>
 
           <div className={css.inputArea}>
-            <label htmlFor="title">Буде плюсом</label>
+            <label htmlFor="plusWillBe" className={css.inputLabel}>
+              Буде плюсом
+            </label>
             <Field
               id="plusWillBe"
-              type="text"
+              as="textarea"
               name="plusWillBe"
               placeholder="Буде плюсом до кандидата"
+              className={`${css.inputField} ${css.highField}`}
             />
             <ErrorMessage
               name="plusWillBe"
@@ -208,12 +205,15 @@ const CreateVacancyForm = () => {
           </div>
 
           <div className={css.inputArea}>
-            <label htmlFor="title">Ми пропонуємо</label>
+            <label htmlFor="weOffer" className={css.inputLabel}>
+              Ми пропонуємо
+            </label>
             <Field
               id="weOffer"
-              type="text"
+              as="textarea"
               name="weOffer"
               placeholder="Ваші пропозиції кандидату"
+              className={`${css.inputField} ${css.highField}`}
             />
             <ErrorMessage
               name="weOffer"
@@ -223,12 +223,15 @@ const CreateVacancyForm = () => {
           </div>
 
           <div className={css.inputArea}>
-            <label htmlFor="title">Зарплата</label>
+            <label htmlFor="salaryRange" className={css.inputLabel}>
+              Зарплата
+            </label>
             <Field
               id="salaryRange"
               type="text"
               name="salaryRange"
               placeholder="Зарплата в доларах"
+              className={css.inputField}
             />
             <ErrorMessage
               name="salaryRange"
@@ -243,12 +246,18 @@ const CreateVacancyForm = () => {
             <Field as="select" id="locationId" name="locationId">
               <option value="">Оберіть локацію</option>
 
-              {locations.map(location => (
-                <option key={location._id} value={location._id}>
-                  {location.name}
-                </option>
-              ))}
+              {locations.status === 'fulfilled' &&
+                locations.value.map(location => (
+                  <option key={location._id} value={location._id}>
+                    {location.name}
+                  </option>
+                ))}
             </Field>
+            <ErrorMessage
+              name="locationId"
+              component={'span'}
+              className={css.error}
+            />
           </div>
 
           <div>

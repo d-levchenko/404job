@@ -6,9 +6,44 @@
 .inputArea {
   display: flex;
   flex-direction: column;
+  gap: 8px;
+
+  margin-bottom: 16px;
+}
+
+.inputLabel {
+  font-family: var(--font-family);
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--color-scheme-1-text);
+}
+
+.inputField {
+  border: 1px solid var(--opacity-neutral-darkest-15);
+  border-radius: 32px;
+  padding: 8px 16px;
+  background: var(--opacity-transparent);
+}
+.inputField::placeholder {
+  color: var(--opacity-neutral-darkest-60);
+}
+
+.highField {
+  height: 180px;
+  border-radius: 16px;
+}
+
+.radioBlock {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+
+  margin-bottom: 16px;
 }
 
 .radioGroup {
   display: flex;
   flex-direction: column;
+  gap: 16px;
 }
