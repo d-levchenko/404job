@@ -88,8 +88,6 @@ export interface SavedVacancies {
 }
 
 export const getFavoriteVacancies = async (): Promise<SavedVacancies> => {
-  // ponytail: без пагінації; perPage=100 — стеля бекенд-валідатора.
-  // Коли в ТЗ з'явиться "Показати більше" — useInfiniteQuery за зразком MyVacanciesList.
   const { data } = await api.get<SavedVacancies>('/vacancies/favorite', {
     params: { perPage: 100 },
   });
