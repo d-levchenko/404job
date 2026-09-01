@@ -1,5 +1,4 @@
 import { AllVacancies, Vacancy, VacancyFormValues } from '@/types/vacancyType';
-
 import { api } from './api';
 
 export interface getAllVacanciesRequest {
@@ -12,7 +11,8 @@ export interface getAllVacanciesRequest {
   employmentType?: string | string[] | null;
   isRemote?: boolean | null;
 }
-interface GetMyVacanciesRequest {
+
+export interface GetMyVacanciesRequest {
   page?: number;
   perPage?: number;
   status?: 'active' | 'closed';
@@ -20,6 +20,7 @@ interface GetMyVacanciesRequest {
 
 export interface VacancyByIdResponse {
   vacancy: Vacancy;
+  similarVacancies?: Vacancy[];
 }
 
 export const getHotVacancies = async (limit = 6): Promise<Vacancy[]> => {
@@ -38,9 +39,11 @@ export const getAllVacancies = async (
   return data;
 };
 
-export const getVacancyById = async (id: string): Promise<Vacancy> => {
+export const getVacancyById = async (
+  id: string,
+): Promise<VacancyByIdResponse> => {
   const { data } = await api.get<VacancyByIdResponse>(`/vacancies/${id}`);
-  return data.vacancy;
+  return data;
 };
 
 export const addToFavorites = async (vacancyId: string): Promise<void> => {
@@ -58,26 +61,20 @@ export const applyToVacancy = async (vacancyId: string): Promise<void> => {
 export const createVacancy = async (
   body: VacancyFormValues,
 ): Promise<Vacancy> => {
-  try {
-    const { data } = await api.post<Vacancy>('/vacancies/create-vacancy', body);
-    return data;
-  } catch (error) {
-    throw error;
-  }
+  const { data } = await api.post<Vacancy>('/vacancies/create-vacancy', body);
+  return data;
 };
 
 export const getMyVacancies = async (
   params: GetMyVacanciesRequest,
 ): Promise<AllVacancies> => {
-  const { data } = await api.get<AllVacancies>('/vacancies/my', {
+  const { data } = await api.get<AllVacancies>('/vacancies/my/vacancies', {
     params,
   });
-
   return data;
 };
 
 export const closeVacancy = async (vacancyId: string): Promise<Vacancy> => {
   const { data } = await api.patch<Vacancy>(`/vacancies/${vacancyId}/close`);
-
   return data;
 };
