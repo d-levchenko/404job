@@ -4,10 +4,14 @@ services:
       context: .
       dockerfile: docker/frontend.Dockerfile
       args:
-        - NEXT_PUBLIC_API_URL=${NEXT_PUBLIC_API_URL}
-        - NEXT_PUBLIC_BACKEND_URL=${NEXT_PUBLIC_BACKEND_URL:-http://backend:4000}
+        NEXT_PUBLIC_API_URL: ${NEXT_PUBLIC_API_URL:-http://localhost:3000}
+
+    environment:
+      INTERNAL_API_URL: http://backend:4000/api
+
     ports:
       - '3000:3000'
+
     depends_on:
       - backend
 
@@ -15,7 +19,9 @@ services:
     build:
       context: .
       dockerfile: docker/backend.Dockerfile
+
     env_file:
       - ./apps/backend/.env
+
     ports:
       - '4000:4000'
