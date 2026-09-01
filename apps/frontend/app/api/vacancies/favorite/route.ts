@@ -4,12 +4,22 @@ import { NextRequest, NextResponse } from 'next/server';
 import { logErrorResponse } from '../../_utils/utils';
 import { api } from '../../api';
 
-export const PATCH = async (request: NextRequest) => {
+export async function GET(req: NextRequest) {
   try {
-    const body = await request.json();
-    const cookie = request.headers.get('cookie') ?? '';
+    const { searchParams } = new URL(req.url);
+    const cookie = req.headers.get('cookie') ?? '';
 
-    const res = await api.patch('/users/candidate', body, {
+    const params = {
+      page: searchParams.get('page')
+        ? Number(searchParams.get('page'))
+        : undefined,
+      perPage: searchParams.get('perPage')
+        ? Number(searchParams.get('perPage'))
+        : undefined,
+    };
+
+    const res = await api.get('/vacancies/favorite', {
+      params,
       headers: {
         cookie,
       },
@@ -24,7 +34,7 @@ export const PATCH = async (request: NextRequest) => {
 
       return NextResponse.json(
         error.response?.data ?? {
-          message: 'Failed to update candidate profile',
+          message: 'Failed to get saved vacancies',
         },
         {
           status: error.response?.status ?? 500,
@@ -45,4 +55,4 @@ export const PATCH = async (request: NextRequest) => {
       },
     );
   }
-};
+}

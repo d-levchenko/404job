@@ -208,7 +208,10 @@ export const getFavoriteVacancies = async (req, res, next) => {
       throw createHttpError(404, 'User not found');
     }
     const skip = (page - 1) * perPage;
-    const savedVacancies = user.savedVacancies.slice(skip, skip + perPage);
+    const savedVacancies = (user.savedVacancies ?? []).slice(
+      skip,
+      skip + perPage,
+    );
     const totalSavedVacancies = user?.savedVacancies?.length || 0;
     const totalPages = Math.ceil(totalSavedVacancies / perPage) || 1;
 

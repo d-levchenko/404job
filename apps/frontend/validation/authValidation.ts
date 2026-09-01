@@ -37,17 +37,17 @@ export const updateUserProfileValidationSchema = Yup.object({
     .required('Це поле є обов’язковим'),
 
   githubUrl: Yup.string()
-    .url()
+    .url('Введіть коректне посилання')
     .max(512, 'Максимум 512 символів в цьому полі')
     .optional(),
 
   linkedinUrl: Yup.string()
-    .url()
+    .url('Введіть коректне посилання')
     .max(512, 'Максимум 512 символів в цьому полі')
     .optional(),
 
   behanceUrl: Yup.string()
-    .url()
+    .url('Введіть коректне посилання')
     .max(512, 'Максимум 512 символів в цьому полі')
     .optional(),
 });

@@ -9,9 +9,15 @@ import css from './VacanciesList.module.css';
 
 interface VacanciesListProps {
   vacancies: Vacancy[];
+  onRemoveFromSaved?: (vacancyId: string) => void;
+  removingId?: string | null;
 }
 
-const VacanciesList = ({ vacancies }: VacanciesListProps) => {
+const VacanciesList = ({
+  vacancies,
+  onRemoveFromSaved,
+  removingId,
+}: VacanciesListProps) => {
   const router = useRouter();
 
   const handleVacancyClick = (vacancyId: string) => {
@@ -57,6 +63,21 @@ const VacanciesList = ({ vacancies }: VacanciesListProps) => {
               <SvgIcon name="payments" width={24} height={24} />
               <p className={css.salary}>{vacancy.salaryRange}</p>
             </div>
+          )}
+
+          {onRemoveFromSaved && (
+            <button
+              type="button"
+              className={css.removeButton}
+              disabled={removingId === vacancy._id}
+              onClick={event => {
+                event.stopPropagation();
+                onRemoveFromSaved(vacancy._id);
+              }}>
+              {removingId === vacancy._id
+                ? 'Видаляємо...'
+                : 'Прибрати зі збережених'}
+            </button>
           )}
         </li>
       ))}
