@@ -264,7 +264,8 @@ export const getMyVacancies = async (req, res, next) => {
         .sort({ createdAt: -1 })
         .skip(skip)
         .limit(perPage)
-        .populate('industryId experienceLevelId locationId employmentTypeId'),
+        .populate('industryId experienceLevelId locationId employmentTypeId')
+        .populate('employerId', 'companyName logo'),
     ]);
 
     const totalPages = Math.ceil(totalItems / perPage);

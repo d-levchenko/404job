@@ -6,13 +6,13 @@ export type FilterOptionType =
 interface Employer {
   _id: string;
   companyName: string;
-  logo: string;
-  createdAt: string;
-  description: string;
-  email: string;
-  updatedAt: string;
-  userType: string;
-  websiteUrl: string;
+  logo?: string;
+  createdAt?: string;
+  description?: string;
+  email?: string;
+  updatedAt?: string;
+  userType?: string;
+  websiteUrl?: string;
 }
 
 export interface Location {

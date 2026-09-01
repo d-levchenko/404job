@@ -12,6 +12,11 @@ export interface getAllVacanciesRequest {
   employmentType?: string | string[] | null;
   isRemote?: boolean | null;
 }
+interface GetMyVacanciesRequest {
+  page?: number;
+  perPage?: number;
+  status?: 'active' | 'closed';
+}
 
 export interface VacancyByIdResponse {
   vacancy: Vacancy;
@@ -59,4 +64,20 @@ export const createVacancy = async (
   } catch (error) {
     throw error;
   }
+};
+
+export const getMyVacancies = async (
+  params: GetMyVacanciesRequest,
+): Promise<AllVacancies> => {
+  const { data } = await api.get<AllVacancies>('/vacancies/my', {
+    params,
+  });
+
+  return data;
+};
+
+export const closeVacancy = async (vacancyId: string): Promise<Vacancy> => {
+  const { data } = await api.patch<Vacancy>(`/vacancies/${vacancyId}/close`);
+
+  return data;
 };
