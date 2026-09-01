@@ -63,7 +63,7 @@ function HotVacancies() {
   }, [isError]);
 
   if (isLoading) return <Loader />;
-  if (isError) return null;
+  if (isError || data?.length === 0) return null;
 
   return (
     <section className={css.hotSection}>
