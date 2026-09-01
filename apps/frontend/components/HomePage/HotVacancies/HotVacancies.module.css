@@ -92,6 +92,7 @@
   padding: 16px;
 
   background: var(--color-scheme-4-foreground);
+  transition: background 250ms ease;
 
   @media only screen and (min-width: 768px) {
     flex: 0 0 calc((100% - 32px) / 2);
@@ -105,6 +106,11 @@
 .slide:last-child {
   margin-right: 32px;
 }
+
+.slide:hover {
+  background: var(--color-scheme-4-background);
+}
+
 .titleCompany {
   font-family: var(--font-family);
   font-weight: 400;

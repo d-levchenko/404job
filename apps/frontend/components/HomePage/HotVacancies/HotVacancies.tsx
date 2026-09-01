@@ -10,6 +10,7 @@ import { getHotVacancies } from '@/lib/vacanciesApi';
 import Loader from '@/components/Loader/Loader';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
+import toast from 'react-hot-toast';
 
 function HotVacancies() {
   const router = useRouter();
@@ -50,11 +51,18 @@ function HotVacancies() {
   const { data, isLoading, isError } = useQuery({
     queryKey: ['hotVacancies'],
     queryFn: () => getHotVacancies(5),
+    refetchOnWindowFocus: false,
+    staleTime: 5 * 60 * 1000,
   });
 
-  if (isLoading) return <Loader />;
-  if (isError) return <p>Помилка завантаження вакансій</p>;
+  useEffect(() => {
+    if (isError) {
+      toast.error('Не вдалося завантажити вакансії');
+    }
+  }, [isError]);
 
+  if (isLoading) return <Loader />;
+  if (isError) return null;
   return (
     <section className={css.hotSection}>
       <div className="container">
