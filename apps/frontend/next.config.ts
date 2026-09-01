@@ -25,12 +25,14 @@ const nextConfig: NextConfig = {
   },
 
   async rewrites() {
-    return [
-      {
-        source: '/api/:path*',
-        destination: 'http://backend:4000/api/:path*',
-      },
-    ];
+    return {
+      fallback: [
+        {
+          source: '/api/:path*',
+          destination: 'http://backend:4000/api/:path*',
+        },
+      ],
+    };
   },
 };
 
