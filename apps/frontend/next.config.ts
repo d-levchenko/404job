@@ -2,6 +2,7 @@ import type { NextConfig } from 'next';
 
 const nextConfig: NextConfig = {
   reactCompiler: true,
+
   output: 'standalone',
 
   images: {
@@ -21,6 +22,15 @@ const nextConfig: NextConfig = {
         as: '*.js',
       },
     },
+  },
+
+  async rewrites() {
+    return [
+      {
+        source: '/api/:path*',
+        destination: 'http://backend:4000/api/:path*',
+      },
+    ];
   },
 };
 

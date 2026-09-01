@@ -30,7 +30,7 @@ const VacanciesList = ({ vacancies }: VacanciesListProps) => {
           <div className="md:flex justify-between flex-row-reverse items-center mb-4">
             <Image
               src="/images/emptyImg.jpg"
-              alt={vacancy.employerId.companyName}
+              alt={vacancy.employerId.companyName || `${vacancy.title} image`}
               width={157}
               height={67}
               className="mb-4 rounded-3xl md:mb-0"

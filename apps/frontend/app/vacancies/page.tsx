@@ -1,44 +1,55 @@
 import { getFilterOptions } from '@/lib/optionsApi';
+
 import {
   dehydrate,
   HydrationBoundary,
-  noop,
   QueryClient,
 } from '@tanstack/react-query';
 
-import css from './page.module.css';
 import Vacancies from '@/components/VacanciesPage/Vacancies';
+import { Suspense } from 'react';
+import Loader from '@/components/Loader/Loader';
+
+import css from './page.module.css';
+
+export const dynamic = 'force-dynamic';
 
 const VacanciesPage = async () => {
   const queryClient = new QueryClient();
 
   const [industries, locations, experienceLevels, employmentTypes] =
     await Promise.allSettled([
-      queryClient
-        .query({
-          queryKey: ['filters', 'industries'],
-          queryFn: () => getFilterOptions('industries'),
-        })
-        .catch(noop),
       queryClient.query({
-        queryKey: ['filters', 'locations'],
+        queryKey: ['industries'],
+        queryFn: () => getFilterOptions('industries'),
+      }),
+
+      queryClient.query({
+        queryKey: ['locations'],
         queryFn: () => getFilterOptions('locations'),
       }),
+
       queryClient.query({
-        queryKey: ['filters', 'experienceLevels'],
+        queryKey: ['experienceLevels'],
         queryFn: () => getFilterOptions('experienceLevels'),
       }),
+
       queryClient.query({
-        queryKey: ['filters', 'employmentTypes'],
+        queryKey: ['employmentTypes'],
         queryFn: () => getFilterOptions('employmentTypes'),
       }),
     ]);
 
   const filters = {
-    industries,
-    locations,
-    experienceLevels,
-    employmentTypes,
+    industries: industries.status === 'fulfilled' ? industries.value : [],
+
+    locations: locations.status === 'fulfilled' ? locations.value : [],
+
+    experienceLevels:
+      experienceLevels.status === 'fulfilled' ? experienceLevels.value : [],
+
+    employmentTypes:
+      employmentTypes.status === 'fulfilled' ? employmentTypes.value : [],
   };
 
   return (
@@ -46,9 +57,11 @@ const VacanciesPage = async () => {
       <div className="container">
         <h1 className={css.title}>Вакансії</h1>
 
-        <HydrationBoundary state={dehydrate(queryClient)}>
-          <Vacancies filters={filters} />
-        </HydrationBoundary>
+        <Suspense fallback={<Loader />}>
+          <HydrationBoundary state={dehydrate(queryClient)}>
+            <Vacancies filters={filters} />
+          </HydrationBoundary>
+        </Suspense>
       </div>
     </main>
   );
