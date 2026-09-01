@@ -6,8 +6,7 @@
 }
 
 .title {
-  margin: 0 0 24px;
-
+  margin-bottom: 24px;
   font-size: 40px;
   font-weight: 700;
   line-height: 1.2;
@@ -18,7 +17,6 @@
   display: flex;
   flex-direction: column;
   align-items: stretch;
-
   width: 100%;
   gap: 24px;
 }
@@ -27,7 +25,6 @@
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-
   width: 100%;
 }
 
@@ -36,28 +33,24 @@
   align-items: center;
   width: 100%;
   padding: 6px 0;
-
-  font-size: 14px;
   font-weight: 400;
   line-height: 1.5;
-
-  color: inherit;
+  color: var(--color-scheme-1-text);
   text-decoration: none;
 
-  transition:
-    color var(--transition),
-    opacity var(--transition);
+  transition: color var(--transition);
 }
 
 .navLink:hover,
 .navLink:focus-visible {
-  opacity: 0.7;
+  color: var(--color-neutral-darkest);
+  text-decoration: underline;
 }
 
 .active {
+  color: var(--color-curious-blue);
   font-weight: 700;
   text-decoration: underline;
-  text-decoration-skip-ink: none;
 }
 
 .content {
@@ -70,30 +63,8 @@
     padding-inline: 32px;
   }
 
-  .title {
-    margin-bottom: 24px;
-
-    font-size: 40px;
-    line-height: 1.2;
-  }
-
-  .dashboard {
-    flex-direction: column;
-    align-items: stretch;
-
-    gap: 24px;
-  }
-
   .navigation {
     width: 304px;
-  }
-
-  .navLink {
-    width: 100%;
-    padding: 6px 0;
-
-    font-size: 14px;
-    line-height: 1.5;
   }
 
   .content {
@@ -105,14 +76,12 @@
   .page {
     width: 100%;
     max-width: 1440px;
-
     margin-inline: auto;
     padding-inline: 64px;
   }
 
   .title {
     margin-bottom: 32px;
-
     font-size: 56px;
     font-weight: 700;
     line-height: 1.2;
@@ -122,22 +91,16 @@
   .dashboard {
     flex-direction: row;
     align-items: flex-start;
-
     gap: 32px;
   }
 
   .navigation {
-    flex: 0 0 304px;
-
     width: 304px;
-
     gap: 12px;
   }
 
   .navLink {
     width: 100%;
-    padding: 6px 0;
-
     font-size: 16px;
     line-height: 1.5;
   }

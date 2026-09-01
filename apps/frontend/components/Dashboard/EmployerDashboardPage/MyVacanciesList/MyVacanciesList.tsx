@@ -2,19 +2,21 @@
 
 import Link from 'next/link';
 import Image from 'next/image';
-import NoImage from '@/assets/no-image.svg';
-import LocationIcon from '@/assets/location-on.svg';
-import PaymentsIcon from '@/assets/payments.svg';
-
+import { useState } from 'react';
 import {
   useInfiniteQuery,
   useMutation,
   useQueryClient,
 } from '@tanstack/react-query';
+import toast from 'react-hot-toast';
+
+import NoImage from '@/assets/no-image.svg';
+import LocationIcon from '@/assets/location-on.svg';
+import PaymentsIcon from '@/assets/payments.svg';
+
+import Loader from '@/components/Loader/Loader';
 
 import { closeVacancy, getMyVacancies } from '@/lib/vacanciesApi';
-import { useState } from 'react';
-import toast from 'react-hot-toast';
 
 import css from './MyVacanciesList.module.css';
 
@@ -98,7 +100,7 @@ const MyVacanciesList = () => {
   const vacancies = data?.pages.flatMap(page => page.vacancies) ?? [];
 
   if (isLoading) {
-    return <p>Завантаження...</p>;
+    return <Loader />;
   }
 
   if (isError) {
@@ -165,7 +167,6 @@ const MyVacanciesList = () => {
 
                 <p className={css.salary}>
                   <PaymentsIcon className={css.salaryIcon} />
-
                   <span>{vacancy.salaryRange}</span>
                 </p>
               </div>

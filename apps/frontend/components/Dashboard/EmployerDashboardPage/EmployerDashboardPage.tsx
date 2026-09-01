@@ -17,8 +17,6 @@ const EmployerDashboardPage = ({ children }: EmployerDashboardPageProps) => {
 
   const isVacanciesActive = pathname === '/dashboard/employer/vacancies';
 
-  const isCandidatesActive = pathname === '/dashboard/employer/candidates';
-
   return (
     <main className={css.page}>
       <h1 className={css.title}>Мій профіль</h1>
@@ -35,14 +33,6 @@ const EmployerDashboardPage = ({ children }: EmployerDashboardPageProps) => {
             href="/dashboard/employer/vacancies"
             className={`${css.navLink} ${isVacanciesActive ? css.active : ''}`}>
             Відкриті вакансії
-          </Link>
-
-          <Link
-            href="/dashboard/employer/candidates"
-            className={`${css.navLink} ${
-              isCandidatesActive ? css.active : ''
-            }`}>
-            Кандидати
           </Link>
         </nav>
 

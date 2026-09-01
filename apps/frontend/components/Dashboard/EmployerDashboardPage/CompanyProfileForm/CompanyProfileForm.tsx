@@ -1,12 +1,14 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { uploadLogo } from '@/lib/uploadLogo';
+import Image from 'next/image';
 import { ErrorMessage, Field, Form, Formik, type FormikHelpers } from 'formik';
 import * as Yup from 'yup';
 import toast from 'react-hot-toast';
-import Image from 'next/image';
+
 import NoImage from '@/assets/no-image.svg';
+import Loader from '@/components/Loader/Loader';
+import { uploadLogo } from '@/lib/uploadLogo';
 import {
   type EmployerProfile,
   getCurrentUser,
@@ -39,7 +41,9 @@ const CompanyProfileForm = () => {
     useState<EmployerProfile>(emptyValues);
 
   const [isLoading, setIsLoading] = useState(true);
+
   const [logoFile, setLogoFile] = useState<File | null>(null);
+
   const [logoPreview, setLogoPreview] = useState('');
 
   const handleLogoChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -64,6 +68,8 @@ const CompanyProfileForm = () => {
         });
       } catch (error) {
         console.error('Failed to load employer profile:', error);
+
+        toast.error('Не вдалося завантажити дані компанії.');
       } finally {
         setIsLoading(false);
       }
@@ -115,7 +121,7 @@ const CompanyProfileForm = () => {
   };
 
   if (isLoading) {
-    return <p>Loading...</p>;
+    return <Loader />;
   }
 
   return (
