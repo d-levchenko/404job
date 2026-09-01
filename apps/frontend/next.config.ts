@@ -3,7 +3,7 @@ import type { NextConfig } from 'next';
 const nextConfig: NextConfig = {
   reactCompiler: true,
 
-  output: 'standalone',
+  output: process.env.VERCEL ? undefined : 'standalone',
 
   images: {
     formats: ['image/avif', 'image/webp'],
