@@ -159,11 +159,7 @@
   line-height: 1.5;
   white-space: nowrap;
   cursor: pointer;
-  transition:
-    background-color var(--transition),
-    color var(--transition),
-    border-color var(--transition),
-    opacity var(--transition);
+  transition: var(--transition);
 }
 
 .uploadButton,

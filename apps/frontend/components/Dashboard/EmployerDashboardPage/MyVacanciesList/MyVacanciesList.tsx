@@ -90,9 +90,7 @@ const MyVacanciesList = () => {
       toast.success('Вакансію успішно закрито');
     },
 
-    onError: error => {
-      console.error('Failed to close vacancy:', error);
-
+    onError: () => {
       toast.error('Не вдалося закрити вакансію. Спробуйте ще раз.');
     },
   });

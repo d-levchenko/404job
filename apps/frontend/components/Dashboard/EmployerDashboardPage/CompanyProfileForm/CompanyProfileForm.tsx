@@ -3,9 +3,7 @@
 import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import { ErrorMessage, Field, Form, Formik, type FormikHelpers } from 'formik';
-import * as Yup from 'yup';
 import toast from 'react-hot-toast';
-
 import NoImage from '@/assets/no-image.svg';
 import Loader from '@/components/Loader/Loader';
 import { uploadLogo } from '@/lib/uploadLogo';
@@ -14,6 +12,7 @@ import {
   getCurrentUser,
   updateEmployerProfile,
 } from '@/lib/usersApi';
+import { companyProfileFormSchema } from '@/validation/profileValidation';
 
 import css from './CompanyProfileForm.module.css';
 
@@ -23,18 +22,6 @@ const emptyValues: EmployerProfile = {
   logo: '',
   description: '',
 };
-
-const validationSchema = Yup.object({
-  companyName: Yup.string()
-    .trim()
-    .min(2, 'Назва компанії має містити щонайменше 2 символи')
-    .max(100, 'Назва компанії занадто довга')
-    .required('Введіть назву компанії'),
-
-  websiteUrl: Yup.string().url('Введіть коректне посилання').nullable(),
-
-  description: Yup.string().max(2000, 'Опис занадто довгий').nullable(),
-});
 
 const CompanyProfileForm = () => {
   const [initialValues, setInitialValues] =
@@ -66,9 +53,7 @@ const CompanyProfileForm = () => {
           logo: user.logo ?? '',
           description: user.description ?? '',
         });
-      } catch (error) {
-        console.error('Failed to load employer profile:', error);
-
+      } catch {
         toast.error('Не вдалося завантажити дані компанії.');
       } finally {
         setIsLoading(false);
@@ -111,9 +96,7 @@ const CompanyProfileForm = () => {
       setLogoPreview('');
 
       toast.success('Зміни успішно збережено');
-    } catch (error) {
-      console.error('Failed to update employer profile:', error);
-
+    } catch {
       toast.error('Не вдалося зберегти зміни. Спробуйте ще раз.');
     } finally {
       setSubmitting(false);
@@ -131,7 +114,7 @@ const CompanyProfileForm = () => {
       <Formik
         initialValues={initialValues}
         enableReinitialize
-        validationSchema={validationSchema}
+        validationSchema={companyProfileFormSchema}
         onSubmit={handleSubmit}>
         {({ resetForm, isSubmitting, dirty, errors, touched }) => (
           <Form className={css.form}>
