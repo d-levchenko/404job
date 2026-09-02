@@ -37,6 +37,7 @@
   flex-direction: column;
   align-items: flex-start;
   width: 100%;
+  min-width: 0;
 }
 
 .companyMobile {
@@ -53,8 +54,8 @@
   width: 157px;
   height: 67px;
   flex-shrink: 0;
-  border-radius: 24px;
   overflow: hidden;
+  border-radius: 24px;
 }
 
 .companyLogo {
@@ -81,6 +82,7 @@
   justify-content: flex-start;
   gap: 24px;
   width: 100%;
+  min-width: 0;
   min-height: 24px;
   margin-bottom: 8px;
   font-weight: 400;
@@ -91,13 +93,15 @@
 .location {
   display: flex;
   align-items: center;
-  font-size: 12px;
   gap: 8px;
+  min-width: 0;
+  font-size: 12px;
 }
 
 .locationIcon {
   width: 24px;
   height: 24px;
+  flex-shrink: 0;
 }
 
 .location > span,
@@ -137,6 +141,7 @@
   align-items: center;
   gap: 8px;
   width: 100%;
+  min-width: 0;
   min-height: 24px;
   font-size: 14px;
   font-weight: 400;
@@ -178,11 +183,11 @@
 }
 
 .createButton:hover,
-.createButton:focus,
+.createButton:focus-visible,
 .closeButton:hover,
-.closeButton:focus,
+.closeButton:focus-visible,
 .showMoreButton:hover,
-.showMoreButton:focus {
+.showMoreButton:focus-visible {
   color: var(--color-scheme-1-text);
   background-color: var(--color-curious-blue-lighter);
 }
@@ -220,7 +225,6 @@
 
 .emptyTitle {
   width: 100%;
-  margin: 0;
   font-size: 20px;
   font-weight: 700;
   line-height: 1.4;
@@ -241,7 +245,18 @@
   font-weight: 500;
 }
 
-@media screen and (min-width: 767px) {
+@media screen and (min-width: 375px) and (max-width: 767px) {
+  .wrapper {
+    width: 335px;
+    margin: 0 auto;
+  }
+
+  .emptyTitle {
+    white-space: nowrap;
+  }
+}
+
+@media screen and (min-width: 768px) {
   .card {
     align-items: flex-end;
     gap: 16px;
@@ -249,15 +264,15 @@
 
   .cardContent {
     display: grid;
+
     grid-template-columns: minmax(0, 1fr) 157px;
     grid-template-areas:
       'meta logo'
       'heading logo'
       'description description'
       'salary salary';
+
     column-gap: 16px;
-    width: 100%;
-    min-width: 0;
   }
 
   .companyMobile {
@@ -265,11 +280,6 @@
     display: block;
     justify-self: end;
     align-self: start;
-    margin: 0;
-  }
-
-  .companyDesktop {
-    display: none;
   }
 
   .meta {
@@ -278,7 +288,6 @@
 
   .vacancyTitle {
     grid-area: heading;
-    margin: 0;
   }
 
   .description {
@@ -310,39 +319,33 @@
   .showMoreButton {
     align-self: center;
     width: 137px;
-    height: 33px;
+    min-height: 33px;
   }
 }
 
-@media screen and (min-width: 767px) and (max-width: 1439px) {
-  .card {
-    min-height: 277px;
+@media screen and (min-width: 768px) and (max-width: 1439px) {
+  .wrapper {
+    width: 704px;
   }
 
-  .location {
-    align-items: center;
-    font-size: 12px;
+  .card {
+    min-height: 277px;
   }
 
   .closeButton {
     width: fit-content;
     min-width: 144px;
     min-height: 33px;
-    white-space: nowrap;
-    flex-shrink: 0;
-  }
-
-  .showMoreButton {
-    width: 137px;
-    min-height: 33px;
   }
 }
 
 @media screen and (min-width: 1440px) {
+  .wrapper {
+    width: 976px;
+  }
+
   .title {
     font-size: 20px;
-    line-height: 1.5;
-
     color: var(--color-scheme-2-text);
   }
 
@@ -376,7 +379,7 @@
   }
 
   .showMoreButton {
-    min-width: 153px;
+    width: 153px;
     min-height: 36px;
     margin-top: 8px;
   }

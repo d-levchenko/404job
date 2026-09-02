@@ -6,9 +6,10 @@ import { api } from '../../api';
 export async function PATCH(request: NextRequest) {
   try {
     const cookie = request.headers.get('cookie') ?? '';
-    const body = await request.json();
 
-    const response = await api.patch('/users/employer', body, {
+    const formData = await request.formData();
+
+    const response = await api.patch('/users/employer', formData, {
       headers: {
         cookie,
       },

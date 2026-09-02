@@ -17,12 +17,14 @@
   "dependencies": {
     "bcrypt": "^6.0.0",
     "celebrate": "^15.0.3",
+    "cloudinary": "^2.11.0",
     "cookie-parser": "^1.4.7",
     "cors": "^2.8.6",
     "dotenv": "^17.4.2",
     "express": "^5.2.1",
     "http-errors": "^2.0.1",
     "mongoose": "^9.9.4",
+    "multer": "^2.3.0",
     "pino-http": "^11.0.0",
     "pino-pretty": "^13.1.3"
   },
