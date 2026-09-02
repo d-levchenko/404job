@@ -14,31 +14,37 @@ const Page = async () => {
 
   const [industries, locations, experienceLevels, employmentTypes] =
     await Promise.allSettled([
-      queryClient
-        .query({
-          queryKey: ['filters', 'industries'],
-          queryFn: () => getFilterOptions('industries'),
-        })
-        .catch(noop),
       queryClient.query({
-        queryKey: ['filters', 'locations'],
+        queryKey: ['industries'],
+        queryFn: () => getFilterOptions('industries'),
+      }),
+
+      queryClient.query({
+        queryKey: ['locations'],
         queryFn: () => getFilterOptions('locations'),
       }),
+
       queryClient.query({
-        queryKey: ['filters', 'experienceLevels'],
+        queryKey: ['experienceLevels'],
         queryFn: () => getFilterOptions('experienceLevels'),
       }),
+
       queryClient.query({
-        queryKey: ['filters', 'employmentTypes'],
+        queryKey: ['employmentTypes'],
         queryFn: () => getFilterOptions('employmentTypes'),
       }),
     ]);
 
   const filters = {
-    industries,
-    locations,
-    experienceLevels,
-    employmentTypes,
+    industries: industries.status === 'fulfilled' ? industries.value : [],
+
+    locations: locations.status === 'fulfilled' ? locations.value : [],
+
+    experienceLevels:
+      experienceLevels.status === 'fulfilled' ? experienceLevels.value : [],
+
+    employmentTypes:
+      employmentTypes.status === 'fulfilled' ? employmentTypes.value : [],
   };
   return (
     <main>

@@ -47,3 +47,7 @@
   flex-direction: column;
   gap: 16px;
 }
+
+.radioInput {
+  margin-right: 12px;
+}

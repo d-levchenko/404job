@@ -108,18 +108,17 @@ const CreateVacancyForm = ({ filters }: VacanciesProps) => {
           <div className={css.radioBlock}>
             <div className={css.radioGroup}>
               <span className={css.title}>Рівень кандидата</span>
-              {experienceLevels.status === 'fulfilled' &&
-                experienceLevels.value.map(experience => (
-                  <label key={experience._id} className={css.radioLabel}>
-                    <Field
-                      type="radio"
-                      name="experienceLevelId"
-                      value={experience._id}
-                      className={css.radioInput}
-                    />
-                    <span>{experience.name}</span>
-                  </label>
-                ))}
+              {experienceLevels.map(experience => (
+                <label key={experience._id} className={css.radioLabel}>
+                  <Field
+                    type="radio"
+                    name="experienceLevelId"
+                    value={experience._id}
+                    className={css.radioInput}
+                  />
+                  <span>{experience.name}</span>
+                </label>
+              ))}
               <ErrorMessage
                 name="experienceLevelId"
                 component={'span'}
@@ -128,18 +127,17 @@ const CreateVacancyForm = ({ filters }: VacanciesProps) => {
             </div>
             <div className={css.radioGroup}>
               <span className={css.title}>Тип зайнятості</span>
-              {employmentTypes.status === 'fulfilled' &&
-                employmentTypes.value.map(employment => (
-                  <label key={employment._id} className={css.radioLabel}>
-                    <Field
-                      type="radio"
-                      name="employmentTypeId"
-                      value={employment._id}
-                      className={css.radioInput}
-                    />
-                    <span>{employment.name}</span>
-                  </label>
-                ))}
+              {employmentTypes.map(employment => (
+                <label key={employment._id} className={css.radioLabel}>
+                  <Field
+                    type="radio"
+                    name="employmentTypeId"
+                    value={employment._id}
+                    className={css.radioInput}
+                  />
+                  <span>{employment.name}</span>
+                </label>
+              ))}
               <ErrorMessage
                 name="employmentTypeId"
                 component={'span'}
@@ -148,18 +146,17 @@ const CreateVacancyForm = ({ filters }: VacanciesProps) => {
             </div>
             <div className={css.radioGroup}>
               <span className={css.title}>Галузь</span>
-              {industries.status === 'fulfilled' &&
-                industries.value.map(industry => (
-                  <label key={industry._id} className={css.radioLabel}>
-                    <Field
-                      type="radio"
-                      name="industryId"
-                      value={industry._id}
-                      className={css.radioInput}
-                    />
-                    <span>{industry.name}</span>
-                  </label>
-                ))}
+              {industries.map(industry => (
+                <label key={industry._id} className={css.radioLabel}>
+                  <Field
+                    type="radio"
+                    name="industryId"
+                    value={industry._id}
+                    className={css.radioInput}
+                  />
+                  <span>{industry.name}</span>
+                </label>
+              ))}
               <ErrorMessage
                 name="industryId"
                 component={'span'}
@@ -246,12 +243,11 @@ const CreateVacancyForm = ({ filters }: VacanciesProps) => {
             <Field as="select" id="locationId" name="locationId">
               <option value="">Оберіть локацію</option>
 
-              {locations.status === 'fulfilled' &&
-                locations.value.map(location => (
-                  <option key={location._id} value={location._id}>
-                    {location.name}
-                  </option>
-                ))}
+              {locations.map(location => (
+                <option key={location._id} value={location._id}>
+                  {location.name}
+                </option>
+              ))}
             </Field>
             <ErrorMessage
               name="locationId"
