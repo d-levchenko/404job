@@ -67,7 +67,7 @@ function HotVacancies() {
 
   return (
     <section className={css.hotSection}>
-      <div className="container">
+      <div className={`${css.container} container`}>
         <div className={css.titleBox}>
           <h2 className={css.sectionTitle}>Гарячі вакансії</h2>
           <Link className={css.vacancyLink} href={'/vacancies'}>
