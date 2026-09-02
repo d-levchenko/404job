@@ -11,8 +11,6 @@ export const metadata: Metadata = {
     'JobScape допомагає кандидатам знаходити актуальні IT-вакансії, а роботодавцям — шукати талановитих спеціалістів і керувати вакансіями.',
 };
 
-export const dynamic = 'force-dynamic';
-
 const stack =
   '[@media(min-width:768px)_and_(min-height:700px)]:sticky ' +
   '[@media(min-width:768px)_and_(min-height:700px)]:top-0 ' +
@@ -27,23 +25,24 @@ const reveal =
 const Home = () => {
   return (
     <main>
-      <div className="relative">
-        <section className={`${stack} z-10 bg-white`}>
-          <HeroSection />
-        </section>
+      <section className={`${stack} z-10 bg-white`}>
+        <HeroSection />
+      </section>
 
-        <section className={`${stack} ${reveal} z-20 bg-white`}>
-          <HotVacancies />
-        </section>
+      <section
+        className={`${stack} ${reveal} z-20 bg-white  stack:shadow-[0_0_4px_rgba(0,0,0,0.12)]`}>
+        <HotVacancies />
+      </section>
 
-        <section className={`${stack} ${reveal} z-30 bg-white`}>
-          <Advantages />
-        </section>
+      <section
+        className={`${stack} ${reveal} z-30 bg-white  stack:shadow-[0_0_4px_rgba(0,0,0,0.12)]`}>
+        <Advantages />
+      </section>
 
-        <section className={`${stack} ${reveal} z-40 bg-white`}>
-          <ForEmployers />
-        </section>
-      </div>
+      <section
+        className={`${stack} ${reveal} z-40 bg-white stack:shadow-[0_0_4px_rgba(0,0,0,0.12)]`}>
+        <ForEmployers />
+      </section>
     </main>
   );
 };
