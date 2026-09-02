@@ -2,15 +2,23 @@
 
 import Image from 'next/image';
 import Link from 'next/link';
+import { useQuery } from '@tanstack/react-query';
 
 import Loader from '@/components/Loader/Loader';
-import { useAuthStore } from '@/store/authStore';
+import { getCurrentAuthUser } from '@/lib/authApi';
 
 import css from './ForEmployers.module.css';
 
 const ForEmployers = () => {
-  const user = useAuthStore(state => state.user);
-  const isLoading = useAuthStore(state => state.isLoading);
+  const {
+    data: user,
+    isLoading,
+    isError,
+  } = useQuery({
+    queryKey: ['currentUser'],
+    queryFn: getCurrentAuthUser,
+    retry: false,
+  });
 
   if (isLoading) {
     return <Loader />;
@@ -33,7 +41,7 @@ const ForEmployers = () => {
             відгуками та аналізуйте результати в одному місці.
           </p>
 
-          {!isCandidate && (
+          {!isError && !isCandidate && (
             <Link href={buttonHref} className={css.button}>
               Розмістити вакансію
             </Link>
