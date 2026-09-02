@@ -24,6 +24,14 @@ export interface VacancyByIdResponse {
   similarVacancies?: Vacancy[];
 }
 
+export interface SavedVacancies {
+  page: number;
+  perPage: number;
+  totalPages: number;
+  totalSavedVacancies: number;
+  savedVacancies: Vacancy[];
+}
+
 export const getHotVacancies = async (limit = 6): Promise<Vacancy[]> => {
   const { data } = await api.get<Vacancy[]>('/vacancies/hot', {
     params: { limit },
@@ -50,8 +58,10 @@ export const getVacancyById = async (
   return data;
 };
 
-export const getFavoriteVacancies = async (): Promise<Vacancy[]> => {
-  const { data } = await api.get<Vacancy[]>('/vacancies/favorite');
+export const getFavoriteVacancies = async (): Promise<SavedVacancies> => {
+  const { data } = await api.get<SavedVacancies>('/vacancies/favorite', {
+    params: { perPage: 100 },
+  });
 
   return data;
 };

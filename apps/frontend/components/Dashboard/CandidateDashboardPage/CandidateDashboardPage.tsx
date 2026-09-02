@@ -1,21 +1,18 @@
 'use client';
 
-import { type ReactNode, useState } from 'react';
-
-import SavedVacanciesList from './SavedVacanciesList/SavedVacanciesList';
+import { ReactNode } from 'react';
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 
 import css from './CandidateDashboardPage.module.css';
-
-type ActiveTab = 'profile' | 'saved';
 
 interface CandidateDashboardPageProps {
   children?: ReactNode;
 }
 
 const CandidateDashboardPage = ({ children }: CandidateDashboardPageProps) => {
-  const [activeTab, setActiveTab] = useState<ActiveTab>('profile');
-
-  const isProfileTab = activeTab === 'profile';
+  const pathname = usePathname();
+  const isProfileTab = pathname === '/dashboard/candidate';
 
   return (
     <main className={css.page}>
@@ -24,21 +21,19 @@ const CandidateDashboardPage = ({ children }: CandidateDashboardPageProps) => {
 
         <div className={css.dashboard}>
           <nav className={css.sidebar} aria-label="Навігація профілю">
-            <button
+            <Link
+              href="/dashboard/candidate"
               className={`${css.navButton} ${isProfileTab ? css.active : ''}`}
-              type="button"
-              onClick={() => setActiveTab('profile')}
               aria-current={isProfileTab ? 'page' : undefined}>
               Мій профіль
-            </button>
+            </Link>
 
-            <button
+            <Link
+              href="/dashboard/candidate/saved-vacancies"
               className={`${css.navButton} ${!isProfileTab ? css.active : ''}`}
-              type="button"
-              onClick={() => setActiveTab('saved')}
               aria-current={!isProfileTab ? 'page' : undefined}>
               Збережені вакансії
-            </button>
+            </Link>
           </nav>
 
           <section
@@ -49,11 +44,7 @@ const CandidateDashboardPage = ({ children }: CandidateDashboardPageProps) => {
               {isProfileTab ? 'Особиста інформація' : 'Збережені вакансії'}
             </h2>
 
-            {isProfileTab ? (
-              <div className={css.contentSlot}>{children}</div>
-            ) : (
-              <SavedVacanciesList />
-            )}
+            <div className={css.contentSlot}>{children}</div>
           </section>
         </div>
       </div>
