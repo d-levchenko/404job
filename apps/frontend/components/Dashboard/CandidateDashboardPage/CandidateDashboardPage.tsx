@@ -7,7 +7,7 @@ import { usePathname } from 'next/navigation';
 import css from './CandidateDashboardPage.module.css';
 
 interface CandidateDashboardPageProps {
-  children: ReactNode;
+  children?: ReactNode;
 }
 
 const CandidateDashboardPage = ({ children }: CandidateDashboardPageProps) => {

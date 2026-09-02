@@ -1,4 +1,5 @@
 import { AllVacancies, Vacancy, VacancyFormValues } from '@/types/vacancyType';
+
 import { api } from './api';
 
 export interface getAllVacanciesRequest {
@@ -23,10 +24,19 @@ export interface VacancyByIdResponse {
   similarVacancies?: Vacancy[];
 }
 
+export interface SavedVacancies {
+  page: number;
+  perPage: number;
+  totalPages: number;
+  totalSavedVacancies: number;
+  savedVacancies: Vacancy[];
+}
+
 export const getHotVacancies = async (limit = 6): Promise<Vacancy[]> => {
   const { data } = await api.get<Vacancy[]>('/vacancies/hot', {
     params: { limit },
   });
+
   return data;
 };
 
@@ -36,6 +46,7 @@ export const getAllVacancies = async (
   const { data } = await api.get<AllVacancies>('/vacancies/get-all', {
     params,
   });
+
   return data;
 };
 
@@ -43,6 +54,15 @@ export const getVacancyById = async (
   id: string,
 ): Promise<VacancyByIdResponse> => {
   const { data } = await api.get<VacancyByIdResponse>(`/vacancies/${id}`);
+
+  return data;
+};
+
+export const getFavoriteVacancies = async (): Promise<SavedVacancies> => {
+  const { data } = await api.get<SavedVacancies>('/vacancies/favorite', {
+    params: { perPage: 100 },
+  });
+
   return data;
 };
 
@@ -62,6 +82,7 @@ export const createVacancy = async (
   body: VacancyFormValues,
 ): Promise<Vacancy> => {
   const { data } = await api.post<Vacancy>('/vacancies/create-vacancy', body);
+
   return data;
 };
 
@@ -71,25 +92,12 @@ export const getMyVacancies = async (
   const { data } = await api.get<AllVacancies>('/vacancies/my/vacancies', {
     params,
   });
+
   return data;
 };
 
 export const closeVacancy = async (vacancyId: string): Promise<Vacancy> => {
   const { data } = await api.patch<Vacancy>(`/vacancies/${vacancyId}/close`);
-  return data;
-};
 
-export interface SavedVacancies {
-  page: number;
-  perPage: number;
-  totalPages: number;
-  totalSavedVacancies: number;
-  savedVacancies: Vacancy[];
-}
-
-export const getFavoriteVacancies = async (): Promise<SavedVacancies> => {
-  const { data } = await api.get<SavedVacancies>('/vacancies/favorite', {
-    params: { perPage: 100 },
-  });
   return data;
 };

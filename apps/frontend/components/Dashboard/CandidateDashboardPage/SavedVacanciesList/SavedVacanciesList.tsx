@@ -29,7 +29,7 @@ const SavedVacanciesList = () => {
 
   if (isPending) return <Loader />;
 
-  if (isError) {
+  if (isError || !data) {
     return <p>Не вдалося завантажити збережені вакансії</p>;
   }
 
@@ -41,7 +41,7 @@ const SavedVacanciesList = () => {
     <VacanciesList
       vacancies={data.savedVacancies}
       onRemoveFromSaved={remove.mutate}
-      removingId={remove.isPending ? remove.variables : null}
+      removingId={remove.isPending ? remove.variables ?? null : null}
     />
   );
 };
