@@ -78,3 +78,18 @@ export const closeVacancy = async (vacancyId: string): Promise<Vacancy> => {
   const { data } = await api.patch<Vacancy>(`/vacancies/${vacancyId}/close`);
   return data;
 };
+
+export interface SavedVacancies {
+  page: number;
+  perPage: number;
+  totalPages: number;
+  totalSavedVacancies: number;
+  savedVacancies: Vacancy[];
+}
+
+export const getFavoriteVacancies = async (): Promise<SavedVacancies> => {
+  const { data } = await api.get<SavedVacancies>('/vacancies/favorite', {
+    params: { perPage: 100 },
+  });
+  return data;
+};
