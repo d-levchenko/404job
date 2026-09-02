@@ -225,7 +225,7 @@ textarea {
   animation: shimmer 2s infinite;
   content: '';
 }
-@custom-variant stack (@media (min-width: 768px) and (min-height: 700px));
+@custom-variant stack (@media (min-width: 1440px) and (min-height: 700px));
 @keyframes reveal-in {
   from {
     opacity: 0;

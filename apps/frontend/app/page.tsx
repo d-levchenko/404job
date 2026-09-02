@@ -13,15 +13,18 @@ export const metadata: Metadata = {
 };
 
 const stack =
-  '[@media(min-width:768px)_and_(min-height:700px)]:sticky ' +
-  '[@media(min-width:768px)_and_(min-height:700px)]:top-0 ' +
-  '[@media(min-width:768px)_and_(min-height:700px)]:h-screen ' +
-  '[@media(min-width:768px)_and_(min-height:700px)]:overflow-hidden';
+  '[@media(min-width:1440px)_and_(min-height:700px)]:sticky ' +
+  '[@media(min-width:1440px)_and_(min-height:700px)]:top-0 ' +
+  '[@media(min-width:1440px)_and_(min-height:700px)]:h-screen ' +
+  '[@media(min-width:1440px)_and_(min-height:700px)]:overflow-hidden ' +
+  '[@media(min-width:1440px)_and_(min-height:700px)]:flex ' +
+  '[@media(min-width:1440px)_and_(min-height:700px)]:flex-col ' +
+  '[@media(min-width:1440px)_and_(min-height:700px)]:justify-center';
 
 const reveal =
-  'max-[1439px]:[animation:reveal-in_linear_both] ' +
-  'max-[1439px]:[animation-timeline:view()] ' +
-  'max-[1439px]:[animation-range:entry_0%_cover_40%]';
+  '[@media(max-width:1439px),(max-height:699px)]:[animation:reveal-in_linear_both] ' +
+  '[@media(max-width:1439px),(max-height:699px)]:[animation-timeline:view()] ' +
+  '[@media(max-width:1439px),(max-height:699px)]:[animation-range:entry_0%_cover_40%]';
 
 const Home = () => {
   return (
