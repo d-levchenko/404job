@@ -4,9 +4,9 @@ import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import { ErrorMessage, Field, Form, Formik, type FormikHelpers } from 'formik';
 import toast from 'react-hot-toast';
+
 import NoImage from '@/assets/no-image.svg';
 import Loader from '@/components/Loader/Loader';
-import { uploadLogo } from '@/lib/uploadLogo';
 import {
   type EmployerProfile,
   getCurrentUser,
@@ -28,15 +28,17 @@ const CompanyProfileForm = () => {
     useState<EmployerProfile>(emptyValues);
 
   const [isLoading, setIsLoading] = useState(true);
-
   const [logoFile, setLogoFile] = useState<File | null>(null);
-
   const [logoPreview, setLogoPreview] = useState('');
 
   const handleLogoChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
 
     if (!file) return;
+
+    if (logoPreview) {
+      URL.revokeObjectURL(logoPreview);
+    }
 
     setLogoFile(file);
     setLogoPreview(URL.createObjectURL(file));
@@ -63,23 +65,32 @@ const CompanyProfileForm = () => {
     loadProfile();
   }, []);
 
+  useEffect(() => {
+    return () => {
+      if (logoPreview) {
+        URL.revokeObjectURL(logoPreview);
+      }
+    };
+  }, [logoPreview]);
+
   const handleSubmit = async (
     values: EmployerProfile,
     { setSubmitting, resetForm }: FormikHelpers<EmployerProfile>,
   ) => {
     try {
-      let logoUrl = values.logo;
+      const formData = new FormData();
+
+      formData.append('companyName', values.companyName ?? '');
+      formData.append('websiteUrl', values.websiteUrl ?? '');
+      formData.append('description', values.description ?? '');
 
       if (logoFile) {
-        logoUrl = await uploadLogo(logoFile);
+        formData.append('logo', logoFile);
       }
 
-      const updatedUser = await updateEmployerProfile({
-        ...values,
-        logo: logoUrl,
-      });
+      const updatedUser = await updateEmployerProfile(formData);
 
-      const updatedValues = {
+      const updatedValues: EmployerProfile = {
         companyName: updatedUser.companyName ?? '',
         websiteUrl: updatedUser.websiteUrl ?? '',
         logo: updatedUser.logo ?? '',
@@ -91,6 +102,10 @@ const CompanyProfileForm = () => {
       resetForm({
         values: updatedValues,
       });
+
+      if (logoPreview) {
+        URL.revokeObjectURL(logoPreview);
+      }
 
       setLogoFile(null);
       setLogoPreview('');
@@ -227,6 +242,11 @@ const CompanyProfileForm = () => {
                 className={css.resetButton}
                 onClick={() => {
                   resetForm();
+
+                  if (logoPreview) {
+                    URL.revokeObjectURL(logoPreview);
+                  }
+
                   setLogoFile(null);
                   setLogoPreview('');
                 }}
