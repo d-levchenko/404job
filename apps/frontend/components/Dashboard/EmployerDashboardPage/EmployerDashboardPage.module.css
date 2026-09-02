@@ -37,7 +37,7 @@
   line-height: 1.5;
   color: var(--color-scheme-1-text);
   text-decoration: none;
-  transition: color var(--transition);
+  transition: var(--transition);
 }
 
 .navLink:hover,
