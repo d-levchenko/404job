@@ -5,6 +5,7 @@ import HeroSection from '@/components/HomePage/HeroSection/HeroSection';
 import HotVacancies from '@/components/HomePage/HotVacancies/HotVacancies';
 import ForEmployers from '@/components/HomePage/ForEmployers/ForEmployers';
 
+export const dynamic = 'force-dynamic';
 export const metadata: Metadata = {
   title: 'JobScape — Платформа для пошуку роботи та кандидатів',
   description:
