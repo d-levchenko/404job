@@ -1,8 +1,5 @@
 import type { NextConfig } from 'next';
 
-const backendUrl =
-  process.env.NEXT_PUBLIC_BACKEND_URL ?? 'http://localhost:4000';
-
 const nextConfig: NextConfig = {
   reactCompiler: true,
 
@@ -36,7 +33,7 @@ const nextConfig: NextConfig = {
       fallback: [
         {
           source: '/api/:path*',
-          destination: `${backendUrl}/api/:path*`,
+          destination: 'http://backend:4000/api/:path*',
         },
       ],
     };
