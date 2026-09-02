@@ -1,37 +1,6 @@
-@keyframes title-in {
-  from {
-    transform: translateX(-100px);
-  }
-
-  to {
-    transform: translateX(0);
-  }
-}
-
-@keyframes card-in {
-  from {
-    transform: translateY(100px) scale(0.92);
-  }
-
-  to {
-    transform: translateY(0) scale(1);
-  }
-}
-
-.title {
-  animation: title-in linear both;
-  animation-timeline: view();
-  animation-range: entry 0% cover 30%;
-}
-
-.item {
-  animation: card-in linear both;
-  animation-timeline: view();
-  animation-range: entry 0% cover 40%;
-}
-
 .sectionAdvantages {
   padding: 64px 0;
+  background: var(--color-scheme-1-background);
 
   @media only screen and (min-width: 1440px) {
     padding: 80px 0;
