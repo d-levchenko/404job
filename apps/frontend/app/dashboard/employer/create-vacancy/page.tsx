@@ -48,7 +48,7 @@ const Page = async () => {
   };
   return (
     <main>
-      <div className="container">
+      <div className={`container ${css.formContainer}`}>
         <h1 className={css.title}>Створення вакансії</h1>
 
         <HydrationBoundary state={dehydrate(queryClient)}>

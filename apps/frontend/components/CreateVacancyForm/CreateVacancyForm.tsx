@@ -8,6 +8,8 @@ import { vacancyFormValidation } from '@/validation/vacancyFormValidation';
 import toast from 'react-hot-toast';
 import { createVacancy } from '@/lib/vacanciesApi';
 import { FiltersOptions } from '../VacanciesPage/FiltersPanel/FilterFields';
+import { SvgIcon } from '../SvgIcon/SvgIcon';
+import { LocationSelect } from './LocationSelect';
 
 interface VacanciesProps {
   filters: FiltersOptions;
@@ -116,6 +118,23 @@ const CreateVacancyForm = ({ filters }: VacanciesProps) => {
                     value={experience._id}
                     className={css.radioInput}
                   />
+
+                  <SvgIcon
+                    name="radio"
+                    width={18}
+                    height={18}
+                    className={css.radioOff}
+                    aria-hidden="true"
+                  />
+
+                  <SvgIcon
+                    name="radioChecked"
+                    width={18}
+                    height={18}
+                    className={css.radioOn}
+                    aria-hidden="true"
+                  />
+
                   <span>{experience.name}</span>
                 </label>
               ))}
@@ -135,6 +154,23 @@ const CreateVacancyForm = ({ filters }: VacanciesProps) => {
                     value={employment._id}
                     className={css.radioInput}
                   />
+
+                  <SvgIcon
+                    name="radio"
+                    width={18}
+                    height={18}
+                    className={css.radioOff}
+                    aria-hidden="true"
+                  />
+
+                  <SvgIcon
+                    name="radioChecked"
+                    width={18}
+                    height={18}
+                    className={css.radioOn}
+                    aria-hidden="true"
+                  />
+
                   <span>{employment.name}</span>
                 </label>
               ))}
@@ -154,6 +190,23 @@ const CreateVacancyForm = ({ filters }: VacanciesProps) => {
                     value={industry._id}
                     className={css.radioInput}
                   />
+
+                  <SvgIcon
+                    name="radio"
+                    width={18}
+                    height={18}
+                    className={css.radioOff}
+                    aria-hidden="true"
+                  />
+
+                  <SvgIcon
+                    name="radioChecked"
+                    width={18}
+                    height={18}
+                    className={css.radioOn}
+                    aria-hidden="true"
+                  />
+
                   <span>{industry.name}</span>
                 </label>
               ))}
@@ -237,37 +290,35 @@ const CreateVacancyForm = ({ filters }: VacanciesProps) => {
             />
           </div>
 
-          <div className={css.inputArea}>
-            <label htmlFor="locationId">Локація</label>
+          <LocationSelect locations={locations} />
 
-            <Field as="select" id="locationId" name="locationId">
-              <option value="">Оберіть локацію</option>
-
-              {locations.map(location => (
-                <option key={location._id} value={location._id}>
-                  {location.name}
-                </option>
-              ))}
-            </Field>
-            <ErrorMessage
-              name="locationId"
-              component={'span'}
-              className={css.error}
-            />
-
-            <div>
-              <Field id="isRemote" type="checkbox" name="isRemote" />
-              <label htmlFor="isRemote">Віддалено</label>
+          <label htmlFor="isRemote" className={css.checkboxLabel}>
+            <div className={css.checkboxWrapper}>
+              <Field
+                id="isRemote"
+                type="checkbox"
+                name="isRemote"
+                className={css.checkboxInput}
+              />
+              <SvgIcon
+                name="checkbox"
+                width={20}
+                height={20}
+                className={css.checkboxIcon}
+                aria-hidden="true"
+              />
             </div>
+            <span>Віддалено</span>
+          </label>
+          <div className={css.buttons}>
+            <button type="reset" className={css.reset}>
+              Відмінити
+            </button>
+
+            <button type="submit" className={css.search}>
+              Опублікувати
+            </button>
           </div>
-
-          <button type="reset" className={css.reset}>
-            Відмінити
-          </button>
-
-          <button type="submit" className={css.search}>
-            Опублікувати
-          </button>
         </Form>
       </Formik>
     </div>
