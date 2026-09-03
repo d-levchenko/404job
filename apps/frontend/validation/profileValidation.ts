@@ -11,3 +11,25 @@ export const companyProfileFormSchema = Yup.object({
 
   description: Yup.string().max(2000, 'Опис занадто довгий').nullable(),
 });
+
+export const updateUserProfileValidationSchema = Yup.object({
+  name: Yup.string()
+    .min(2, 'Мінімум 2 символи в цьому полі')
+    .max(32, 'Максимум 32 символи в цьому полі')
+    .required('Це поле є обов’язковим'),
+
+  githubUrl: Yup.string()
+    .url('Введіть коректне посилання')
+    .max(512, 'Максимум 512 символів в цьому полі')
+    .optional(),
+
+  linkedinUrl: Yup.string()
+    .url('Введіть коректне посилання')
+    .max(512, 'Максимум 512 символів в цьому полі')
+    .optional(),
+
+  behanceUrl: Yup.string()
+    .url('Введіть коректне посилання')
+    .max(512, 'Максимум 512 символів в цьому полі')
+    .optional(),
+});
