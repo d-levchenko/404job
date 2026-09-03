@@ -9,7 +9,7 @@ import toast from 'react-hot-toast';
 import Loader from '@/components/Loader/Loader';
 import { getCurrentCandidate, updateUser } from '@/lib/userApi';
 import { CandidateProfile } from '@/types/userType';
-import { updateUserProfileValidationSchema } from '@/validation/authValidation';
+import { updateUserProfileValidationSchema } from '@/validation/profileValidation';
 
 import css from './ProfileForm.module.css';
 
