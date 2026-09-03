@@ -1,0 +1,298 @@
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  min-width: 0;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+
+.title {
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 1.4;
+  color: var(--color-scheme-1-text);
+}
+
+/* Оновити список кандидатів */
+
+.refreshButton {
+  flex-shrink: 0;
+  min-height: 33px;
+  padding: 4px 12px;
+  border: 1px solid var(--color-neutral-light);
+  border-radius: 32px;
+  background-color: transparent;
+  color: var(--color-scheme-1-text);
+  font-weight: 500;
+  line-height: 1.5;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.refreshButton:hover,
+.refreshButton:focus-visible {
+  background-color: var(--color-curious-blue-lighter);
+  border-color: var(--color-curious-blue-lighter);
+}
+
+.refreshButton:active {
+  background-color: var(--color-curious-blue-light);
+}
+
+.scroll {
+  width: 100%;
+  min-width: 0;
+  overflow-x: auto;
+  overflow-y: hidden;
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  width: 975px;
+  min-width: 975px;
+}
+
+.candidate {
+  display: grid;
+  grid-template-columns: 210px 230px 435px;
+  align-items: center;
+  column-gap: 32px;
+  width: 975px;
+  min-width: 975px;
+  height: 64px;
+  padding: 12px 12px 12px 24px;
+  border-radius: 32px;
+  background-color: var(--color-scheme-4-foreground);
+}
+
+.name,
+.vacancy,
+.resume {
+  color: var(--color-scheme-1-text);
+  white-space: nowrap;
+}
+
+.name {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-size: 18px;
+  font-weight: 600;
+  line-height: 1.5;
+}
+
+.vacancy {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-weight: 400;
+  line-height: 1.5;
+}
+
+.candidateActions {
+  display: grid;
+  grid-template-columns: 159px 264px;
+  align-items: center;
+  gap: 12px;
+  width: 435px;
+  min-width: 435px;
+}
+
+.resume {
+  overflow: visible;
+  font-weight: 400;
+  line-height: 1.5;
+  color: var(--color-scheme-1-text);
+}
+
+.statusWrapper {
+  position: relative;
+  width: 264px;
+  height: 40px;
+}
+
+.statusButton {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  width: 100%;
+  height: 40px;
+  padding: 8px 16px 8px 24px;
+  border: 1px solid var(--color-neutral-light);
+  border-radius: 32px;
+  background-color: transparent;
+  color: var(--color-scheme-1-text);
+  font-weight: 400;
+  line-height: 1.5;
+  text-align: left;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.statusButton:hover,
+.statusButton:focus-visible,
+.statusButtonOpen {
+  border-color: var(--color-curious-blue);
+}
+
+.statusIcon {
+  width: 24px;
+  height: 24px;
+}
+
+.statusIcon path {
+  fill: var(--opacity-neutral-darkest-60);
+}
+
+.showMoreButton {
+  align-self: center;
+  margin-top: 16px;
+  padding: 6px 12px;
+  border: none;
+  border-radius: 32px;
+  background-color: var(--color-curious-blue);
+  color: var(--color-white);
+  font-weight: 500;
+  line-height: 1.5;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.showMoreButton:hover,
+.showMoreButton:focus-visible {
+  background-color: var(--color-curious-blue-lighter);
+  color: var(--color-scheme-1-text);
+}
+
+.showMoreButton:active {
+  background-color: var(--color-curious-blue-light);
+}
+
+.statusMenu {
+  position: absolute;
+  z-index: 20;
+  top: calc(100% + 4px);
+  left: 0;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  padding: 4px;
+  border: 1px solid var(--color-neutral-light);
+  border-radius: 16px;
+  background-color: var(--color-scheme-1-background);
+  box-shadow: 0 4px 12px rgb(0 0 0 / 8%);
+}
+
+.statusOption {
+  width: 100%;
+  padding: 8px 16px;
+  border: none;
+  border-radius: 12px;
+  background-color: transparent;
+  color: var(--color-scheme-1-text);
+  font-weight: 400;
+  line-height: 1.5;
+  text-align: left;
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.statusOption:hover,
+.statusOption:focus-visible {
+  background-color: var(--color-scheme-4-foreground);
+}
+
+.statusOptionActive {
+  background-color: var(--color-scheme-4-foreground);
+}
+
+.empty {
+  width: 100%;
+  padding: 20px;
+  border-radius: 32px;
+  background-color: var(--color-scheme-4-foreground);
+}
+
+.emptyTitle {
+  margin-bottom: 12px;
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 1.4;
+  color: var(--color-scheme-1-text);
+}
+
+.emptyText {
+  font-weight: 400;
+  line-height: 1.5;
+  color: var(--color-scheme-1-text);
+}
+
+@media screen and (max-width: 374px) {
+  .header {
+    flex-wrap: wrap;
+    row-gap: 12px;
+  }
+
+  .refreshButton {
+    margin-left: auto;
+  }
+}
+
+@media screen and (min-width: 768px) and (max-width: 1439px) {
+  .empty {
+    padding: 24px;
+  }
+}
+
+@media screen and (min-width: 1440px) {
+  .scroll {
+    overflow: visible;
+  }
+
+  .title {
+    font-size: 20px;
+  }
+
+  .refreshButton {
+    font-size: 16px;
+  }
+
+  .name {
+    font-size: 20px;
+  }
+
+  .vacancy,
+  .resume,
+  .status {
+    font-size: 16px;
+  }
+
+  .statusButton,
+  .statusOption {
+    font-size: 16px;
+  }
+
+  .showMoreButton {
+    margin-top: 16px;
+    font-size: 16px;
+  }
+
+  .emptyTitle {
+    font-size: 20px;
+  }
+
+  .emptyText {
+    font-size: 16px;
+  }
+}
