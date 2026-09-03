@@ -35,7 +35,7 @@ const VacanciesList = ({
           hover:shadow-[0_4px_16px_rgba(0,0,0,0.1)] hover:scale-[1.01] vacancyItem">
           <div className="md:flex justify-between flex-row-reverse items-center mb-4">
             <Image
-              src="/images/emptyImg.jpg"
+              src={vacancy.employerId.logo || '/images/emptyImg.jpg'}
               alt={vacancy.employerId.companyName || `${vacancy.title} image`}
               width={157}
               height={67}
