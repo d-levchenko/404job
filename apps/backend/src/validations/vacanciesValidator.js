@@ -88,3 +88,13 @@ export const savedVacanciesScema = {
     perPage: Joi.number().min(1).max(100).default(10),
   }),
 };
+
+export const updateApplicationStatusSchema = {
+  [Segments.PARAMS]: Joi.object({
+    applicationId: Joi.string().required(),
+  }),
+
+  [Segments.BODY]: Joi.object({
+    status: Joi.string().valid('reviewed', 'accepted', 'rejected').required(),
+  }),
+};
