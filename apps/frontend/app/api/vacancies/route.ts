@@ -1,8 +1,8 @@
 import { isAxiosError } from 'axios';
 import { NextRequest, NextResponse } from 'next/server';
-import { logErrorResponse } from '../../_utils/utils';
+import { logErrorResponse } from '../_utils/utils';
 import { getAllVacanciesRequest } from '@/lib/vacanciesApi';
-import { api } from '../../api';
+import { api } from '../api';
 
 export async function GET(req: NextRequest) {
   try {
@@ -28,7 +28,7 @@ export async function GET(req: NextRequest) {
       isRemote: rawIsRemote === null ? null : rawIsRemote === 'true',
     };
 
-    const res = await api.get('/vacancies/get-all', { params });
+    const res = await api.get('/vacancies', { params });
     return NextResponse.json(res.data);
   } catch (error) {
     if (isAxiosError(error)) {

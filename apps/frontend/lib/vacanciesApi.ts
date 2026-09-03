@@ -43,7 +43,7 @@ export const getHotVacancies = async (limit = 6): Promise<Vacancy[]> => {
 export const getAllVacancies = async (
   params: getAllVacanciesRequest,
 ): Promise<AllVacancies> => {
-  const { data } = await api.get<AllVacancies>('/vacancies/get-all', {
+  const { data } = await api.get<AllVacancies>('/vacancies', {
     params,
   });
 
