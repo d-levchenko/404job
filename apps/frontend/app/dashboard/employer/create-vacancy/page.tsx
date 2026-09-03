@@ -4,7 +4,6 @@ import {
   QueryClient,
   dehydrate,
   HydrationBoundary,
-  noop,
 } from '@tanstack/react-query';
 
 import css from './page.module.css';

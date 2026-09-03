@@ -14,7 +14,7 @@
 .inputLabel {
   font-family: var(--font-family);
   font-weight: 400;
-  font-size: 14px;
+  font-size: 16px;
   line-height: 1.5;
   color: var(--color-scheme-1-text);
 }
@@ -29,9 +29,34 @@
   color: var(--opacity-neutral-darkest-60);
 }
 
+.inputField:hover,
+.inputField:focus {
+  border: 1px solid var(--color-curious-blue);
+}
+
 .highField {
   height: 180px;
   border-radius: 16px;
+}
+
+.inputFieldError {
+  color: var(--color-red);
+  border-color: var(--color-red);
+}
+.inputFieldError:hover,
+.inputFieldError:focus {
+  border-color: var(--color-red);
+}
+
+.inputField:focus {
+  outline: none;
+}
+
+.error {
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--color-red);
 }
 
 .radioBlock {

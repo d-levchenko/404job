@@ -10,6 +10,7 @@ import { createVacancy } from '@/lib/vacanciesApi';
 import { FiltersOptions } from '../VacanciesPage/FiltersPanel/FilterFields';
 import { SvgIcon } from '../SvgIcon/SvgIcon';
 import { LocationSelect } from './LocationSelect';
+import type { FieldProps } from 'formik';
 
 interface VacanciesProps {
   filters: FiltersOptions;
@@ -57,34 +58,43 @@ const CreateVacancyForm = ({ filters }: VacanciesProps) => {
             <label htmlFor="title" className={css.inputLabel}>
               Назва вакансії
             </label>
-            <Field
-              id="title"
-              type="text"
-              name="title"
-              placeholder="Назва вакансії"
-              className={css.inputField}
-            />
-            <ErrorMessage
-              name="title"
-              component={'span'}
-              className={css.error}
-            />
+            <Field name="title">
+              {({ field, meta }: FieldProps<string>) => (
+                <input
+                  {...field}
+                  id="title"
+                  type="text"
+                  placeholder="Назва вакансії"
+                  className={`${css.inputField} ${
+                    meta.touched && meta.error ? css.inputFieldError : ''
+                  }`}
+                />
+              )}
+            </Field>
+
+            <ErrorMessage name="title" component="span" className={css.error} />
           </div>
 
           <div className={css.inputArea}>
             <label htmlFor="description" className={css.inputLabel}>
               Опис
             </label>
-            <Field
-              id="description"
-              as="textarea"
-              name="description"
-              placeholder="Короткий опис"
-              className={`${css.inputField} ${css.highField}`}
-            />
+            <Field name="description">
+              {({ field, meta }: FieldProps<string>) => (
+                <textarea
+                  {...field}
+                  id="description"
+                  placeholder="Короткий опис"
+                  className={`${css.inputField} ${css.highField} ${
+                    meta.touched && meta.error ? css.inputFieldError : ''
+                  }`}
+                />
+              )}
+            </Field>
+
             <ErrorMessage
               name="description"
-              component={'span'}
+              component="span"
               className={css.error}
             />
           </div>
@@ -93,13 +103,18 @@ const CreateVacancyForm = ({ filters }: VacanciesProps) => {
             <label htmlFor="requirements" className={css.inputLabel}>
               Вимоги
             </label>
-            <Field
-              id="requirements"
-              as="textarea"
-              name="requirements"
-              placeholder="Вимоги до кандидата"
-              className={`${css.inputField} ${css.highField}`}
-            />
+            <Field name="requirements">
+              {({ field, meta }: FieldProps<string>) => (
+                <textarea
+                  {...field}
+                  id="requirements"
+                  placeholder="Вимоги до кандидата"
+                  className={`${css.inputField} ${css.highField} ${
+                    meta.touched && meta.error ? css.inputFieldError : ''
+                  }`}
+                />
+              )}
+            </Field>
             <ErrorMessage
               name="requirements"
               component={'span'}
@@ -222,13 +237,16 @@ const CreateVacancyForm = ({ filters }: VacanciesProps) => {
             <label htmlFor="duties" className={css.inputLabel}>
               Обовʼязки
             </label>
-            <Field
-              id="duties"
-              as="textarea"
-              name="duties"
-              placeholder="Обовʼязки кандидата"
-              className={`${css.inputField} ${css.highField}`}
-            />
+            <Field name="duties">
+              {({ field, meta }: FieldProps<string>) => (
+                <textarea
+                  {...field}
+                  id="duties"
+                  placeholder="Обовʼязки кандидата"
+                  className={`${css.inputField} ${css.highField} ${meta.touched && meta.error ? css.inputFieldError : ''}`}
+                />
+              )}
+            </Field>
             <ErrorMessage
               name="duties"
               component={'span'}
@@ -240,13 +258,16 @@ const CreateVacancyForm = ({ filters }: VacanciesProps) => {
             <label htmlFor="plusWillBe" className={css.inputLabel}>
               Буде плюсом
             </label>
-            <Field
-              id="plusWillBe"
-              as="textarea"
-              name="plusWillBe"
-              placeholder="Буде плюсом до кандидата"
-              className={`${css.inputField} ${css.highField}`}
-            />
+            <Field name="plusWillBe">
+              {({ field, meta }: FieldProps<string>) => (
+                <textarea
+                  {...field}
+                  id="plusWillBe"
+                  placeholder="Буде плюсом до кандидата"
+                  className={`${css.inputField} ${css.highField} ${meta.touched && meta.error ? css.inputFieldError : ''}`}
+                />
+              )}
+            </Field>
             <ErrorMessage
               name="plusWillBe"
               component={'span'}
@@ -258,13 +279,16 @@ const CreateVacancyForm = ({ filters }: VacanciesProps) => {
             <label htmlFor="weOffer" className={css.inputLabel}>
               Ми пропонуємо
             </label>
-            <Field
-              id="weOffer"
-              as="textarea"
-              name="weOffer"
-              placeholder="Ваші пропозиції кандидату"
-              className={`${css.inputField} ${css.highField}`}
-            />
+            <Field name="weOffer">
+              {({ field, meta }: FieldProps<string>) => (
+                <textarea
+                  {...field}
+                  id="weOffer"
+                  placeholder="Ваші пропозиції кандидату"
+                  className={`${css.inputField} ${css.highField} ${meta.touched && meta.error ? css.inputFieldError : ''}`}
+                />
+              )}
+            </Field>
             <ErrorMessage
               name="weOffer"
               component={'span'}
@@ -276,13 +300,19 @@ const CreateVacancyForm = ({ filters }: VacanciesProps) => {
             <label htmlFor="salaryRange" className={css.inputLabel}>
               Зарплата
             </label>
-            <Field
-              id="salaryRange"
-              type="text"
-              name="salaryRange"
-              placeholder="Зарплата в доларах"
-              className={css.inputField}
-            />
+            <Field name="salaryRange">
+              {({ field, meta }: FieldProps<string>) => (
+                <input
+                  {...field}
+                  id="salaryRange"
+                  type="text"
+                  placeholder="Зарплата в доларах"
+                  className={`${css.inputField} ${
+                    meta.touched && meta.error ? css.inputFieldError : ''
+                  }`}
+                />
+              )}
+            </Field>
             <ErrorMessage
               name="salaryRange"
               component={'span'}
