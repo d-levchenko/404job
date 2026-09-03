@@ -1,3 +1,6 @@
+.heroSection {
+  background: var(--color-scheme-1-background);
+}
 .heroSection .container {
   background-color: var(--color-scheme-4-background);
   display: flex;

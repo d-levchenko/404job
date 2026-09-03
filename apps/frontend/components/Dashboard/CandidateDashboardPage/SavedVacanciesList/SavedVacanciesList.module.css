@@ -1,0 +1,134 @@
+.list {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.card {
+  width: 100%;
+  padding: 24px;
+  border-radius: 24px;
+  background-color: var(--color-scheme-4-foreground);
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.card:hover,
+.card:focus-within {
+  background-color: var(--color-scheme-4-background);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+}
+
+.top {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+
+.image {
+  border-radius: 24px;
+  object-fit: cover;
+}
+
+.info {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  align-items: center;
+}
+
+.location,
+.salary {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.location,
+.company,
+.description,
+.salary,
+.message {
+  font-family: var(--font-family);
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 1.5;
+  color: var(--color-scheme-1-text);
+}
+
+.title {
+  font-family: var(--font-family);
+  font-weight: 700;
+  font-size: 24px;
+  line-height: 1.4;
+  letter-spacing: -0.01em;
+  color: var(--color-scheme-2-text);
+}
+
+.description {
+  margin-bottom: 16px;
+}
+
+.bottom {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.removeButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 100%;
+  min-height: 40px;
+  padding: 8px 16px;
+
+  border-radius: 100px;
+  background-color: var(--color-white);
+  border: 1px solid var(--color-neutral-darkest);
+
+  font-family: var(--font-family);
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--color-scheme-1-text);
+
+  transition: var(--transition);
+}
+
+.removeButton:hover,
+.removeButton:focus-visible {
+  background-color: var(--color-scheme-4-background);
+}
+
+.removeButton:disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+@media screen and (min-width: 768px) {
+  .top {
+    flex-direction: row-reverse;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .bottom {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .removeButton {
+    width: auto;
+  }
+}

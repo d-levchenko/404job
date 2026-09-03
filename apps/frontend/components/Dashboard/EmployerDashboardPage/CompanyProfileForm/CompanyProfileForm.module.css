@@ -80,10 +80,7 @@
   border-radius: 16px;
 }
 
-.inputError {
-  border-color: var(--color-red);
-}
-
+.inputError,
 .inputError:hover,
 .inputError:focus {
   border-color: var(--color-red);
@@ -232,19 +229,17 @@
   cursor: default;
 }
 
-@media screen and (min-width: 768px) and (max-width: 1439px) {
-  .wrapper,
-  .form {
-    max-width: 640px;
+@media screen and (min-width: 375px) and (max-width: 767px) {
+  .wrapper {
+    width: 335px;
+    margin: 0 auto;
   }
+}
 
+@media screen and (min-width: 768px) {
   .logoPlaceholder {
     width: 304px;
     height: 99px;
-  }
-
-  .uploadButton {
-    width: 150px;
   }
 
   .textarea {
@@ -258,6 +253,16 @@
     gap: 8px;
     width: auto;
   }
+}
+
+@media screen and (min-width: 768px) and (max-width: 1439px) {
+  .wrapper {
+    width: 704px;
+  }
+
+  .uploadButton {
+    width: 150px;
+  }
 
   .resetButton {
     width: 120px;
@@ -269,9 +274,8 @@
 }
 
 @media screen and (min-width: 1440px) {
-  .wrapper,
-  .form {
-    max-width: 640px;
+  .wrapper {
+    width: 640px;
   }
 
   .title {
@@ -286,11 +290,6 @@
     font-size: 16px;
   }
 
-  .logoPlaceholder {
-    width: 304px;
-    height: 99px;
-  }
-
   .uploadButton,
   .resetButton,
   .submitButton {
@@ -300,18 +299,6 @@
 
   .uploadButton {
     width: 168px;
-  }
-
-  .textarea {
-    height: 180px;
-  }
-
-  .actions {
-    flex-direction: row;
-    align-items: center;
-    justify-content: flex-start;
-    gap: 8px;
-    width: auto;
   }
 
   .resetButton {

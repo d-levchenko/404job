@@ -96,6 +96,7 @@ a *,
 .slide path,
 .slide img,
 .vacancyItem,
+.vacancyItem *,
 .swiper-pagination-bullet,
 [role='button'],
 [role='button'] *,
@@ -224,4 +225,15 @@ textarea {
   );
   animation: shimmer 2s infinite;
   content: '';
+}
+@custom-variant stack (@media (min-width: 1440px) and (min-height: 700px));
+@keyframes reveal-in {
+  from {
+    opacity: 0;
+    transform: scale(0.7);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
 }

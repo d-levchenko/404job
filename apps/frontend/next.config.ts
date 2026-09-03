@@ -12,6 +12,10 @@ const nextConfig: NextConfig = {
         protocol: 'https',
         hostname: 'res.cloudinary.com',
       },
+      {
+        protocol: 'https',
+        hostname: 'storage.jobscape.dev',
+      },
     ],
   },
 
@@ -25,12 +29,14 @@ const nextConfig: NextConfig = {
   },
 
   async rewrites() {
-    return [
-      {
-        source: '/api/:path*',
-        destination: 'http://backend:4000/api/:path*',
-      },
-    ];
+    return {
+      fallback: [
+        {
+          source: '/api/:path*',
+          destination: 'http://backend:4000/api/:path*',
+        },
+      ],
+    };
   },
 };
 

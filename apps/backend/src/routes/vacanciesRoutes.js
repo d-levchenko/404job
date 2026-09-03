@@ -28,11 +28,7 @@ import { celebrate } from 'celebrate';
 
 const vacancyRouter = Router();
 
-vacancyRouter.get(
-  '/get-all',
-  celebrate(getAllVacanciesSchema),
-  getAllVacancies,
-);
+vacancyRouter.get('/', celebrate(getAllVacanciesSchema), getAllVacancies);
 
 vacancyRouter.get('/hot', celebrate(getHotVacanciesSchema), getHotVacancies);
 vacancyRouter.get(
