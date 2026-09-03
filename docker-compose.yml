@@ -5,9 +5,12 @@ services:
       dockerfile: docker/frontend.Dockerfile
       args:
         NEXT_PUBLIC_API_URL: ${NEXT_PUBLIC_API_URL:-http://localhost:3000}
+        INTERNAL_API_URL: http://backend:4000/api
+        INTERNAL_BACKEND_URL: http://backend:4000
 
     environment:
       INTERNAL_API_URL: http://backend:4000/api
+      INTERNAL_BACKEND_URL: http://backend:4000
 
     ports:
       - '3000:3000'
