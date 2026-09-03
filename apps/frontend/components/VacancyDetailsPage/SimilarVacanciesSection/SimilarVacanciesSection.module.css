@@ -8,17 +8,21 @@
 .title {
   font-family: var(--font-family);
   font-weight: 700;
-  font-size: 24px;
-  line-height: 1.4;
-  letter-spacing: -0.24px;
+  font-size: 48px;
+  line-height: 1.2;
+  letter-spacing: -0.48px;
   color: var(--color-scheme-1-text);
 }
 
 .list {
   display: grid;
   grid-template-columns: 1fr;
-  gap: 16px;
-  align-items: stretch;
+  gap: 32px;
+}
+
+/* ховаємо третю картку на мобільному й планшеті — за макетом там завжди тільки 2 */
+.list li:nth-child(n + 3) {
+  display: none;
 }
 
 @media (min-width: 768px) {
@@ -27,9 +31,14 @@
   }
 }
 
-@media (min-width: 1200px) {
+@media (min-width: 90rem) {
   .list {
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  /* на десктопі показуємо всі 3 картки, як у макеті */
+  .list li:nth-child(n + 3) {
+    display: block;
   }
 }
 
