@@ -30,24 +30,14 @@ export const RegisterValidation = (type: UserType) =>
       .required('Вкажіть пароль'),
   });
 
-export const updateUserProfileValidationSchema = Yup.object({
-  name: Yup.string()
-    .min(2, 'Мінімум 2 символи в цьому полі')
-    .max(32, 'Максимум 32 символи в цьому полі')
-    .required('Це поле є обов’язковим'),
-
-  githubUrl: Yup.string()
-    .url('Введіть коректне посилання')
-    .max(512, 'Максимум 512 символів в цьому полі')
-    .optional(),
-
-  linkedinUrl: Yup.string()
-    .url('Введіть коректне посилання')
-    .max(512, 'Максимум 512 символів в цьому полі')
-    .optional(),
-
-  behanceUrl: Yup.string()
-    .url('Введіть коректне посилання')
-    .max(512, 'Максимум 512 символів в цьому полі')
-    .optional(),
+export const loginSchema = Yup.object({
+  email: Yup.string()
+    .trim()
+    .email('Електронна адреса має бути валідною, приклад: example@gmail.com')
+    .max(64, 'Максимум 64 символи')
+    .required('Це поле обовʼязкове для заповнення'),
+  password: Yup.string()
+    .min(8, 'Пароль має бути не меньше 8 символів')
+    .max(128, 'Пароль має бути не більше 128 символів')
+    .required('Це поле обовʼязкове для заповнення'),
 });

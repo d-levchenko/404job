@@ -16,7 +16,10 @@ const stack =
   '[@media(min-width:1440px)_and_(min-height:700px)]:sticky ' +
   '[@media(min-width:1440px)_and_(min-height:700px)]:top-0 ' +
   '[@media(min-width:1440px)_and_(min-height:700px)]:h-screen ' +
-  '[@media(min-width:1440px)_and_(min-height:700px)]:overflow-hidden ' +
+  '[@media(min-width:1440px)_and_(min-height:700px)]:overflow-hidden';
+
+const stackCentered =
+  `${stack} ` +
   '[@media(min-width:1440px)_and_(min-height:700px)]:flex ' +
   '[@media(min-width:1440px)_and_(min-height:700px)]:flex-col ' +
   '[@media(min-width:1440px)_and_(min-height:700px)]:justify-center';
@@ -29,22 +32,23 @@ const reveal =
 const Home = () => {
   return (
     <main>
-      <section className={`${stack} z-10 bg-white`}>
+      <section
+        className={`${stack} z-10 bg-white [@media(min-width:1440px)_and_(min-height:700px)]:mb-[30px]`}>
         <HeroSection />
       </section>
 
       <section
-        className={`${stack} ${reveal} z-20 bg-white  stack:shadow-[0_0_4px_rgba(0,0,0,0.12)]`}>
+        className={`${stackCentered} ${reveal} z-20 bg-white stack:shadow-[0_0_4px_rgba(0,0,0,0.12)]`}>
         <HotVacancies />
       </section>
 
       <section
-        className={`${stack} ${reveal} z-30 bg-white  stack:shadow-[0_0_4px_rgba(0,0,0,0.12)]`}>
+        className={`${stackCentered} ${reveal} z-30 bg-white stack:shadow-[0_0_4px_rgba(0,0,0,0.12)]`}>
         <Advantages />
       </section>
 
       <section
-        className={`${stack} ${reveal} z-40 bg-white stack:shadow-[0_0_4px_rgba(0,0,0,0.12)]`}>
+        className={`${stackCentered} ${reveal} z-40 bg-white stack:shadow-[0_0_4px_rgba(0,0,0,0.12)]`}>
         <ForEmployers />
       </section>
     </main>

@@ -80,8 +80,12 @@
   scrollbar-color: var(--color-curious-blue-light) var(--color-white);
 
   z-index: 10;
-}
 
+  @media only screen and (min-width: 1440px) {
+    top: auto;
+    bottom: calc(100% + 8px);
+  }
+}
 .locationOptions button {
   width: 100%;
   padding: 10px 12px;
