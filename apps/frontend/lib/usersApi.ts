@@ -18,7 +18,7 @@ export const getCurrentUser = async (): Promise<EmployerProfile> => {
 };
 
 export const updateEmployerProfile = async (
-  data: EmployerProfile,
+  data: FormData,
 ): Promise<EmployerProfile> => {
   const response = await axios.patch<CurrentUserResponse>(
     '/api/users/employer',

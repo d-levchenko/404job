@@ -48,9 +48,7 @@
   background-color: var(--color-curious-blue);
   white-space: nowrap;
   cursor: pointer;
-  transition:
-    background-color var(--transition),
-    color var(--transition);
+  transition: var(--transition);
 }
 .button:hover,
 .button:focus-visible {
