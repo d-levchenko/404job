@@ -91,6 +91,13 @@ vacancyRouter.patch(
   closeVacancy,
 );
 
+vacancyRouter.delete(
+  '/:vacancyId/close',
+  authenticate,
+  celebrate(closeVacancySchema),
+  closeVacancy,
+);
+
 vacancyRouter.post(
   '/:vacancyId/apply',
   authenticate,

@@ -97,7 +97,7 @@ export const getMyVacancies = async (
 };
 
 export const closeVacancy = async (vacancyId: string): Promise<Vacancy> => {
-  const { data } = await api.patch<Vacancy>(`/vacancies/${vacancyId}/close`);
+  const { data } = await api.delete<Vacancy>(`/vacancies/${vacancyId}/close`);
 
   return data;
 };
