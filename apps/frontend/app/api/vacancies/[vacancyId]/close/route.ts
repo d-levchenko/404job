@@ -10,20 +10,16 @@ interface RouteContext {
   }>;
 }
 
-export async function PATCH(req: NextRequest, { params }: RouteContext) {
+export async function DELETE(req: NextRequest, { params }: RouteContext) {
   try {
     const { vacancyId } = await params;
     const cookie = req.headers.get('cookie') ?? '';
 
-    const res = await api.patch(
-      `/vacancies/${vacancyId}/close`,
-      {},
-      {
-        headers: {
-          cookie,
-        },
+    const res = await api.delete(`/vacancies/${vacancyId}/close`, {
+      headers: {
+        cookie,
       },
-    );
+    });
 
     return NextResponse.json(res.data, {
       status: res.status,
