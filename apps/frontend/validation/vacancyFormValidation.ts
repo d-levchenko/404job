@@ -3,7 +3,7 @@ import * as Yup from 'yup';
 const objectId = (fieldName: string) =>
   Yup.string()
     .matches(/^[0-9a-fA-F]{24}$/, `${fieldName} повинен бути валідним`)
-    .required(`вибір одного з пунктів є обов’язковим`);
+    .required(`Вибір одного з пунктів є обов’язковим`);
 
 export const vacancyFormValidation = Yup.object().shape({
   title: Yup.string()
