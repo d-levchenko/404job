@@ -48,8 +48,8 @@ const CreateVacancyForm = ({ filters }: VacanciesProps) => {
       toast.success('Вакансію успішно створено');
       router.push(`/vacancies/${vacancy._id}`);
       actions.resetForm();
-    } catch (error) {
-      toast.error(error instanceof Error ? error.message : 'Щось пішло не так');
+    } catch {
+      toast.error('Щось пішло не так, вакансія не створена');
     }
   };
 
@@ -139,28 +139,21 @@ const CreateVacancyForm = ({ filters }: VacanciesProps) => {
                 <span className={css.title}>Рівень кандидата</span>
                 {experienceLevels.map(experience => (
                   <label key={experience._id} className={css.radioLabel}>
-                    <Field
-                      type="radio"
-                      name="experienceLevelId"
-                      value={experience._id}
-                      className={css.radioInput}
-                    />
-
-                    <SvgIcon
-                      name="radio"
-                      width={18}
-                      height={18}
-                      className={css.radioOff}
-                      aria-hidden="true"
-                    />
-
-                    <SvgIcon
-                      name="radioChecked"
-                      width={18}
-                      height={18}
-                      className={css.radioOn}
-                      aria-hidden="true"
-                    />
+                    <div className={css.radiowrapper}>
+                      <Field
+                        type="radio"
+                        name="experienceLevelId"
+                        value={experience._id}
+                        className={css.radioInput}
+                      />
+                      <SvgIcon
+                        name="radioChecked"
+                        width={18}
+                        height={18}
+                        className={css.radio}
+                        aria-hidden="true"
+                      />
+                    </div>
 
                     <span>{experience.name}</span>
                   </label>
@@ -175,28 +168,21 @@ const CreateVacancyForm = ({ filters }: VacanciesProps) => {
                 <span className={css.title}>Тип зайнятості</span>
                 {employmentTypes.map(employment => (
                   <label key={employment._id} className={css.radioLabel}>
-                    <Field
-                      type="radio"
-                      name="employmentTypeId"
-                      value={employment._id}
-                      className={css.radioInput}
-                    />
-
-                    <SvgIcon
-                      name="radio"
-                      width={18}
-                      height={18}
-                      className={css.radioOff}
-                      aria-hidden="true"
-                    />
-
-                    <SvgIcon
-                      name="radioChecked"
-                      width={18}
-                      height={18}
-                      className={css.radioOn}
-                      aria-hidden="true"
-                    />
+                    <div className={css.radiowrapper}>
+                      <Field
+                        type="radio"
+                        name="employmentTypeId"
+                        value={employment._id}
+                        className={css.radioInput}
+                      />
+                      <SvgIcon
+                        name="radioChecked"
+                        width={18}
+                        height={18}
+                        className={css.radio}
+                        aria-hidden="true"
+                      />
+                    </div>
 
                     <span>{employment.name}</span>
                   </label>
@@ -211,28 +197,21 @@ const CreateVacancyForm = ({ filters }: VacanciesProps) => {
                 <span className={css.title}>Галузь</span>
                 {industries.map(industry => (
                   <label key={industry._id} className={css.radioLabel}>
-                    <Field
-                      type="radio"
-                      name="industryId"
-                      value={industry._id}
-                      className={css.radioInput}
-                    />
-
-                    <SvgIcon
-                      name="radio"
-                      width={18}
-                      height={18}
-                      className={css.radioOff}
-                      aria-hidden="true"
-                    />
-
-                    <SvgIcon
-                      name="radioChecked"
-                      width={18}
-                      height={18}
-                      className={css.radioOn}
-                      aria-hidden="true"
-                    />
+                    <div className={css.radiowrapper}>
+                      <Field
+                        type="radio"
+                        name="industryId"
+                        value={industry._id}
+                        className={css.radioInput}
+                      />
+                      <SvgIcon
+                        name="radioChecked"
+                        width={18}
+                        height={18}
+                        className={css.radio}
+                        aria-hidden="true"
+                      />
+                    </div>
 
                     <span>{industry.name}</span>
                   </label>

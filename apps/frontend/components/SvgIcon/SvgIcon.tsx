@@ -16,7 +16,6 @@ import linkedin from '@/assets/linkedIn.svg';
 import dateRange from '@/assets/date_range.svg';
 import heart from '@/assets/heart.svg';
 import heartFilled from '@/assets/heart_filled.svg';
-import radio from '@/assets/radio.svg';
 import radioChecked from '@/assets/radioChecked.svg';
 
 const icons = {
@@ -38,7 +37,6 @@ const icons = {
   dateRange,
   heart,
   heartFilled,
-  radio,
   radioChecked,
 };
 

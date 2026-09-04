@@ -58,7 +58,7 @@ export const LocationSelect = ({ locations }: LocationSelectProps) => {
                   aria-selected={values.locationId === location._id}
                   onClick={() => {
                     setFieldValue('locationId', location._id);
-                    setFieldTouched('locationId', true);
+                    setFieldTouched('locationId', true, false);
                     setIsOpen(false);
                   }}>
                   {location.name}
