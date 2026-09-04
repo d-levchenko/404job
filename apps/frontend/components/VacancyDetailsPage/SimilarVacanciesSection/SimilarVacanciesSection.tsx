@@ -31,7 +31,13 @@ const SimilarVacanciesSection = ({
                     sizes="(min-width: 90rem) 33vw, (min-width: 768px) 50vw, 100vw"
                   />
                 ) : (
-                  <SvgIcon name="noImage" width={64} height={64} />
+                  <Image
+                    src="/images/emptyImg.jpg"
+                    alt={vacancy.employerId.companyName}
+                    fill
+                    className={css.image}
+                    sizes="(min-width: 90rem) 33vw, (min-width: 768px) 50vw, 100vw"
+                  />
                 )}
               </div>
 
