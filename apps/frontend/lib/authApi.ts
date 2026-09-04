@@ -3,12 +3,9 @@ import { api } from './api';
 import axios from 'axios';
 
 export const registerUser = async (payload: RegisterData) => {
-  try {
-    const { data } = await api.post('auth/register', payload);
-    return data;
-  } catch (error) {
-    throw error;
-  }
+  const { data } = await axios.post<AuthUser>('/api/auth/register', payload);
+
+  return data;
 };
 
 export const loginUser = async (payload: LoginData) => {
