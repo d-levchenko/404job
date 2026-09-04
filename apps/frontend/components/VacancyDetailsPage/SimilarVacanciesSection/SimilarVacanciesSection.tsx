@@ -1,8 +1,7 @@
+import Image from 'next/image';
 import Link from 'next/link';
-
 import { SvgIcon } from '@/components/SvgIcon/SvgIcon';
 import { Vacancy } from '@/types/vacancyType';
-
 import css from './SimilarVacanciesSection.module.css';
 
 type SimilarVacanciesSectionProps = {
@@ -23,7 +22,17 @@ const SimilarVacanciesSection = ({
           <li key={vacancy._id}>
             <Link href={`/vacancies/${vacancy._id}`} className={css.card}>
               <div className={css.imageWrapper}>
-                <SvgIcon name="noImage" width={64} height={64} />
+                {vacancy.employerId.logo ? (
+                  <Image
+                    src={vacancy.employerId.logo}
+                    alt={vacancy.employerId.companyName}
+                    fill
+                    className={css.image}
+                    sizes="(min-width: 90rem) 33vw, (min-width: 768px) 50vw, 100vw"
+                  />
+                ) : (
+                  <SvgIcon name="noImage" width={64} height={64} />
+                )}
               </div>
 
               <div className={css.header}>
