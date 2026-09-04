@@ -4,18 +4,26 @@ import { NextRequest, NextResponse } from 'next/server';
 import { logErrorResponse } from '../../../_utils/utils';
 import { api } from '../../../api';
 
-interface RouteContext {
-  params: Promise<{
-    vacancyId: string;
-  }>;
-}
-
-export async function DELETE(req: NextRequest, { params }: RouteContext) {
+export async function GET(req: NextRequest) {
   try {
-    const { vacancyId } = await params;
+    const { searchParams } = new URL(req.url);
+
     const cookie = req.headers.get('cookie') ?? '';
 
-    const res = await api.delete(`/vacancies/${vacancyId}/close`, {
+    const params = {
+      page: searchParams.get('page')
+        ? Number(searchParams.get('page'))
+        : undefined,
+
+      perPage: searchParams.get('perPage')
+        ? Number(searchParams.get('perPage'))
+        : undefined,
+
+      status: searchParams.get('status') || undefined,
+    };
+
+    const res = await api.get('/vacancies/my/vacancies', {
+      params,
       headers: {
         cookie,
       },
@@ -30,7 +38,7 @@ export async function DELETE(req: NextRequest, { params }: RouteContext) {
 
       return NextResponse.json(
         error.response?.data ?? {
-          message: 'Failed to close vacancy',
+          message: 'Failed to get employer vacancies',
         },
         {
           status: error.response?.status ?? 500,
