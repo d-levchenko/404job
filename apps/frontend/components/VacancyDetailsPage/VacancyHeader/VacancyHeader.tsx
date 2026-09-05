@@ -11,6 +11,7 @@ import {
   removeFromFavorites,
 } from '@/lib/vacanciesApi';
 import css from './VacancyHeader.module.css';
+import { useAuthStore } from '@/store/authStore';
 
 interface VacancyHeaderProps {
   vacancyId: string;
@@ -37,6 +38,8 @@ const VacancyHeader: React.FC<VacancyHeaderProps> = ({
   const [isApplying, setIsApplying] = useState<boolean>(false);
   const [isApplied, setIsApplied] = useState<boolean>(false);
 
+  const user = useAuthStore(state => state.user);
+
   const formattedDate = createdAt
     ? new Date(createdAt).toLocaleDateString('uk-UA', {
         day: '2-digit',
@@ -52,6 +55,10 @@ const VacancyHeader: React.FC<VacancyHeaderProps> = ({
 
   const handleApply = async () => {
     if (isApplied || isApplying) return;
+    if (user?.userType === 'employer') {
+      toast.error('Відгук на вакансію може зробити тільки кандидат');
+      return;
+    }
 
     try {
       setIsApplying(true);
@@ -86,6 +93,10 @@ const VacancyHeader: React.FC<VacancyHeaderProps> = ({
 
   const handleToggleFavorite = async () => {
     if (isFavoriteLoading) return;
+    if (user?.userType === 'employer') {
+      toast.error('Додати вакансію в обране може зробити тільки кандидат');
+      return;
+    }
 
     try {
       setIsFavoriteLoading(true);

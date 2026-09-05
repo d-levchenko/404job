@@ -11,6 +11,7 @@ import { Suspense } from 'react';
 import Loader from '@/components/Loader/Loader';
 
 import css from './page.module.css';
+import ForEmployers from '@/components/HomePage/ForEmployers/ForEmployers';
 
 export const dynamic = 'force-dynamic';
 
@@ -62,6 +63,8 @@ const VacanciesPage = async () => {
             <Vacancies filters={filters} />
           </HydrationBoundary>
         </Suspense>
+
+        <ForEmployers />
       </div>
     </main>
   );
