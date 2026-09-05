@@ -3,6 +3,15 @@
   flex-direction: column;
   gap: 24px;
   padding-block: 24px;
+  width: 100%;
+  min-width: 0;
+  max-width: 100%;
+}
+
+.card,
+.topRow {
+  min-width: 0;
+  max-width: 100%;
 }
 
 .title {
@@ -12,12 +21,21 @@
   line-height: 1.2;
   letter-spacing: -0.48px;
   color: var(--color-scheme-1-text);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 100%;
 }
 
 .list {
   display: grid;
-  grid-template-columns: 1fr;
+  grid-template-columns: minmax(0, 1fr);
   gap: 32px;
+  max-width: 100%;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+  width: 100%;
+  min-width: 0;
 }
 
 .list li:nth-child(n + 3) {
@@ -26,13 +44,13 @@
 
 @media screen and (min-width: 768px) {
   .list {
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
 
 @media screen and (min-width: 1440px) {
   .list {
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 
   .list li:nth-child(n + 3) {
@@ -79,8 +97,17 @@
   gap: 4px;
   width: 100%;
   flex: 1;
+  min-width: 0;
 }
-
+.companyName,
+.location,
+.vacancyTitle,
+.salary {
+  min-width: 0;
+  max-width: 100%;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
 .topRow {
   display: flex;
   align-items: center;

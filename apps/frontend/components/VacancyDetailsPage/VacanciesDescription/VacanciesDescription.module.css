@@ -1,3 +1,8 @@
+.container {
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+}
 .mainTitle {
   font-size: 36px;
   font-weight: 700;
@@ -5,12 +10,29 @@
   letter-spacing: -0.01em;
   color: var(--color-scheme-1-text);
   margin-bottom: 24px;
+  min-width: 0;
+  max-width: 100%;
+
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+  overflow-wrap: anywhere;
+}
+.text,
+.listItem {
+  overflow-wrap: anywhere;
+  word-break: break-word;
+  min-width: 0;
+  max-width: 100%;
 }
 
 .section {
   display: flex;
   flex-direction: column;
   padding: 0 0 16px;
+  min-width: 0;
+  max-width: 100%;
 }
 
 .title {
@@ -36,6 +58,8 @@
   flex-direction: column;
   padding-left: 20px;
   margin: 0;
+  min-width: 0;
+  max-width: 100%;
 }
 
 .listItem {
@@ -52,10 +76,6 @@
   }
 }
 @media (min-width: 1440px) {
-  .container {
-    gap: 24px;
-  }
-
   .mainTitle {
     font-size: 48px;
   }
