@@ -41,7 +41,7 @@ const SavedVacanciesList = () => {
     <VacanciesList
       vacancies={data.savedVacancies}
       onRemoveFromSaved={remove.mutate}
-      removingId={remove.isPending ? remove.variables ?? null : null}
+      removingId={remove.isPending ? (remove.variables ?? null) : null}
     />
   );
 };

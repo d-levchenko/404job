@@ -29,19 +29,15 @@
   display: flex;
   align-items: center;
   justify-content: center;
-
   width: 100%;
   min-width: 0;
   height: 32px;
   padding: 0 8px;
-
   border: 1px solid transparent;
   border-radius: 100px;
-
   font-size: 14px;
   line-height: 1.5;
   white-space: nowrap;
-
   color: var(--color-scheme-4-text);
 }
 
@@ -49,7 +45,6 @@
   background-color: var(--color-scheme-4-foreground);
   border-color: var(--color-scheme-4-border);
   font-weight: 500;
-
   box-shadow: 0 1px 2px var(--opacity-neutral-darkest-10);
 }
 
@@ -58,6 +53,12 @@
   flex-direction: column;
   width: 100%;
   gap: 16px;
+}
+
+@media screen and (min-width: 1440px) {
+  .form {
+    gap: 23px;
+  }
 }
 
 .fieldGroup {
@@ -74,20 +75,15 @@
 .input {
   display: flex;
   align-items: center;
-
   width: 100%;
   height: 40px;
   color: var(--color-scheme-1-text);
   padding: 8px 16px;
-
   border: 1px solid var(--color-scheme-1-border);
   border-radius: 32px;
-
   background: var(--opacity-transparent);
-
   font-size: 16px;
   line-height: 1.5;
-
   outline: none;
 }
 
@@ -107,9 +103,7 @@
 
 .errorMessage {
   display: block;
-
   padding-left: 16px;
-
   font-size: 14px;
   line-height: 1.4;
   color: var(--color-red);
@@ -118,13 +112,10 @@
 .button {
   width: 100%;
   height: 40px;
-
   border: 1px solid transparent;
   border-radius: 32px;
-
   background-color: var(--color-curious-blue);
   color: var(--color-white);
-
   font-size: 16px;
   cursor: pointer;
   transition: var(--transition);
@@ -152,4 +143,20 @@
   background: var(--color-curious-blue);
   opacity: 0.3;
   cursor: not-allowed;
+}
+
+@media screen and (min-width: 1920px) {
+  .fieldGroup label {
+    font-size: 15px;
+  }
+
+  .input {
+    height: 44px;
+    font-size: 17px;
+  }
+
+  .button {
+    height: 44px;
+    font-size: 17px;
+  }
 }

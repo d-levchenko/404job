@@ -5,6 +5,8 @@ import { usePathname } from 'next/navigation';
 import { ReactNode } from 'react';
 
 import css from './EmployerDashboardPage.module.css';
+import { useDashboardGuard } from '@/hooks/useDashboardGuard';
+import Loader from '@/components/Loader/Loader';
 
 interface EmployerDashboardPageProps {
   children: ReactNode;
@@ -18,7 +20,8 @@ const EmployerDashboardPage = ({ children }: EmployerDashboardPageProps) => {
   const isVacanciesActive = pathname === '/dashboard/employer/vacancies';
 
   const isCandidatesActive = pathname === '/dashboard/employer/candidates';
-
+  const { isAllowed } = useDashboardGuard('employer');
+  if (!isAllowed) return <Loader />;
   return (
     <main className={css.page}>
       <h1 className={css.title}>Мій профіль</h1>
