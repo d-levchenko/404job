@@ -37,6 +37,9 @@ export interface AuthUser {
   name?: string;
   companyName?: string;
   email: string;
+  websiteUrl?: string;
+  logo?: string;
+  description?: string;
   createdAt: string;
   updatedAt: string;
 }
