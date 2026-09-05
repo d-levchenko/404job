@@ -8,7 +8,11 @@ export async function POST(req: NextRequest) {
   try {
     const body = await req.json();
 
-    const res = await api.post('/vacancies/create-vacancy', body);
+    const res = await api.post('/vacancies/create-vacancy', body, {
+      headers: {
+        cookie: req.headers.get('cookie') ?? '',
+      },
+    });
 
     return NextResponse.json(res.data, {
       status: res.status,
