@@ -36,6 +36,8 @@
   line-clamp: 3;
   box-orient: vertical;
 
+  text-overflow: ellipsis;
+
   color: var(--color-scheme-1-text);
 
   margin-bottom: 8px;
