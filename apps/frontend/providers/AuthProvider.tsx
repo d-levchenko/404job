@@ -1,6 +1,5 @@
 'use client';
 
-import { refreshSession } from '@/lib/authApi';
 import { getCurrentUser } from '@/lib/usersApi';
 import { useAuthStore } from '@/store/authStore';
 import React, { useEffect } from 'react';
@@ -10,17 +9,18 @@ interface AuthProviderProps {
 }
 
 const AuthProvider = ({ children }: AuthProviderProps) => {
-  const { setUser, setIsAuthenticated, clearAuthStore } = useAuthStore();
+  const { setUser, setIsAuthenticated, setIsInitialized, clearAuthStore } =
+    useAuthStore();
 
   useEffect(() => {
     const fetchUser = async () => {
       try {
-        await refreshSession();
         const user = await getCurrentUser();
 
         if (user) {
           setUser(user);
           setIsAuthenticated(true);
+          setIsInitialized(true);
         } else {
           clearAuthStore();
         }
@@ -30,7 +30,7 @@ const AuthProvider = ({ children }: AuthProviderProps) => {
     };
 
     fetchUser();
-  }, [setUser, setIsAuthenticated, clearAuthStore]);
+  }, [setUser, setIsAuthenticated, setIsInitialized, clearAuthStore]);
 
   return <>{children}</>;
 };
