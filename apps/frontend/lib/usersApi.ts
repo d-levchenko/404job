@@ -13,7 +13,7 @@ interface CurrentUserResponse {
 }
 
 export const getCurrentUser = async (): Promise<AuthUser> => {
-  const { data } = await api.get<AuthUser>('/users');
+  const { data } = await api.get<AuthUser>('/users/me');
 
   return data;
 };
