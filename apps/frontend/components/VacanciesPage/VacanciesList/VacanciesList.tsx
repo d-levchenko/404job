@@ -39,7 +39,7 @@ const VacanciesList = ({
               alt={vacancy.employerId.companyName || `${vacancy.title} image`}
               width={157}
               height={67}
-              className="mb-4 rounded-3xl md:mb-0"
+              className={`mb-4 rounded-3xl md:mb-0 ${css.image}`}
             />
 
             <div>
