@@ -24,12 +24,10 @@ export interface LoginData {
   password: string;
 }
 
-export interface UpdateProfileData {
-  name: string;
-  githubUrl?: string;
-  linkedinUrl?: string;
-  behanceUrl?: string;
-}
+export type UpdateProfileData = Pick<
+  AuthUser,
+  'name' | 'githubUrl' | 'linkedinUrl' | 'behanceUrl'
+>;
 
 export interface AuthUser {
   _id: string;
@@ -40,6 +38,9 @@ export interface AuthUser {
   websiteUrl?: string;
   logo?: string;
   description?: string;
+  githubUrl?: string;
+  linkedinUrl?: string;
+  behanceUrl?: string;
   createdAt: string;
   updatedAt: string;
 }

@@ -5,6 +5,23 @@
   line-height: 1.4;
   letter-spacing: -0.01em;
   color: var(--color-scheme-1-text);
+
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  box-orient: vertical;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+
+  text-overflow: ellipsis;
+
+  max-width: 327px;
+  @media screen and (min-width: 768px) {
+    max-width: 500px;
+  }
+  @media screen and (min-width: 1440px) {
+    max-width: 750px;
+  }
 }
 
 .description {

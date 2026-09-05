@@ -69,7 +69,9 @@
     box-shadow var(--transition-speed) var(--transition-ease),
     transform var(--transition-speed) var(--transition-ease),
     opacity var(--transition-speed) var(--transition-ease),
-    visibility var(--transition-speed) var(--transition-ease);
+    visibility var(--transition-speed) var(--transition-ease),
+    width var(--transition-speed) var(--transition-ease),
+    height var(--transition-speed) var(--transition-ease);
 }
 
 *,
