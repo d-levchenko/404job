@@ -6,6 +6,7 @@ import TanStackProvider from '@/providers/TanStackProvider';
 import Header from '@/components/Header/Header';
 import Footer from '@/components/Footer/Footer';
 import { Toaster } from 'react-hot-toast';
+import AuthProvider from '@/providers/AuthProvider';
 
 const roboto = Roboto({
   weight: ['400', '500', '700'],
@@ -59,36 +60,38 @@ const RootLayout = ({ children }: LayoutProps<'/'>) => {
     <html lang="en" className={`${roboto.variable} h-full antialiased`}>
       <body className="min-h-full flex flex-col">
         <TanStackProvider>
-          <Header />
-          <Toaster
-            position="top-center"
-            toastOptions={{
-              duration: 3000,
-              style: {
-                borderRadius: '16px',
-                padding: '14px 18px',
-                fontSize: '16px',
-                lineHeight: '150%',
-                color: 'var(--color-scheme-1-text)',
-                background: 'var(--color-white)',
-                boxShadow: '4px 8px 24px rgb(0 0 0 / 10%)',
-              },
-              success: {
-                iconTheme: {
-                  primary: 'var(--color-curious-blue)',
-                  secondary: 'var(--color-white)',
+          <AuthProvider>
+            <Header />
+            <Toaster
+              position="top-center"
+              toastOptions={{
+                duration: 3000,
+                style: {
+                  borderRadius: '16px',
+                  padding: '14px 18px',
+                  fontSize: '16px',
+                  lineHeight: '150%',
+                  color: 'var(--color-scheme-1-text)',
+                  background: 'var(--color-white)',
+                  boxShadow: '4px 8px 24px rgb(0 0 0 / 10%)',
                 },
-              },
-              error: {
-                iconTheme: {
-                  primary: '#D92D20',
-                  secondary: 'var(--color-white)',
+                success: {
+                  iconTheme: {
+                    primary: 'var(--color-curious-blue)',
+                    secondary: 'var(--color-white)',
+                  },
                 },
-              },
-            }}
-          />
-          {children}
-          <Footer />
+                error: {
+                  iconTheme: {
+                    primary: '#D92D20',
+                    secondary: 'var(--color-white)',
+                  },
+                },
+              }}
+            />
+            {children}
+            <Footer />
+          </AuthProvider>
         </TanStackProvider>
       </body>
     </html>

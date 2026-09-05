@@ -1,27 +1,36 @@
 'use client';
-import { initAuth } from '@/lib/authApi';
+
+import { getCurrentUser } from '@/lib/usersApi';
 import { useAuthStore } from '@/store/authStore';
-import { useQuery } from '@tanstack/react-query';
 import React, { useEffect } from 'react';
 
-const AuthProvider = ({
-  children,
-}: Readonly<{ children: React.ReactNode }>) => {
-  const { setUser } = useAuthStore();
+interface AuthProviderProps {
+  children: React.ReactNode;
+}
 
-  const { data: user, isFetched } = useQuery({
-    queryKey: ['user'],
-    queryFn: () => initAuth(),
-  });
+const AuthProvider = ({ children }: AuthProviderProps) => {
+  const { setUser, setIsAuthenticated, clearAuthStore } = useAuthStore();
 
   useEffect(() => {
-    if (isFetched) {
-      if (user) {
-        setUser(user);
+    const fetchUser = async () => {
+      try {
+        const user = await getCurrentUser();
+
+        if (user) {
+          setUser(user);
+          setIsAuthenticated(true);
+        } else {
+          clearAuthStore();
+        }
+      } catch {
+        clearAuthStore();
       }
-    }
-  }, [isFetched, user, setUser]);
-  return children;
+    };
+
+    fetchUser();
+  }, [setUser, setIsAuthenticated, clearAuthStore]);
+
+  return <>{children}</>;
 };
 
 export default AuthProvider;

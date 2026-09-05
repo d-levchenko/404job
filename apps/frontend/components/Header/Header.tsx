@@ -3,32 +3,31 @@ import Link from 'next/link';
 import { SvgIcon } from '../SvgIcon/SvgIcon';
 import Button from '../UI/Button/Button';
 import AppLink from '../UI/AppLink/AppLink';
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import { useAuthStore } from '@/store/authStore';
 import { useBurgerStore } from '@/store/burgerStore';
-import { useMutation } from '@tanstack/react-query';
 import { logout } from '@/lib/authApi';
 
 const Header = () => {
   const path = usePathname();
-  const { openBurger } = useBurgerStore();
+  const router = useRouter();
+  const { openBurger, closeBurger } = useBurgerStore();
 
   const handleOpenBurgerMenu = () => {
     openBurger();
   };
-  const { isAuthenticated, userType, clearAuthStore } = useAuthStore();
 
-  const { mutate } = useMutation({
-    mutationFn: logout,
-    onSuccess: () => {
-      clearAuthStore();
-    },
-  });
+  const { userType, isAuthenticated, clearAuthStore } = useAuthStore();
 
-  const handleExit = () => {
-    mutate();
+  const handleExit = async () => {
+    await logout();
+    clearAuthStore();
+    closeBurger();
+    router.push('/');
   };
+
   if (path.startsWith('/auth')) return null;
+
   return (
     <header className="w-full h-18 flex items-center px-5 md:px-8 desktop:px-16 bg-(--color-scheme-1-background)">
       <div className="w-full max-w-83.75 md:max-w-176 desktop:max-w-328 mx-auto flex items-center justify-between">
@@ -60,14 +59,12 @@ const Header = () => {
                   <Button href="/dashboard/employer/create-vacancy">
                     Створити вакансію
                   </Button>
-                  <Button primary>Вийти</Button>
+                  <Button onClick={handleExit}>Вийти</Button>
                 </>
               ) : (
                 <>
                   <Button href="/dashboard/candidate">Мій профіль</Button>
-                  <Button primary onClick={handleExit}>
-                    Вийти
-                  </Button>
+                  <Button onClick={handleExit}>Вийти</Button>
                 </>
               )
             ) : (

@@ -3,26 +3,23 @@ import { create } from 'zustand';
 
 interface AuthStoreState {
   user: AuthUser | null;
-  userType: UserType | '';
+  userType: UserType;
   isAuthenticated: boolean;
-}
-interface AuthStoreAction {
-  setUser: (data: AuthUser) => void;
-  setUserType: (type: UserType) => void;
-  setIsAuthenticated: (state: boolean) => void;
+  setUser: (user: AuthUser) => void;
+  setUserType: (userType: UserType) => void;
+  setIsAuthenticated: (isAuthenticated: boolean) => void;
+  clear: () => void;
   clearAuthStore: () => void;
 }
 
-const initialState: AuthStoreState = {
+export const useAuthStore = create<AuthStoreState>()(set => ({
   user: null,
-  userType: '',
+  userType: 'candidate',
   isAuthenticated: false,
-};
-
-export const useAuthStore = create<AuthStoreState & AuthStoreAction>()(set => ({
-  ...initialState,
-  setUser: user => set({ user, isAuthenticated: true }),
-  setUserType: userType => set({ userType }),
-  setIsAuthenticated: (state: boolean) => ({ state }),
-  clearAuthStore: () => set({ ...initialState }),
+  setUser: (user: AuthUser) => set({ user, userType: user.userType }),
+  setUserType: (userType: UserType) => set({ userType }),
+  setIsAuthenticated: (isAuthenticated: boolean) => set({ isAuthenticated }),
+  clear: () => set({ user: null, isAuthenticated: false }),
+  clearAuthStore: () =>
+    set({ user: null, userType: 'candidate', isAuthenticated: false }),
 }));

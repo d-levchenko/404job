@@ -8,10 +8,10 @@ import toast from 'react-hot-toast';
 
 import Loader from '@/components/Loader/Loader';
 import { getCurrentCandidate, updateUser } from '@/lib/userApi';
-import { CandidateProfile } from '@/types/userType';
 import { updateUserProfileValidationSchema } from '@/validation/profileValidation';
 
 import css from './ProfileForm.module.css';
+import { UpdateProfileData } from '@/types/auth';
 
 const ProfileForm = () => {
   const id = useId();
@@ -46,7 +46,7 @@ const ProfileForm = () => {
     return <p>Не вдалося завантажити дані профілю</p>;
   }
 
-  const initialValues: CandidateProfile = {
+  const initialValues: UpdateProfileData = {
     name: user.name,
     githubUrl: user.githubUrl || '',
     linkedinUrl: user.linkedinUrl || '',

@@ -17,20 +17,21 @@ interface LoginFormData {
 
 const LoginForm = () => {
   const router = useRouter();
-  const { setUser } = useAuthStore();
+  const { setUser, setIsAuthenticated } = useAuthStore();
 
   const initialValues: LoginFormData = {
     email: '',
     password: '',
   };
+
   const { mutate } = useMutation({
     mutationFn: loginUser,
-    onSuccess: data => {
-      setUser(data);
+    onSuccess: user => {
+      setUser(user);
+      setIsAuthenticated(true);
       router.push('/');
     },
-    onError: error => {
-      console.log('mutation error', error); // додай це для діагностики
+    onError: () => {
       toast.error('Неправильний email або пароль');
     },
   });

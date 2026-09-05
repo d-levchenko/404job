@@ -17,6 +17,7 @@ import dateRange from '@/assets/date_range.svg';
 import heart from '@/assets/heart.svg';
 import heartFilled from '@/assets/heart_filled.svg';
 import radioChecked from '@/assets/radioChecked.svg';
+import close from '@/assets/close.svg';
 
 const icons = {
   logo: jobLogo,
