@@ -27,20 +27,15 @@
     width: 50%;
     min-height: 900px;
     flex-shrink: 0;
-
     display: grid;
     grid-template-rows: auto 1fr auto;
-
   }
 
   .login-image {
     display: block;
-
     width: 50%;
     height: 100vh;
     min-height: 900px;
-
     object-fit: cover;
   }
 }
-
