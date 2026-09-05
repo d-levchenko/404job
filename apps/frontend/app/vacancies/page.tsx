@@ -6,9 +6,10 @@ import {
   QueryClient,
 } from '@tanstack/react-query';
 
-import Vacancies from '@/components/VacanciesPage/Vacancies';
 import { Suspense } from 'react';
+import Vacancies from '@/components/VacanciesPage/Vacancies';
 import Loader from '@/components/Loader/Loader';
+import ForEmployers from '@/components/HomePage/ForEmployers/ForEmployers';
 
 import css from './page.module.css';
 
@@ -62,6 +63,8 @@ const VacanciesPage = async () => {
             <Vacancies filters={filters} />
           </HydrationBoundary>
         </Suspense>
+
+        <ForEmployers />
       </div>
     </main>
   );

@@ -6,13 +6,12 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 
 const Footer = () => {
-  const currentYear = new Date().getFullYear();
   const path = usePathname();
   if (path.startsWith('/auth')) return null;
 
   return (
-    <footer className="mx-auto w-full py-12 px-8 max-w-93.75 md:max-w-3xl desktop:max-w-360  desktop:px-16 flex flex-col justify-center items-center  gap-6 bg-(--color-scheme-4-background) md:">
-      <div className="flex flex-col gap-12.5 md:flex-row md:justify-between md:w-full desktop:items-start desktop:justify-center">
+    <footer className="mx-auto w-full py-12 px-8 desktop:px-16 flex flex-col justify-center items-center  gap-6 bg-(--color-scheme-4-background)">
+      <div className="flex flex-col gap-12.5 md:flex-row md:justify-between md:w-full desktop:items-start desktop:justify-center max-w-93.75 md:max-w-3xl desktop:max-w-360">
         <div className="flex gap-2.5  md:flex-1 md:items-start ">
           <Link href="/" className="flex items-center gap-2.5 md:gap-1 ">
             <SvgIcon
@@ -41,9 +40,9 @@ const Footer = () => {
           </div>
         </div>
       </div>
-      <div className="pt-8 border-t border-(--color-scheme-4-border) w-full flex justify-center">
+      <div className="pt-8 border-t border-(--color-scheme-4-border) w-full flex justify-center max-w-93.75 md:max-w-3xl desktop:max-w-360">
         <span className="font-normal text-xs leading-normal text-justify text-(--color-scheme-4-text) desktop:text-[14px]">
-          © {currentYear} JobSpace. Всі права захищені.
+          © {new Date().getFullYear()} JobSpace. Всі права захищені.
         </span>
       </div>
     </footer>

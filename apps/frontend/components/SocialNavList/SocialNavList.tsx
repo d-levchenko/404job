@@ -1,4 +1,3 @@
-import React from 'react';
 import AppLink from '../UI/AppLink/AppLink';
 import { SvgIcon } from '../SvgIcon/SvgIcon';
 
@@ -6,17 +5,17 @@ const SocialNavList = () => {
   return (
     <ul className="flex gap-5.5 flex-col md:items-start">
       <li>
-        <AppLink href="https://www.facebook.com/">
+        <AppLink href="https://www.facebook.com/" newTab={true}>
           <SvgIcon name="facebook" /> Facebook
         </AppLink>
       </li>
       <li>
-        <AppLink href="http://x.com/">
+        <AppLink href="http://x.com/" newTab={true}>
           <SvgIcon name="x" /> X
         </AppLink>
       </li>
       <li>
-        <AppLink href="http://linkedin.com/">
+        <AppLink href="http://linkedin.com/" newTab={true}>
           <SvgIcon name="linkedin" /> LinkedIn
         </AppLink>
       </li>

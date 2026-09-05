@@ -15,7 +15,7 @@ const FooterNavList = () => {
         </AppLink>
       </li>
       <li>
-        <AppLink href="/profile" className="text-[12px] md:text-[14px]">
+        <AppLink href="/dashboard" className="text-[12px] md:text-[14px]">
           Профіль
         </AppLink>
       </li>

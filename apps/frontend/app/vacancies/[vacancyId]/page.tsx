@@ -1,4 +1,3 @@
-import React from 'react';
 import { notFound } from 'next/navigation';
 import { getVacancyById } from '@/lib/vacanciesApi';
 import VacanciesDescription from '@/components/VacancyDetailsPage/VacanciesDescription/VacanciesDescription';
