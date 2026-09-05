@@ -1,13 +1,12 @@
 'use client';
-
 import css from './LoginForm.module.css';
-
 import { useId } from 'react';
 import Link from 'next/link';
 import { ErrorMessage, Field, Form, Formik } from 'formik';
 import { useRouter } from 'next/navigation';
-
+import { useMutation } from '@tanstack/react-query';
 import { loginUser } from '@/lib/authApi';
+import { useAuthStore } from '@/store/authStore';
 import toast from 'react-hot-toast';
 import { loginSchema } from '@/validation/authValidation';
 
@@ -18,19 +17,26 @@ interface LoginFormData {
 
 const LoginForm = () => {
   const router = useRouter();
+  const { setUser } = useAuthStore();
 
   const initialValues: LoginFormData = {
     email: '',
     password: '',
   };
+  const { mutate } = useMutation({
+    mutationFn: loginUser,
+    onSuccess: data => {
+      setUser(data);
+      router.push('/');
+    },
+    onError: error => {
+      console.log('mutation error', error); // додай це для діагностики
+      toast.error('Неправильний email або пароль');
+    },
+  });
 
   const handleSubmit = async (values: LoginFormData) => {
-    try {
-      await loginUser(values);
-      router.push('/');
-    } catch {
-      toast.error('Неправильний email або пароль');
-    }
+    mutate(values);
   };
 
   const id = useId();
@@ -104,5 +110,4 @@ const LoginForm = () => {
     </div>
   );
 };
-
 export default LoginForm;

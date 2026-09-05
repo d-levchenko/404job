@@ -1,11 +1,15 @@
-import React from 'react';
+'use client';
 import SocialNavList from '../SocialNavList/SocialNavList';
 import FooterNavList from '../FooterNavList/FooterNavList';
 import { SvgIcon } from '../SvgIcon/SvgIcon';
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
+  const path = usePathname();
+  if (path.startsWith('/auth')) return null;
+
   return (
     <footer className="mx-auto w-full py-12 px-8 max-w-93.75 md:max-w-3xl desktop:max-w-360  desktop:px-16 flex flex-col justify-center items-center  gap-6 bg-(--color-scheme-4-background) md:">
       <div className="flex flex-col gap-12.5 md:flex-row md:justify-between md:w-full desktop:items-start desktop:justify-center">

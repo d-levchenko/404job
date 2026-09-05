@@ -1,4 +1,11 @@
+import { api } from './api';
 import axios from 'axios';
+
+export const getMe = async () => {
+  const response = await api.get('/users');
+
+  return response.data;
+};
 
 export interface EmployerProfile {
   companyName: string;

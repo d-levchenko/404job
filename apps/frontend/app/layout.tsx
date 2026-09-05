@@ -63,7 +63,7 @@ const RootLayout = ({ children }: LayoutProps<'/'>) => {
           <Toaster
             position="top-center"
             toastOptions={{
-              duration: 6000,
+              duration: 3000,
               style: {
                 borderRadius: '16px',
                 padding: '14px 18px',
@@ -88,7 +88,6 @@ const RootLayout = ({ children }: LayoutProps<'/'>) => {
             }}
           />
           {children}
-
           <Footer />
         </TanStackProvider>
       </body>

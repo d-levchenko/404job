@@ -34,10 +34,11 @@ const icons = {
   facebook,
   x,
   linkedin,
-  dateRange,
-  heart,
+  close,
   heartFilled,
   radioChecked,
+  dateRange,
+  heart,
 };
 
 export type IconName = keyof typeof icons;

@@ -11,9 +11,6 @@ export interface EmployerRegisterData {
   email: string;
   password: string;
 }
-
-export type RegisterData = CandidateRegisterData | EmployerRegisterData;
-
 export type UserType = 'candidate' | 'employer';
 
 export interface LoginFormData {
@@ -41,3 +38,5 @@ export interface AuthUser {
   createdAt: string;
   updatedAt: string;
 }
+
+export type RegisterData = CandidateRegisterData | EmployerRegisterData;
