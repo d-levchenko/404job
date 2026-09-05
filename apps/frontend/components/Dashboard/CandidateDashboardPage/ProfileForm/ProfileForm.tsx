@@ -1,30 +1,21 @@
 'use client';
 
 import { useId } from 'react';
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { isAxiosError } from 'axios';
 import { ErrorMessage, Field, Form, Formik } from 'formik';
+import { updateUser } from '@/lib/userApi';
+import { updateUserProfileValidationSchema } from '@/validation/profileValidation';
+import { UpdateProfileData } from '@/types/auth';
 import toast from 'react-hot-toast';
 
-import Loader from '@/components/Loader/Loader';
-import { getCurrentCandidate, updateUser } from '@/lib/userApi';
-import { updateUserProfileValidationSchema } from '@/validation/profileValidation';
-
 import css from './ProfileForm.module.css';
-import { UpdateProfileData } from '@/types/auth';
+import { useAuthStore } from '@/store/authStore';
 
 const ProfileForm = () => {
   const id = useId();
   const queryClient = useQueryClient();
-
-  const {
-    data: user,
-    isPending,
-    isError,
-  } = useQuery({
-    queryKey: ['currentUser'],
-    queryFn: getCurrentCandidate,
-  });
+  const user = useAuthStore(state => state.user);
 
   const mutation = useMutation({
     mutationFn: updateUser,
@@ -40,17 +31,11 @@ const ProfileForm = () => {
     },
   });
 
-  if (isPending) return <Loader />;
-
-  if (isError || !user) {
-    return <p>Не вдалося завантажити дані профілю</p>;
-  }
-
   const initialValues: UpdateProfileData = {
-    name: user.name,
-    githubUrl: user.githubUrl || '',
-    linkedinUrl: user.linkedinUrl || '',
-    behanceUrl: user.behanceUrl || '',
+    name: user?.name,
+    githubUrl: user?.githubUrl,
+    linkedinUrl: user?.linkedinUrl || '',
+    behanceUrl: user?.behanceUrl || '',
   };
 
   return (

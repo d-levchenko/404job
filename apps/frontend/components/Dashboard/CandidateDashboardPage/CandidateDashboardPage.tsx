@@ -3,10 +3,10 @@
 import { ReactNode } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-
-import css from './CandidateDashboardPage.module.css';
 import { useDashboardGuard } from '@/hooks/useDashboardGuard';
 import Loader from '@/components/Loader/Loader';
+
+import css from './CandidateDashboardPage.module.css';
 
 interface CandidateDashboardPageProps {
   children?: ReactNode;
