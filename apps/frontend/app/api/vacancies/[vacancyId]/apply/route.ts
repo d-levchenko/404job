@@ -32,7 +32,7 @@ export async function POST(req: NextRequest, { params }: RouteContext) {
 
       return NextResponse.json(
         error.response?.data ?? {
-          message: 'Failed to apply to vacancy',
+          message: 'Не вдалося відгукнутися на вакансію',
         },
         {
           status: error.response?.status ?? 500,

@@ -22,7 +22,7 @@ export async function PATCH(request: NextRequest) {
     if (axios.isAxiosError(error)) {
       return NextResponse.json(
         error.response?.data ?? {
-          message: 'Failed to update employer profile',
+          message: 'Не вдалося оновити профіль роботодавця',
         },
         {
           status: error.response?.status ?? 500,
