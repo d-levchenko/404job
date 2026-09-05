@@ -24,7 +24,7 @@ import {
   getVacancyByIdSchema,
   closeVacancySchema,
   getMyVacanciesSchema,
-  savedVacanciesScema,
+  savedVacanciesSchema,
   updateApplicationStatusSchema,
 } from '../validations/vacanciesValidator.js';
 import { celebrate } from 'celebrate';
@@ -32,40 +32,20 @@ import { celebrate } from 'celebrate';
 const vacancyRouter = Router();
 
 vacancyRouter.get('/', celebrate(getAllVacanciesSchema), getAllVacancies);
-
 vacancyRouter.get('/hot', celebrate(getHotVacanciesSchema), getHotVacancies);
 vacancyRouter.get(
   '/favorite',
   authenticate,
-  celebrate(savedVacanciesScema),
+  celebrate(savedVacanciesSchema),
   getFavoriteVacancies,
 );
-
 vacancyRouter.get(
   '/my/vacancies',
   authenticate,
   celebrate(getMyVacanciesSchema),
   getMyVacancies,
 );
-
 vacancyRouter.get('/my/applications', authenticate, getEmployerApplications);
-
-vacancyRouter.patch(
-  '/applications/:applicationId/status',
-  authenticate,
-  celebrate(updateApplicationStatusSchema, {
-    abortEarly: false,
-  }),
-  updateApplicationStatus,
-);
-
-vacancyRouter.post('/:vacancyId/favorite', authenticate, addVacancyToFavorites);
-
-vacancyRouter.delete(
-  '/:vacancyId/favorite',
-  authenticate,
-  removeVacancyFromFavorites,
-);
 
 vacancyRouter.post(
   '/create-vacancy',
@@ -73,20 +53,31 @@ vacancyRouter.post(
   celebrate(createVacancySchema),
   createVacancy,
 );
-
-vacancyRouter.get(
-  '/:vacancyId',
-  celebrate(getVacancyByIdSchema),
-  getVacancyById,
+vacancyRouter.patch(
+  '/applications/:applicationId/status',
+  authenticate,
+  celebrate(updateApplicationStatusSchema, { abortEarly: false }),
+  updateApplicationStatus,
 );
 
+vacancyRouter.post('/:vacancyId/favorite', authenticate, addVacancyToFavorites);
+vacancyRouter.delete(
+  '/:vacancyId/favorite',
+  authenticate,
+  removeVacancyFromFavorites,
+);
+vacancyRouter.post(
+  '/:vacancyId/apply',
+  authenticate,
+  celebrate(applyToVacancySchema),
+  applyToVacancy,
+);
 vacancyRouter.patch(
   '/:vacancyId/close',
   authenticate,
   celebrate(closeVacancySchema),
   closeVacancy,
 );
-
 vacancyRouter.delete(
   '/:vacancyId/close',
   authenticate,
@@ -94,11 +85,10 @@ vacancyRouter.delete(
   closeVacancy,
 );
 
-vacancyRouter.post(
-  '/:vacancyId/apply',
-  authenticate,
-  celebrate(applyToVacancySchema),
-  applyToVacancy,
+vacancyRouter.get(
+  '/:vacancyId',
+  celebrate(getVacancyByIdSchema),
+  getVacancyById,
 );
 
 export default vacancyRouter;
