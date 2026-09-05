@@ -7,6 +7,7 @@ import { useRouter } from 'next/navigation';
 import { registerUser } from '@/lib/authApi';
 import { RegisterValidation } from '@/validation/authValidation';
 import { useState } from 'react';
+import { useAuthStore } from '@/store/authStore';
 interface RegisterFormValidation {
   name: string;
   companyName: string;
@@ -22,6 +23,7 @@ const initialValues: RegisterFormValidation = {
 };
 
 const RegistrationForm = () => {
+  const { setUser, setIsAuthenticated } = useAuthStore();
   const [userType, setUserType] = useState<UserType>('candidate');
 
   const router = useRouter();
@@ -46,11 +48,14 @@ const RegistrationForm = () => {
             password: values.password,
           };
     try {
-      await registerUser(payload);
+      const user = await registerUser(payload);
+
+      setUser(user);
+      setIsAuthenticated(true);
       toast.success('Реєстрація успішна');
       router.push('/');
     } catch {
-      toast.error('Email in use');
+      toast.error('Ця електронна адреса вже використовується');
     } finally {
       actions.setSubmitting(false);
     }
