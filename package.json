@@ -14,9 +14,5 @@
   },
   "devDependencies": {
     "prettier": "^3.9.6"
-  },
-  "dependencies": {
-    "cookie-parser": "^1.4.7",
-    "zustand": "^5.0.15"
   }
 }

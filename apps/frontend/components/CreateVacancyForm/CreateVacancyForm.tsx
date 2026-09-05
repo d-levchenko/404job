@@ -65,7 +65,6 @@ const CreateVacancyForm = ({ filters }: VacanciesProps) => {
 
   const handleCancel = () => {
     clearDraft();
-    router.back();
   };
 
   if (!hasHydrated) {
