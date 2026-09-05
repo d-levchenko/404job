@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation';
 import { useAuthStore } from '@/store/authStore';
 import { UserType } from '@/types/auth';
 
-const dashboardPathByType: Record<UserType, string> = {
+export const dashboardPathByType: Record<UserType, string> = {
   candidate: '/dashboard/candidate',
   employer: '/dashboard/employer',
 };
