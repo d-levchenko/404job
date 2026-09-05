@@ -1,4 +1,5 @@
 'use client';
+
 import Link from 'next/link';
 import { SvgIcon } from '../SvgIcon/SvgIcon';
 import Button from '../UI/Button/Button';
@@ -7,6 +8,7 @@ import { usePathname, useRouter } from 'next/navigation';
 import { useAuthStore } from '@/store/authStore';
 import { useBurgerStore } from '@/store/burgerStore';
 import { logout } from '@/lib/authApi';
+import Burger from '../Burger/Burger';
 
 const Header = () => {
   const path = usePathname();
@@ -78,6 +80,8 @@ const Header = () => {
           </div>
         </nav>
       </div>
+
+      <Burger />
     </header>
   );
 };
