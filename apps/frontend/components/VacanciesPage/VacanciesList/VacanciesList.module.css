@@ -74,3 +74,9 @@
     font-size: 16px;
   }
 }
+
+.image {
+  width: 157px;
+  height: 67px;
+  object-fit: cover;
+}
