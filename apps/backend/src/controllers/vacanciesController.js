@@ -315,6 +315,8 @@ export const applyToVacancy = async (req, res, next) => {
     const application = await Application.create({
       vacancyId,
       candidateId: userId,
+      resumeUrl: req.user.resumeUrl || '',
+      resumeName: req.user.resumeName || '',
     });
 
     res.status(201).json({
