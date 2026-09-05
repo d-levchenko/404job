@@ -114,12 +114,39 @@
 
 .vacancyTitle {
   width: 100%;
+  min-width: 0;
+  max-width: 100%;
   margin-bottom: 16px;
+
+  overflow-wrap: anywhere;
+  word-break: break-word;
+  white-space: normal;
+
   font-size: 20px;
   font-weight: 700;
   line-height: 1.4;
   letter-spacing: -0.01em;
   color: var(--color-scheme-1-text);
+}
+
+.description {
+  display: -webkit-box;
+  width: 100%;
+  min-width: 0;
+  max-width: 100%;
+  margin-bottom: 8px;
+
+  overflow: hidden;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+
+  font-weight: 400;
+  line-height: 1.5;
+  color: var(--color-scheme-1-text);
+
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  line-clamp: 3;
 }
 
 .description {

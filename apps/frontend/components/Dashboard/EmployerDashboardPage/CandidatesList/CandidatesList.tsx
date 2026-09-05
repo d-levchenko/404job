@@ -1,6 +1,8 @@
 'use client';
 
-import { useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
+
+import { createPortal } from 'react-dom';
 
 import {
   useInfiniteQuery,
@@ -25,6 +27,8 @@ import {
 import css from './CandidatesList.module.css';
 
 const APPLICATIONS_PER_PAGE = 7;
+const STATUS_MENU_HEIGHT = 132;
+const STATUS_MENU_GAP = 4;
 
 const statusLabels: Record<ApplicationStatus, string> = {
   pending: 'На розгляді',
@@ -55,6 +59,56 @@ const CandidatesList = () => {
   const queryClient = useQueryClient();
 
   const [openStatusId, setOpenStatusId] = useState<string | null>(null);
+
+  const [menuPosition, setMenuPosition] = useState<{
+    top: number;
+    left: number;
+    width: number;
+  } | null>(null);
+
+  const activeStatusButtonRef = useRef<HTMLButtonElement | null>(null);
+
+  const updateMenuPosition = useCallback(() => {
+    const button = activeStatusButtonRef.current;
+
+    if (!button) {
+      return;
+    }
+
+    const rect = button.getBoundingClientRect();
+
+    const hasSpaceBelow =
+      window.innerHeight - rect.bottom >= STATUS_MENU_HEIGHT + STATUS_MENU_GAP;
+
+    setMenuPosition({
+      left: rect.left,
+      top: hasSpaceBelow
+        ? rect.bottom + STATUS_MENU_GAP
+        : rect.top - STATUS_MENU_HEIGHT - STATUS_MENU_GAP,
+      width: rect.width,
+    });
+  }, []);
+
+  useEffect(() => {
+    if (!openStatusId) {
+      return;
+    }
+
+    updateMenuPosition();
+
+    const handlePositionUpdate = () => {
+      updateMenuPosition();
+    };
+
+    document.addEventListener('scroll', handlePositionUpdate, true);
+    window.addEventListener('resize', handlePositionUpdate);
+
+    return () => {
+      document.removeEventListener('scroll', handlePositionUpdate, true);
+
+      window.removeEventListener('resize', handlePositionUpdate);
+    };
+  }, [openStatusId, updateMenuPosition]);
 
   const {
     data,
@@ -104,11 +158,17 @@ const CandidatesList = () => {
 
   const applications = data?.pages.flatMap(page => page.applications) ?? [];
 
+  const closeStatusMenu = () => {
+    setOpenStatusId(null);
+    setMenuPosition(null);
+    activeStatusButtonRef.current = null;
+  };
+
   const handleStatusChange = (
     applicationId: string,
     status: EditableApplicationStatus,
   ) => {
-    setOpenStatusId(null);
+    closeStatusMenu();
 
     statusMutation.mutate({
       applicationId,
@@ -117,6 +177,8 @@ const CandidatesList = () => {
   };
 
   const handleRefresh = async () => {
+    closeStatusMenu();
+
     const result = await refetch();
 
     if (result.isSuccess) {
@@ -158,6 +220,8 @@ const CandidatesList = () => {
                   statusMutation.variables?.applicationId ===
                     application.applicationId;
 
+                const isStatusOpen = openStatusId === application.applicationId;
+
                 return (
                   <div
                     key={application.applicationId}
@@ -183,25 +247,26 @@ const CandidatesList = () => {
                         <button
                           type="button"
                           className={`${css.statusButton} ${
-                            openStatusId === application.applicationId
-                              ? css.statusButtonOpen
-                              : ''
+                            isStatusOpen ? css.statusButtonOpen : ''
                           }`}
-                          onClick={() =>
-                            setOpenStatusId(currentId =>
-                              currentId === application.applicationId
-                                ? null
-                                : application.applicationId,
-                            )
-                          }
+                          onClick={event => {
+                            if (isStatusOpen) {
+                              closeStatusMenu();
+                              return;
+                            }
+
+                            activeStatusButtonRef.current = event.currentTarget;
+
+                            setOpenStatusId(application.applicationId);
+
+                            updateMenuPosition();
+                          }}
                           disabled={isStatusUpdating}
-                          aria-expanded={
-                            openStatusId === application.applicationId
-                          }
+                          aria-expanded={isStatusOpen}
                           aria-haspopup="listbox">
                           <span>{statusLabels[application.status]}</span>
 
-                          {openStatusId === application.applicationId ? (
+                          {isStatusOpen ? (
                             <KeyboardArrowUp
                               className={css.statusIcon}
                               aria-hidden="true"
@@ -214,39 +279,47 @@ const CandidatesList = () => {
                           )}
                         </button>
 
-                        {openStatusId === application.applicationId && (
-                          <div
-                            className={css.statusMenu}
-                            role="listbox"
-                            aria-label={`Статус кандидата ${application.candidateName}`}>
-                            {statusOptions.map(({ value, label }) => (
-                              <button
-                                key={value}
-                                type="button"
-                                role="option"
-                                aria-selected={
+                        {isStatusOpen &&
+                          menuPosition &&
+                          typeof document !== 'undefined' &&
+                          createPortal(
+                            <div
+                              className={css.statusMenu}
+                              role="listbox"
+                              aria-label={`Статус кандидата ${application.candidateName}`}
+                              style={{
+                                top: menuPosition.top,
+                                left: menuPosition.left,
+                                width: menuPosition.width,
+                              }}>
+                              {statusOptions.map(({ value, label }) => {
+                                const isActive =
                                   application.status === value ||
                                   (application.status === 'pending' &&
-                                    value === 'reviewed')
-                                }
-                                className={`${css.statusOption} ${
-                                  application.status === value ||
-                                  (application.status === 'pending' &&
-                                    value === 'reviewed')
-                                    ? css.statusOptionActive
-                                    : ''
-                                }`}
-                                onClick={() =>
-                                  handleStatusChange(
-                                    application.applicationId,
-                                    value,
-                                  )
-                                }>
-                                {label}
-                              </button>
-                            ))}
-                          </div>
-                        )}
+                                    value === 'reviewed');
+
+                                return (
+                                  <button
+                                    key={value}
+                                    type="button"
+                                    role="option"
+                                    aria-selected={isActive}
+                                    className={`${css.statusOption} ${
+                                      isActive ? css.statusOptionActive : ''
+                                    }`}
+                                    onClick={() =>
+                                      handleStatusChange(
+                                        application.applicationId,
+                                        value,
+                                      )
+                                    }>
+                                    {label}
+                                  </button>
+                                );
+                              })}
+                            </div>,
+                            document.body,
+                          )}
                       </div>
                     </div>
                   </div>
