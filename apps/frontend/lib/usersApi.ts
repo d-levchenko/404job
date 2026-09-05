@@ -1,11 +1,5 @@
 import { api } from './api';
-import axios from 'axios';
-
-export const getMe = async () => {
-  const response = await api.get('/users');
-
-  return response.data;
-};
+import { AuthUser } from '@/types/auth';
 
 export interface EmployerProfile {
   companyName: string;
@@ -18,17 +12,17 @@ interface CurrentUserResponse {
   data: EmployerProfile;
 }
 
-export const getCurrentUser = async (): Promise<EmployerProfile> => {
-  const response = await axios.get<CurrentUserResponse>('/api/users');
+export const getCurrentUser = async (): Promise<AuthUser> => {
+  const { data } = await api.get<AuthUser>('/users');
 
-  return response.data.data;
+  return data;
 };
 
 export const updateEmployerProfile = async (
   data: FormData,
 ): Promise<EmployerProfile> => {
-  const response = await axios.patch<CurrentUserResponse>(
-    '/api/users/employer',
+  const response = await api.patch<CurrentUserResponse>(
+    '/users/employer',
     data,
   );
 
