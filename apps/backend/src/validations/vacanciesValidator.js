@@ -53,7 +53,7 @@ export const createVacancySchema = {
     description: Joi.string().min(50).max(4000).required(),
     requirements: Joi.string().min(50).max(4000).required(),
     duties: Joi.string().min(50).max(4000).required(),
-    plusWillBe: Joi.string().min(20).max(4000).optional(),
+    plusWillBe: Joi.string().min(20).max(4000).allow('').optional(),
     weOffer: Joi.string().min(50).max(4000).required(),
     salaryRange: Joi.string().allow('').optional(),
     industryId: Joi.string().custom(objectIdValidator).required(),
