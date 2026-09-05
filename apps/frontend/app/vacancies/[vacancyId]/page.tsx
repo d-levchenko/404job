@@ -39,7 +39,7 @@ const VacancyDetailsPage = async ({ params }: PageProps) => {
   return (
     <main className="mx-auto w-full max-w-93.75 md:max-w-3xl desktop:max-w-360 px-4 md:px-8 desktop:px-16 py-8 md:py-10 desktop:py-12 flex flex-col gap-12">
       <div className="flex flex-col gap-6 desktop:flex-row desktop:items-start desktop:justify-between">
-        <div className="flex-1 w-full">
+        <div className="flex-1 w-full min-w-0">
           <VacanciesDescription
             title={vacancy.title}
             description={vacancy.description}
