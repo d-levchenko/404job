@@ -46,7 +46,7 @@ const RegistrationForm = ({ type }: RegistrationFormProps) => {
             password: values.password,
           };
     try {
-      const user = await registerUser(payload);
+      await registerUser(payload);
       toast.success('Реєстрація успішна');
       router.push('/');
     } catch {
