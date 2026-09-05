@@ -1,6 +1,6 @@
 import Image from 'next/image';
 import LoginForm from '@/components/Auth/LoginForm/LoginForm';
-import css from '@/app/auth/login/page.module.css';
+import css from './page.module.css';
 import AuthHeader from '@/components/AuthHeader/AuthHeader';
 import AuthFooter from '@/components/AuthFooter/AuthFooter';
 
@@ -18,6 +18,7 @@ const Page = () => {
         alt=""
         width={720}
         height={900}
+        priority
         className={css['login-image']}
       />
     </main>

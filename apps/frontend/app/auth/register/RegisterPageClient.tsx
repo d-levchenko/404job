@@ -27,8 +27,8 @@ const RegisterPageClient = () => {
         <Image
           src="/images/registerimg.png"
           alt="Register"
-          width={500}
-          height={600}
+          width={720}
+          height={900}
           priority
           className={css.registerImage}
         />

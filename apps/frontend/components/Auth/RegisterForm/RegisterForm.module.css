@@ -60,6 +60,12 @@
   gap: 16px;
 }
 
+@media screen and (min-width: 1440px) {
+  .form {
+    gap: 23px;
+  }
+}
+
 .fieldGroup {
   display: flex;
   flex-direction: column;
@@ -152,4 +158,19 @@
   background: var(--color-curious-blue);
   opacity: 0.3;
   cursor: not-allowed;
+}
+@media screen and (min-width: 1920px) {
+  .fieldGroup label {
+    font-size: 15px;
+  }
+
+  .input {
+    height: 44px;
+    font-size: 17px;
+  }
+
+  .button {
+    height: 44px;
+    font-size: 17px;
+  }
 }
