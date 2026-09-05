@@ -12,6 +12,17 @@ const applicationSchema = new Schema(
       ref: 'User',
       required: true,
     },
+
+    resumeUrl: {
+      type: String,
+      default: '',
+    },
+
+    resumeName: {
+      type: String,
+      default: '',
+    },
+
     status: {
       type: String,
       enum: ['pending', 'reviewed', 'accepted', 'rejected'],

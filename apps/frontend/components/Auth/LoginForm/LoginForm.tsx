@@ -3,29 +3,17 @@ import css from './LoginForm.module.css';
 import { useId } from 'react';
 import Link from 'next/link';
 import { ErrorMessage, Field, Form, Formik } from 'formik';
-import * as Yup from 'yup';
 import { useRouter } from 'next/navigation';
 import { useMutation } from '@tanstack/react-query';
 import { loginUser } from '@/lib/authApi';
 import { useAuthStore } from '@/store/authStore';
 import toast from 'react-hot-toast';
+import { loginSchema } from '@/validation/authValidation';
 
 interface LoginFormData {
   email: string;
   password: string;
 }
-
-const loginSchema = Yup.object({
-  email: Yup.string()
-    .trim()
-    .email('Електронна адреса має бути валідною, приклад: example@gmail.com')
-    .max(64, 'Максимум 64 символи')
-    .required('Це поле обовʼязкове для заповнення'),
-  password: Yup.string()
-    .min(8, 'Пароль має бути не меньше 8 символів')
-    .max(128, 'Пароль має бути не більше 128 символів')
-    .required('Це поле обовʼязкове для заповнення'),
-});
 
 const LoginForm = () => {
   const router = useRouter();

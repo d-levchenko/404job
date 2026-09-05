@@ -96,9 +96,15 @@ a *,
 .slide path,
 .slide img,
 .vacancyItem,
+.vacancyItem *,
+form,
+form *,
+label,
+label *,
 .swiper-pagination-bullet,
 [role='button'],
 [role='button'] *,
+input,
 .embla__button,
 .embla__button *,
 .embla__dot,
@@ -223,4 +229,15 @@ textarea {
   );
   animation: shimmer 2s infinite;
   content: '';
+}
+@custom-variant stack (@media (min-width: 1440px) and (min-height: 700px));
+@keyframes reveal-in {
+  from {
+    opacity: 0;
+    transform: scale(0.7);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
 }

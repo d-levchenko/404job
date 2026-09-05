@@ -1,26 +1,50 @@
 'use client';
 
 import { useId } from 'react';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { isAxiosError } from 'axios';
 import { ErrorMessage, Field, Form, Formik } from 'formik';
 import toast from 'react-hot-toast';
 
+import Loader from '@/components/Loader/Loader';
+import { getCurrentCandidate, updateUser } from '@/lib/userApi';
 import { CandidateProfile } from '@/types/userType';
-import { updateUser } from '@/lib/userApi';
+import { updateUserProfileValidationSchema } from '@/validation/profileValidation';
 
 import css from './ProfileForm.module.css';
-import { updateUserProfileValidationSchema } from '@/validation/authValidation';
 
-const ProfileForm = ({ user }: { user: CandidateProfile }) => {
+const ProfileForm = () => {
   const id = useId();
+  const queryClient = useQueryClient();
 
-  const handleSubmit = async (values: CandidateProfile) => {
-    try {
-      await updateUser(values);
+  const {
+    data: user,
+    isPending,
+    isError,
+  } = useQuery({
+    queryKey: ['currentUser'],
+    queryFn: getCurrentCandidate,
+  });
+
+  const mutation = useMutation({
+    mutationFn: updateUser,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['currentUser'] });
       toast.success('Зміни збережено');
-    } catch {
-      toast.error('Не вдалося зберегти зміни');
-    }
-  };
+    },
+    onError: error => {
+      toast.error(
+        (isAxiosError(error) && error.response?.data?.message) ||
+          'Не вдалося зберегти зміни',
+      );
+    },
+  });
+
+  if (isPending) return <Loader />;
+
+  if (isError || !user) {
+    return <p>Не вдалося завантажити дані профілю</p>;
+  }
 
   const initialValues: CandidateProfile = {
     name: user.name,
@@ -32,9 +56,10 @@ const ProfileForm = ({ user }: { user: CandidateProfile }) => {
   return (
     <section className={css['profile-section']}>
       <Formik
+        enableReinitialize
         initialValues={initialValues}
         validationSchema={updateUserProfileValidationSchema}
-        onSubmit={handleSubmit}>
+        onSubmit={values => mutation.mutate(values)}>
         {({ errors, touched, resetForm }) => (
           <Form className={css['profile-form']}>
             <div className={css.field}>
@@ -127,12 +152,16 @@ const ProfileForm = ({ user }: { user: CandidateProfile }) => {
               <button
                 type="button"
                 className={css['reset-btn']}
+                disabled={mutation.isPending}
                 onClick={() => resetForm()}>
                 Скинути зміни
               </button>
 
-              <button type="submit" className={css['submit-btn']}>
-                Зберегти зміни
+              <button
+                type="submit"
+                className={css['submit-btn']}
+                disabled={mutation.isPending}>
+                {mutation.isPending ? 'Збереження...' : 'Зберегти зміни'}
               </button>
             </div>
           </Form>

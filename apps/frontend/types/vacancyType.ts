@@ -6,13 +6,13 @@ export type FilterOptionType =
 interface Employer {
   _id: string;
   companyName: string;
-  logo: string;
-  createdAt: string;
-  description: string;
-  email: string;
-  updatedAt: string;
-  userType: string;
-  websiteUrl: string;
+  logo?: string;
+  createdAt?: string;
+  description?: string;
+  email?: string;
+  updatedAt?: string;
+  userType?: string;
+  websiteUrl?: string;
 }
 
 export interface Location {
@@ -62,4 +62,19 @@ export interface Vacancy {
   updatedAt: string;
   salaryRange: string;
   hotVacancy: boolean;
+}
+
+export interface VacancyFormValues {
+  title: string;
+  description: string;
+  requirements: string;
+  duties: string;
+  plusWillBe: string;
+  weOffer: string;
+  salaryRange: string;
+  experienceLevelId: string;
+  employmentTypeId: string;
+  industryId: string;
+  locationId: string;
+  isRemote: boolean;
 }

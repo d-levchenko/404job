@@ -10,6 +10,8 @@ import { getHotVacancies } from '@/lib/vacanciesApi';
 import Loader from '@/components/Loader/Loader';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
+import toast from 'react-hot-toast';
+import Image from 'next/image';
 
 function HotVacancies() {
   const router = useRouter();
@@ -50,14 +52,22 @@ function HotVacancies() {
   const { data, isLoading, isError } = useQuery({
     queryKey: ['hotVacancies'],
     queryFn: () => getHotVacancies(5),
+    refetchOnWindowFocus: false,
+    staleTime: 5 * 60 * 1000,
   });
 
+  useEffect(() => {
+    if (isError) {
+      toast.error('Не вдалося завантажити вакансії');
+    }
+  }, [isError]);
+
   if (isLoading) return <Loader />;
-  if (isError) return <p>Помилка завантаження вакансій</p>;
+  if (isError || data?.length === 0) return null;
 
   return (
     <section className={css.hotSection}>
-      <div className="container">
+      <div className={`${css.container} container`}>
         <div className={css.titleBox}>
           <h2 className={css.sectionTitle}>Гарячі вакансії</h2>
           <Link className={css.vacancyLink} href={'/vacancies'}>
@@ -65,19 +75,42 @@ function HotVacancies() {
           </Link>
         </div>
         <div className={css.viewport} ref={emblaRef}>
-          <div className={css.slides}>
+          <ul className={css.slides}>
             {data?.map(vacancy => (
-              <div
+              <li
                 key={vacancy._id}
                 className={`${css.slide} slide`}
                 onClick={() => router.push('/vacancies/' + vacancy._id)}>
-                <div className={css.noImageBox}>
-                  <SvgIcon
-                    className={css.noImage}
-                    name="noImage"
-                    width={75}
-                    height={75}
-                  />
+                <div className={css.logoBox}>
+                  <div className={css.skeleton}>
+                    <SvgIcon
+                      className={css.noImage}
+                      name="noImage"
+                      width={75}
+                      height={75}
+                    />
+                  </div>
+
+                  {vacancy.employerId.logo && (
+                    <Image
+                      src={vacancy.employerId.logo}
+                      alt={vacancy.employerId.companyName}
+                      fill
+                      sizes="384px"
+                      className={css.logoImage}
+                      onLoad={e => {
+                        e.currentTarget.style.opacity = '1';
+                        const skeleton =
+                          e.currentTarget.parentElement?.querySelector<HTMLElement>(
+                            `.${css.skeleton}`,
+                          );
+                        if (skeleton) skeleton.style.display = 'none';
+                      }}
+                      onError={e => {
+                        e.currentTarget.style.display = 'none';
+                      }}
+                    />
+                  )}
                 </div>
 
                 <div className={css.titleWrapper}>
@@ -104,9 +137,9 @@ function HotVacancies() {
                     {vacancy.salaryRange}
                   </p>
                 )}
-              </div>
+              </li>
             ))}
-          </div>
+          </ul>
         </div>
 
         <div className={css.wrapper}>

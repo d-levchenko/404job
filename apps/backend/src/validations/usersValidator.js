@@ -20,14 +20,8 @@ export const updateEmployerSchema = {
   [Segments.BODY]: Joi.object({
     companyName: Joi.string().trim().min(2).max(100),
 
-    logo: Joi.string().uri().allow('', null),
-
     description: Joi.string().trim().max(2000).allow('', null),
 
     websiteUrl: Joi.string().uri().allow('', null),
-  })
-    .min(1)
-    .messages({
-      'object.min': 'At least one field must be provided',
-    }),
+  }),
 };

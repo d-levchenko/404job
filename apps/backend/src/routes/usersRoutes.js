@@ -2,6 +2,7 @@ import { Router } from 'express';
 import { celebrate } from 'celebrate';
 
 import authenticate from '../middleware/authenticate.js';
+import { upload } from '../middleware/multer.js';
 
 import {
   getCurrent,
@@ -30,6 +31,7 @@ router.patch(
 router.patch(
   '/employer',
   authenticate,
+  upload.single('logo'),
   celebrate(updateEmployerSchema, {
     abortEarly: false,
   }),

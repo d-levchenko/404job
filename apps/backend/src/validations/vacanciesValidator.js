@@ -37,7 +37,7 @@ export const getAllVacanciesSchema = {
 
 export const getVacancyByIdSchema = {
   [Segments.PARAMS]: Joi.object({
-    id: Joi.string().custom(objectIdValidator).required(),
+    vacancyId: Joi.string().custom(objectIdValidator).required(),
   }),
 };
 
@@ -86,5 +86,15 @@ export const savedVacanciesScema = {
   [Segments.QUERY]: Joi.object({
     page: Joi.number().min(1).default(1),
     perPage: Joi.number().min(1).max(100).default(10),
+  }),
+};
+
+export const updateApplicationStatusSchema = {
+  [Segments.PARAMS]: Joi.object({
+    applicationId: Joi.string().required(),
+  }),
+
+  [Segments.BODY]: Joi.object({
+    status: Joi.string().valid('reviewed', 'accepted', 'rejected').required(),
   }),
 };

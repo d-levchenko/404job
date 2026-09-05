@@ -1,14 +1,12 @@
 import { AuthUser, LoginData, RegisterData } from '@/types/auth';
 import { api } from './api';
 import { getMe } from './usersApi';
+import axios from 'axios';
 
 export const registerUser = async (payload: RegisterData) => {
-  try {
-    const { data } = await api.post('auth/register', payload);
-    return data;
-  } catch (error) {
-    throw error;
-  }
+  const { data } = await axios.post<AuthUser>('/api/auth/register', payload);
+
+  return data;
 };
 
 export const loginUser = async (payload: LoginData): Promise<AuthUser> => {
@@ -31,5 +29,19 @@ export const initAuth = async (): Promise<AuthUser | null> => {
     return user;
   } catch {
     return null;
+  }
+};
+
+export const getCurrentAuthUser = async (): Promise<AuthUser | null> => {
+  try {
+    const response = await axios.get<{ data: AuthUser }>('/api/users');
+
+    return response.data.data;
+  } catch (error) {
+    if (axios.isAxiosError(error) && error.response?.status === 401) {
+      return null;
+    }
+
+    throw error;
   }
 };

@@ -14,6 +14,8 @@ import {
   getFavoriteVacancies,
   closeVacancy,
   getMyVacancies,
+  getEmployerApplications,
+  updateApplicationStatus,
 } from '../controllers/vacanciesController.js';
 import {
   createVacancySchema,
@@ -23,16 +25,13 @@ import {
   closeVacancySchema,
   getMyVacanciesSchema,
   savedVacanciesScema,
+  updateApplicationStatusSchema,
 } from '../validations/vacanciesValidator.js';
 import { celebrate } from 'celebrate';
 
 const vacancyRouter = Router();
 
-vacancyRouter.get(
-  '/get-all',
-  celebrate(getAllVacanciesSchema),
-  getAllVacancies,
-);
+vacancyRouter.get('/', celebrate(getAllVacanciesSchema), getAllVacancies);
 
 vacancyRouter.get('/hot', celebrate(getHotVacanciesSchema), getHotVacancies);
 vacancyRouter.get(
@@ -42,7 +41,23 @@ vacancyRouter.get(
   getFavoriteVacancies,
 );
 
-vacancyRouter.get('/:id', celebrate(getVacancyByIdSchema), getVacancyById);
+vacancyRouter.get(
+  '/my/vacancies',
+  authenticate,
+  celebrate(getMyVacanciesSchema),
+  getMyVacancies,
+);
+
+vacancyRouter.get('/my/applications', authenticate, getEmployerApplications);
+
+vacancyRouter.patch(
+  '/applications/:applicationId/status',
+  authenticate,
+  celebrate(updateApplicationStatusSchema, {
+    abortEarly: false,
+  }),
+  updateApplicationStatus,
+);
 
 vacancyRouter.post('/:vacancyId/favorite', authenticate, addVacancyToFavorites);
 
@@ -59,6 +74,12 @@ vacancyRouter.post(
   createVacancy,
 );
 
+vacancyRouter.get(
+  '/:vacancyId',
+  celebrate(getVacancyByIdSchema),
+  getVacancyById,
+);
+
 vacancyRouter.patch(
   '/:vacancyId/close',
   authenticate,
@@ -66,12 +87,13 @@ vacancyRouter.patch(
   closeVacancy,
 );
 
-vacancyRouter.get(
-  '/my/vacancies',
+vacancyRouter.delete(
+  '/:vacancyId/close',
   authenticate,
-  celebrate(getMyVacanciesSchema),
-  getMyVacancies,
+  celebrate(closeVacancySchema),
+  closeVacancy,
 );
+
 vacancyRouter.post(
   '/:vacancyId/apply',
   authenticate,

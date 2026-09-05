@@ -134,7 +134,7 @@ export const getHotVacancies = async (req, res, next) => {
       status: 'active',
       hotVacancy: true,
     })
-      .sort({ createdAt: -1 })
+      .sort({ createdAt: -1, _id: 1 })
       .limit(Number(limit))
       .populate('employerId', 'companyName logo')
       .populate('locationId', 'name');
@@ -147,9 +147,9 @@ export const getHotVacancies = async (req, res, next) => {
 
 export const getVacancyById = async (req, res, next) => {
   try {
-    const { id } = req.params;
+    const { vacancyId } = req.params;
 
-    const vacancy = await Vacancy.findById(id)
+    const vacancy = await Vacancy.findById(vacancyId)
       .populate('employerId', 'companyName logo websiteUrl description')
       .populate('industryId', 'name')
       .populate('experienceLevelId', 'name')
@@ -208,7 +208,10 @@ export const getFavoriteVacancies = async (req, res, next) => {
       throw createHttpError(404, 'User not found');
     }
     const skip = (page - 1) * perPage;
-    const savedVacancies = user.savedVacancies.slice(skip, skip + perPage);
+    const savedVacancies = (user.savedVacancies ?? []).slice(
+      skip,
+      skip + perPage,
+    );
     const totalSavedVacancies = user?.savedVacancies?.length || 0;
     const totalPages = Math.ceil(totalSavedVacancies / perPage) || 1;
 
@@ -264,7 +267,8 @@ export const getMyVacancies = async (req, res, next) => {
         .sort({ createdAt: -1 })
         .skip(skip)
         .limit(perPage)
-        .populate('industryId experienceLevelId locationId employmentTypeId'),
+        .populate('industryId experienceLevelId locationId employmentTypeId')
+        .populate('employerId', 'companyName logo'),
     ]);
 
     const totalPages = Math.ceil(totalItems / perPage);
@@ -315,6 +319,116 @@ export const applyToVacancy = async (req, res, next) => {
 
     res.status(201).json({
       message: 'Application submitted successfully',
+      application,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const getEmployerApplications = async (req, res, next) => {
+  try {
+    const { _id: userId, userType } = req.user;
+
+    if (userType !== 'employer') {
+      throw createHttpError(403, 'Only employers can view applications');
+    }
+
+    const page = Number(req.query.page) || 1;
+    const perPage = Number(req.query.perPage) || 7;
+
+    const skip = (page - 1) * perPage;
+
+    const vacancies = await Vacancy.find({
+      employerId: userId,
+    }).select('_id');
+
+    const vacancyIds = vacancies.map(vacancy => vacancy._id);
+
+    const filter = {
+      vacancyId: {
+        $in: vacancyIds,
+      },
+    };
+
+    const [totalItems, applications] = await Promise.all([
+      Application.countDocuments(filter),
+
+      Application.find(filter)
+        .sort({ createdAt: -1 })
+        .skip(skip)
+        .limit(perPage)
+        .populate('candidateId', 'name')
+        .populate('vacancyId', 'title'),
+    ]);
+
+    const totalPages = Math.ceil(totalItems / perPage);
+
+    const candidates = applications.map(application => ({
+      applicationId: application._id,
+
+      candidateId: application.candidateId?._id,
+      candidateName: application.candidateId?.name ?? '',
+
+      vacancyId: application.vacancyId?._id,
+      vacancyTitle: application.vacancyId?.title ?? '',
+
+      resumeUrl: application.resumeUrl ?? '',
+      resumeName: application.resumeName ?? '',
+
+      status: application.status,
+    }));
+
+    res.status(200).json({
+      page,
+      perPage,
+      totalApplications: totalItems,
+      totalPages,
+      applications: candidates,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const updateApplicationStatus = async (req, res, next) => {
+  try {
+    const { applicationId } = req.params;
+    const { status } = req.body;
+
+    const { _id: userId, userType } = req.user;
+
+    if (userType !== 'employer') {
+      throw createHttpError(
+        403,
+        'Only employers can update application status',
+      );
+    }
+
+    const application = await Application.findById(applicationId);
+
+    if (!application) {
+      throw createHttpError(404, 'Application not found');
+    }
+
+    const vacancy = await Vacancy.findOne({
+      _id: application.vacancyId,
+      employerId: userId,
+    });
+
+    if (!vacancy) {
+      throw createHttpError(
+        403,
+        'You can only update applications for your own vacancies',
+      );
+    }
+
+    application.status = status;
+
+    await application.save();
+
+    res.status(200).json({
+      message: 'Application status updated successfully',
       application,
     });
   } catch (error) {
