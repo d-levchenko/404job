@@ -22,8 +22,8 @@ const Button = ({
         href={href}
         className={`${
           !primary
-            ? `bg-(--color-scheme-2-accent) text-white  border-(--color-curious-blue) hover:bg-(--color-curious-blue-lighter) hover:text-black `
-            : `text-black border-(--opacity-neutral-darkest-15) hover:bg-(--color-scheme-2-accent) hover:text-white`
+            ? `bg-(--color-scheme-2-accent) text-white  border-(--color-curious-blue) hover:bg-(--color-curious-blue-lighter) hover:text-black active:bg-(--color-curious-blue-light)`
+            : `text-black border-(--opacity-neutral-darkest-15) hover:bg-(--color-scheme-2-accent) hover:text-white active:bg-(--color-curious-blue-dark)`
         } 
         [transition:var(--transition)]
         flex flex-row items-center justify-center gap-2 
@@ -37,8 +37,8 @@ const Button = ({
       onClick={onClick}
       className={`${
         !primary
-          ? `bg-(--color-scheme-2-accent) text-white  border-(--color-curious-blue) hover:bg-(--color-curious-blue-lighter) hover:text-black `
-          : `text-black border-(--opacity-neutral-darkest-15) hover:bg-(--color-scheme-2-accent) hover:text-white`
+          ? `bg-(--color-scheme-2-accent) text-white  border-(--color-curious-blue) hover:bg-(--color-curious-blue-lighter) hover:text-black active:bg-(--color-curious-blue-light)`
+          : `text-black border-(--opacity-neutral-darkest-15) hover:bg-(--color-scheme-2-accent) hover:text-white active:bg-(--color-curious-blue-dark)`
       } 
         [transition:var(--transition)]
         flex flex-row items-center justify-center gap-2 
