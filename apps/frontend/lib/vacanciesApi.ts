@@ -75,7 +75,9 @@ export const removeFromFavorites = async (vacancyId: string): Promise<void> => {
 };
 
 export const applyToVacancy = async (vacancyId: string): Promise<void> => {
-  await api.post(`/vacancies/${vacancyId}/apply`);
+  const { data } = await api.post(`/vacancies/${vacancyId}/apply`);
+
+  return data;
 };
 
 export const createVacancy = async (

@@ -23,7 +23,11 @@ export const vacancyFormValidation = Yup.object().shape({
     .max(4000, 'Максимум 4000 символи в цьому полі')
     .required('Це поле є обов’язковим'),
   plusWillBe: Yup.string()
-    .min(20, 'Мінімум 20 символи в цьому полі')
+    .test(
+      'min-if-filled',
+      'Мінімум 20 символи в цьому полі',
+      value => !value || value.length >= 20,
+    )
     .max(4000, 'Максимум 4000 символи в цьому полі')
     .optional(),
   weOffer: Yup.string()

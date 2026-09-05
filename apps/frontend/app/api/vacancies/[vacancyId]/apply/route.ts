@@ -1,29 +1,27 @@
 import { isAxiosError } from 'axios';
 import { NextRequest, NextResponse } from 'next/server';
 
-import { logErrorResponse } from '../../_utils/utils';
-import { api } from '../../api';
+import { logErrorResponse } from '../../../_utils/utils';
+import { api } from '../../../api';
 
-export async function GET(req: NextRequest) {
+interface RouteContext {
+  params: Promise<{ vacancyId: string }>;
+}
+
+export async function POST(req: NextRequest, { params }: RouteContext) {
   try {
-    const { searchParams } = new URL(req.url);
+    const { vacancyId } = await params;
     const cookie = req.headers.get('cookie') ?? '';
 
-    const params = {
-      page: searchParams.get('page')
-        ? Number(searchParams.get('page'))
-        : undefined,
-      perPage: searchParams.get('perPage')
-        ? Number(searchParams.get('perPage'))
-        : undefined,
-    };
-
-    const res = await api.get('/vacancies/favorite', {
-      params,
-      headers: {
-        cookie,
+    const res = await api.post(
+      `/vacancies/${vacancyId}/apply`,
+      {},
+      {
+        headers: {
+          cookie,
+        },
       },
-    });
+    );
 
     return NextResponse.json(res.data, {
       status: res.status,
@@ -34,7 +32,7 @@ export async function GET(req: NextRequest) {
 
       return NextResponse.json(
         error.response?.data ?? {
-          message: 'Failed to get saved vacancies',
+          message: 'Failed to apply to vacancy',
         },
         {
           status: error.response?.status ?? 500,
@@ -47,9 +45,7 @@ export async function GET(req: NextRequest) {
     });
 
     return NextResponse.json(
-      {
-        message: 'Internal Server Error',
-      },
+      { error: 'Internal Server Error' },
       {
         status: 500,
       },

@@ -5,6 +5,8 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 
 import css from './CandidateDashboardPage.module.css';
+import { useDashboardGuard } from '@/hooks/useDashboardGuard';
+import Loader from '@/components/Loader/Loader';
 
 interface CandidateDashboardPageProps {
   children?: ReactNode;
@@ -13,7 +15,8 @@ interface CandidateDashboardPageProps {
 const CandidateDashboardPage = ({ children }: CandidateDashboardPageProps) => {
   const pathname = usePathname();
   const isProfileTab = pathname === '/dashboard/candidate';
-
+  const { isAllowed } = useDashboardGuard('candidate');
+  if (!isAllowed) return <Loader />;
   return (
     <main className={css.page}>
       <div className="container">

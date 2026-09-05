@@ -6,12 +6,11 @@ import { api } from '../../api';
 
 export async function POST(req: NextRequest) {
   try {
+    const cookie = req.headers.get('cookie') ?? '';
     const body = await req.json();
 
     const res = await api.post('/vacancies/create-vacancy', body, {
-      headers: {
-        cookie: req.headers.get('cookie') ?? '',
-      },
+      headers: { cookie },
     });
 
     return NextResponse.json(res.data, {
