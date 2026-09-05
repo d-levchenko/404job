@@ -34,7 +34,7 @@ export async function POST(req: NextRequest, { params }: RouteContext) {
 
       return NextResponse.json(
         error.response?.data ?? {
-          message: 'Failed to add vacancy to saved',
+          message: 'Не вдалося додати вакансію до збережених',
         },
         {
           status: error.response?.status ?? 500,
@@ -77,7 +77,7 @@ export async function DELETE(req: NextRequest, { params }: RouteContext) {
 
       return NextResponse.json(
         error.response?.data ?? {
-          message: 'Failed to remove vacancy from saved',
+          message: 'Не вдалося видалити вакансію зі збережених',
         },
         {
           status: error.response?.status ?? 500,

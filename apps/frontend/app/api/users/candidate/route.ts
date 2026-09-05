@@ -24,7 +24,7 @@ export const PATCH = async (request: NextRequest) => {
 
       return NextResponse.json(
         error.response?.data ?? {
-          message: 'Failed to update candidate profile',
+          message: 'Не вдалося оновити профіль кандидата',
         },
         {
           status: error.response?.status ?? 500,
