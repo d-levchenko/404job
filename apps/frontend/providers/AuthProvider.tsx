@@ -1,5 +1,6 @@
 'use client';
 
+import { refreshSession } from '@/lib/authApi';
 import { getCurrentUser } from '@/lib/usersApi';
 import { useAuthStore } from '@/store/authStore';
 import React, { useEffect } from 'react';
@@ -15,6 +16,7 @@ const AuthProvider = ({ children }: AuthProviderProps) => {
   useEffect(() => {
     const fetchUser = async () => {
       try {
+        await refreshSession();
         const user = await getCurrentUser();
 
         if (user) {
