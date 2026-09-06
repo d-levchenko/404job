@@ -277,3 +277,17 @@ npm run build --workspace=frontend
   сервісів.
 - Локальний Docker Compose не запускає окремий контейнер MongoDB: база даних має
   бути зовнішньою або запущеною окремо.
+
+## Учасники проекту
+
+- [Dmytro Levchenko](https://github.com/d-levchenko)
+- [Vladyslav Daletskyi](https://github.com/daletskyiv)
+- [Viktoriia Dmytryk](https://github.com/viktoriia-dmytryk)
+- [Oleksandr Karpenko](https://github.com/SuperCat2812)
+- [Vitalii Beniuk](https://github.com/Vitalik0422)
+- [Marharyta Holub](https://github.com/marharyta-golub)
+- [Olena Shykova](https://github.com/Tigra26)
+- [Dmytro Kovalenko](https://github.com/Mitiako)
+- [Ivan Aleksieiev](https://github.com/IvanAlekseev45)
+- [Daniil Renhevych](https://github.com/Huliga101)
+- [Volodymyr Yachnyk](https://github.com/YachnikVova)

@@ -17,7 +17,7 @@ const roboto = Roboto({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://jobscape.vercel.app'),
+  metadataBase: new URL('https://404job-frontend.vercel.app'),
 
   title: 'JobScape',
   description: 'JobScape - Знайди роботу своєї мріії',
@@ -29,7 +29,7 @@ export const metadata: Metadata = {
     siteName: 'JobScape',
     locale: 'uk-UA',
     type: 'website',
-    url: 'https://jobscape.vercel.app',
+    url: 'https://404job-frontend.vercel.app',
     images: [
       {
         url: '/images/og-image.png',

@@ -5,8 +5,14 @@ import {
   dehydrate,
   HydrationBoundary,
 } from '@tanstack/react-query';
+import { Metadata } from 'next';
 
 import css from './page.module.css';
+
+export const metadata: Metadata = {
+  title: 'Створення вакансії | JobSpace',
+  description: 'Створіть вакансію для роботодавця на JobSpace.',
+};
 
 const Page = async () => {
   const queryClient = new QueryClient();
