@@ -28,7 +28,7 @@ const Button = ({
         [transition:var(--transition)]
         flex flex-row items-center justify-center gap-2 
         h-7.25 border rounded-full 
-       py-1 px-2.5 text-sm font-medium leading-normal ${className}`}>
+       py-1 px-2.5 text-sm font-medium leading-normal cursor-pointer ${className}`}>
         {children}
       </Link>
     );
@@ -43,7 +43,7 @@ const Button = ({
         [transition:var(--transition)]
         flex flex-row items-center justify-center gap-2 
         h-7.25 border rounded-full 
-       py-1 px-2.5 text-sm font-medium leading-normal ${className}`}>
+       py-1 px-2.5 text-sm font-medium leading-normal cursor-pointer ${className}`}>
       {children}
     </button>
   );
