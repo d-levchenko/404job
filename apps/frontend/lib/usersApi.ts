@@ -1,5 +1,12 @@
 import { api } from './api';
 import { AuthUser } from '@/types/auth';
+import { UpdateProfileData } from '@/types/auth';
+
+export const updateUser = async (body: UpdateProfileData) => {
+  const { data } = await api.patch('/users/candidate', body);
+
+  return data;
+};
 
 export interface EmployerProfile {
   companyName: string;
