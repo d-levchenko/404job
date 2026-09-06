@@ -19,13 +19,19 @@ const Header = () => {
     openBurger();
   };
 
-  const { userType, isAuthenticated, clearAuthStore, isInitialized } =
-    useAuthStore();
+  const {
+    userType,
+    isAuthenticated,
+    clearAuthStore,
+    setIsAuthenticated,
+    isInitialized,
+  } = useAuthStore();
 
   const handleExit = async () => {
     await logout();
     clearAuthStore();
     closeBurger();
+    setIsAuthenticated(false);
     router.push('/');
   };
 
@@ -65,7 +71,7 @@ const Header = () => {
                     </Button>
                     <Button onClick={handleExit}>Вийти</Button>
                   </>
-                ) : userType === 'candidate' ? (
+                ) : isAuthenticated && userType === 'candidate' ? (
                   <>
                     <Button href="/dashboard/candidate">Мій профіль</Button>
                     <Button onClick={handleExit}>Вийти</Button>
