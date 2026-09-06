@@ -4,7 +4,7 @@ import { useId } from 'react';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { isAxiosError } from 'axios';
 import { ErrorMessage, Field, Form, Formik } from 'formik';
-import { updateUser } from '@/lib/userApi';
+import { updateUser } from '@/lib/usersApi';
 import { updateUserProfileValidationSchema } from '@/validation/profileValidation';
 import { UpdateProfileData } from '@/types/auth';
 import toast from 'react-hot-toast';
