@@ -9,10 +9,10 @@ import {
 import { Suspense } from 'react';
 import Vacancies from '@/components/VacanciesPage/Vacancies';
 import Loader from '@/components/Loader/Loader';
-import ForEmployers from '@/components/HomePage/ForEmployers/ForEmployers';
 
 import css from './page.module.css';
 import { Metadata } from 'next';
+import ForEmployersGate from '@/components/HomePage/ForEmployersGate/ForEmployersGate';
 
 export const dynamic = 'force-dynamic';
 
@@ -81,7 +81,7 @@ const VacanciesPage = async () => {
           </HydrationBoundary>
         </Suspense>
 
-        <ForEmployers />
+        <ForEmployersGate />
       </div>
     </main>
   );

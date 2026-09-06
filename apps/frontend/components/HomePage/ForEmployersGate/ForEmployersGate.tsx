@@ -4,7 +4,7 @@ import { useAuthStore } from '@/store/authStore';
 import ForEmployers from '../ForEmployers/ForEmployers';
 
 interface ForEmployersGateProps {
-  className: string;
+  className?: string;
 }
 
 const ForEmployersGate = ({ className }: ForEmployersGateProps) => {
