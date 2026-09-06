@@ -12,8 +12,25 @@ import Loader from '@/components/Loader/Loader';
 import ForEmployers from '@/components/HomePage/ForEmployers/ForEmployers';
 
 import css from './page.module.css';
+import { Metadata } from 'next';
 
 export const dynamic = 'force-dynamic';
+
+export const metadata: Metadata = {
+  title: 'Вакансії | JobSpace',
+  description: 'Перегляд вакансій в особистому кабінеті JobSpace.',
+
+  openGraph: {
+    title: 'Вакансії | JobSpace',
+    description: 'Перегляд вакансій в особистому кабінеті JobSpace.',
+  },
+
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Вакансії | JobSpace',
+    description: 'Перегляд вакансій в особистому кабінеті JobSpace.',
+  },
+};
 
 const VacanciesPage = async () => {
   const queryClient = new QueryClient();

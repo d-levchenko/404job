@@ -4,12 +4,43 @@ import VacanciesDescription from '@/components/VacancyDetailsPage/VacanciesDescr
 import VacancyHeader from '@/components/VacancyDetailsPage/VacancyHeader/VacancyHeader';
 import AboutCompanyBlock from '@/components/VacancyDetailsPage/AboutCompanyBlock/AboutCompanyBlock';
 import SimilarVacanciesSection from '@/components/VacancyDetailsPage/SimilarVacanciesSection/SimilarVacanciesSection';
+import { Metadata } from 'next';
 
 interface PageProps {
   params: Promise<{
     vacancyId: string;
   }>;
 }
+
+export const generateMetadata = async ({
+  params,
+}: PageProps): Promise<Metadata> => {
+  const { vacancyId } = await params;
+  const data = await getVacancyById(vacancyId);
+
+  if (!data || !data.vacancy) {
+    return {
+      title: 'Vacancy not found',
+    };
+  }
+
+  const { vacancy } = data;
+
+  return {
+    title: vacancy.title,
+    description: vacancy.description,
+    openGraph: {
+      title: vacancy.title,
+      description: vacancy.description,
+    },
+
+    twitter: {
+      card: 'summary_large_image',
+      title: vacancy.title,
+      description: vacancy.description,
+    },
+  };
+};
 
 const VacancyDetailsPage = async ({ params }: PageProps) => {
   const { vacancyId } = await params;
