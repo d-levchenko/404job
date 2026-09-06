@@ -19,7 +19,8 @@ const Header = () => {
     openBurger();
   };
 
-  const { userType, isAuthenticated, clearAuthStore } = useAuthStore();
+  const { userType, isAuthenticated, clearAuthStore, isInitialized } =
+    useAuthStore();
 
   const handleExit = async () => {
     await logout();
@@ -52,29 +53,38 @@ const Header = () => {
             <AppLink href="/vacancies">Вакансії</AppLink>
           </div>
           <div className="flex gap-4">
-            {isAuthenticated ? (
-              userType === 'employer' ? (
-                <>
-                  <Button primary href="/dashboard/employer">
-                    Мій профіль
-                  </Button>
-                  <Button href="/dashboard/employer/create-vacancy">
-                    Створити вакансію
-                  </Button>
-                  <Button onClick={handleExit}>Вийти</Button>
-                </>
-              ) : (
-                <>
-                  <Button href="/dashboard/candidate">Мій профіль</Button>
-                  <Button onClick={handleExit}>Вийти</Button>
-                </>
-              )
+            {isInitialized ? (
+              <>
+                {isAuthenticated && userType === 'employer' ? (
+                  <>
+                    <Button primary href="/dashboard/employer">
+                      Мій профіль
+                    </Button>
+                    <Button href="/dashboard/employer/create-vacancy">
+                      Створити вакансію
+                    </Button>
+                    <Button onClick={handleExit}>Вийти</Button>
+                  </>
+                ) : userType === 'candidate' ? (
+                  <>
+                    <Button href="/dashboard/candidate">Мій профіль</Button>
+                    <Button onClick={handleExit}>Вийти</Button>
+                  </>
+                ) : (
+                  <>
+                    <Button primary href="/auth/login">
+                      Вхід
+                    </Button>
+                    <Button href="/auth/register">Реєстрація</Button>
+                  </>
+                )}
+              </>
             ) : (
               <>
-                <Button primary href="/auth/login">
-                  Вхід
-                </Button>
-                <Button href="/auth/register">Реєстрація</Button>
+                <div className="flex items-center gap-2">
+                  <div className="skeleton-button h-7.25 w-25 rounded-full overflow-hidden border border-(--color-scheme-2-accent)/40 bg-(--color-scheme-2-accent)" />
+                  <div className="skeleton-button h-7.25 w-17.5 rounded-full overflow-hidden border border-(--color-scheme-2-accent)/40 bg-(--color-scheme-2-accent)" />
+                </div>
               </>
             )}
           </div>
