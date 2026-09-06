@@ -3,7 +3,7 @@ import type { Metadata } from 'next';
 import Advantages from '@/components/HomePage/Advantages/Advantages';
 import HeroSection from '@/components/HomePage/HeroSection/HeroSection';
 import HotVacancies from '@/components/HomePage/HotVacancies/HotVacancies';
-import ForEmployers from '@/components/HomePage/ForEmployers/ForEmployers';
+import ForEmployersGate from '@/components/HomePage/ForEmployersGate/ForEmployersGate';
 
 export const dynamic = 'force-dynamic';
 export const metadata: Metadata = {
@@ -60,10 +60,9 @@ const Home = () => {
         <Advantages />
       </section>
 
-      <section
-        className={`${stackCentered} ${reveal} z-40 bg-white stack:shadow-[0_0_4px_rgba(0,0,0,0.12)]`}>
-        <ForEmployers />
-      </section>
+      <ForEmployersGate
+        className={`${stackCentered} ${reveal} z-40 bg-white stack:shadow-[0_0_4px_rgba(0,0,0,0.12)]`}
+      />
     </main>
   );
 };
