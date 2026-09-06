@@ -24,7 +24,7 @@ export const getAllVacanciesSchema = {
     location: Joi.array()
       .items(Joi.string().custom(objectIdValidator))
       .single()
-      .allow(null),
+      .allow('', null),
 
     employmentType: Joi.array()
       .items(Joi.string().custom(objectIdValidator))
