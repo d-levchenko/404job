@@ -1,8 +1,10 @@
 .page {
   width: 100%;
   box-sizing: border-box;
-  padding: 0 20px;
-  margin: 0 auto 48px;
+  padding: 0 20px 48px;
+  margin: 0 auto;
+
+  flex: 1;
 }
 
 .title {
