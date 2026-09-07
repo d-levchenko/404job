@@ -33,7 +33,7 @@
 
   .login-image {
     display: block;
-    width: 40%;
+    width: 720px;
     object-fit: cover;
   }
 }
