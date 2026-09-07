@@ -96,7 +96,7 @@ export const createVacancy = async (
 export const getMyVacancies = async (
   params: GetMyVacanciesRequest,
 ): Promise<AllVacancies> => {
-  const { data } = await api.get<AllVacancies>('/vacancies/my/vacancies', {
+  const { data } = await api.get<AllVacancies>('/vacancies/my', {
     params,
   });
 
