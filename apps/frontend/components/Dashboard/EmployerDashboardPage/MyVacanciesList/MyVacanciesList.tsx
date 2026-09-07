@@ -16,7 +16,7 @@ import PaymentsIcon from '@/assets/payments.svg';
 
 import Loader from '@/components/Loader/Loader';
 
-import { closeVacancy, getMyVacancies } from '@/lib/vacanciesApi';
+import { getMyVacancies, updateVacancy } from '@/lib/vacanciesApi';
 
 import css from './MyVacanciesList.module.css';
 
@@ -80,7 +80,8 @@ const MyVacanciesList = () => {
   });
 
   const closeMutation = useMutation({
-    mutationFn: closeVacancy,
+    mutationFn: (vacancyId: string) =>
+      updateVacancy(vacancyId, { status: 'closed' }),
 
     onSuccess: async () => {
       await queryClient.invalidateQueries({

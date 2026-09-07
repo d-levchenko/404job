@@ -33,7 +33,7 @@ const nextConfig: NextConfig = {
       fallback: [
         {
           source: '/api/:path*',
-          destination: 'http://backend:4000/api/:path*',
+          destination: `${process.env.INTERNAL_API_URL ?? 'http://localhost:4000/api'}/:path*`,
         },
       ],
     };
