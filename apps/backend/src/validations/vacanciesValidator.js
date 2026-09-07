@@ -1,6 +1,8 @@
 import { Joi, Segments } from 'celebrate';
 import { isValidObjectId } from 'mongoose';
 
+import { Status } from '../constants/status.js';
+
 const objectIdValidator = (value, helpers) =>
   !isValidObjectId(value) ? helpers.message('Invalid id') : value;
 
@@ -64,10 +66,14 @@ export const createVacancySchema = {
   }),
 };
 
-export const closeVacancySchema = {
+export const updateVacancySchema = {
   [Segments.PARAMS]: Joi.object({
     vacancyId: Joi.string().custom(objectIdValidator).required(),
   }),
+  [Segments.BODY]: Joi.object({
+    status: Joi.string().valid(...Status),
+    hotVacancy: Joi.boolean(),
+  }).min(1),
 };
 
 export const getMyVacanciesSchema = {

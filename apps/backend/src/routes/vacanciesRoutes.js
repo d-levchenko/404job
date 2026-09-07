@@ -12,7 +12,7 @@ import {
   removeVacancyFromFavorites,
   createVacancy,
   getFavoriteVacancies,
-  closeVacancy,
+  updateVacancy,
   getMyVacancies,
   getEmployerApplications,
   updateApplicationStatus,
@@ -22,7 +22,7 @@ import {
   getAllVacanciesSchema,
   getHotVacanciesSchema,
   getVacancyByIdSchema,
-  closeVacancySchema,
+  updateVacancySchema,
   getMyVacanciesSchema,
   savedVacanciesSchema,
   updateApplicationStatusSchema,
@@ -73,16 +73,10 @@ vacancyRouter.post(
   applyToVacancy,
 );
 vacancyRouter.patch(
-  '/:vacancyId/close',
+  '/:vacancyId',
   authenticate,
-  celebrate(closeVacancySchema),
-  closeVacancy,
-);
-vacancyRouter.delete(
-  '/:vacancyId/close',
-  authenticate,
-  celebrate(closeVacancySchema),
-  closeVacancy,
+  celebrate(updateVacancySchema),
+  updateVacancy,
 );
 
 vacancyRouter.get(

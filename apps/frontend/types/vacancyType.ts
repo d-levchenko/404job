@@ -1,4 +1,4 @@
-type Status = 'active' | 'closed';
+export type Status = 'active' | 'closed';
 type ExperienceLevelsName = 'Trainee' | 'Junior' | 'Middle' | 'Senior' | 'Lead';
 export type FilterOptionType =
   'locations' | 'industries' | 'experienceLevels' | 'employmentTypes';

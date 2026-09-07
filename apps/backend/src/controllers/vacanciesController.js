@@ -223,12 +223,12 @@ export const getFavoriteVacancies = async (req, res, next) => {
   }
 };
 
-export const closeVacancy = async (req, res) => {
+export const updateVacancy = async (req, res) => {
   const { vacancyId } = req.params;
   const { _id: userId, userType } = req.user;
 
   if (userType !== 'employer') {
-    throw createHttpError(403, 'Only employers can close vacancies');
+    throw createHttpError(403, 'Only employers can update vacancies');
   }
 
   const vacancy = await Vacancy.findById(vacancyId);
@@ -238,10 +238,10 @@ export const closeVacancy = async (req, res) => {
   }
 
   if (String(vacancy.employerId) !== String(userId)) {
-    throw createHttpError(403, 'You can only close your own vacancies');
+    throw createHttpError(403, 'You can only update your own vacancies');
   }
 
-  vacancy.status = 'closed';
+  Object.assign(vacancy, req.body);
   await vacancy.save();
 
   res.status(200).json(vacancy);

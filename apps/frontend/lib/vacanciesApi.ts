@@ -1,4 +1,9 @@
-import { AllVacancies, Vacancy, VacancyFormValues } from '@/types/vacancyType';
+import {
+  AllVacancies,
+  Status,
+  Vacancy,
+  VacancyFormValues,
+} from '@/types/vacancyType';
 
 import { api } from './api';
 
@@ -98,8 +103,16 @@ export const getMyVacancies = async (
   return data;
 };
 
-export const closeVacancy = async (vacancyId: string): Promise<Vacancy> => {
-  const { data } = await api.delete<Vacancy>(`/vacancies/${vacancyId}/close`);
+export interface UpdateVacancyRequest {
+  status?: Status;
+  hotVacancy?: boolean;
+}
+
+export const updateVacancy = async (
+  vacancyId: string,
+  body: UpdateVacancyRequest,
+): Promise<Vacancy> => {
+  const { data } = await api.patch<Vacancy>(`/vacancies/${vacancyId}`, body);
 
   return data;
 };
